@@ -1,0 +1,117 @@
+{
+  "sys": {
+    "shape": {
+      "srv": {}
+    }
+  },
+  "main": {
+    "srv": {
+      "monitor": {
+        "msg": {},
+        "plugin": {
+          "repl": {}
+        }
+      },
+      "web": {
+        "msg": {}
+      },
+      "info": {
+        "msg": {
+          "role:info,collect:part": {
+            "async": true
+          },
+          "role:info,get:info": {
+            "params": {}
+          }
+        }
+      },
+      "npm": {
+        "msg": {
+          "role:info,need:part": {
+            "async": true
+          },
+          "role:source,source:npm,get:package": {},
+          "role:source,source:npm,pull:package": {}
+        }
+      },
+      "github": {
+        "msg": {
+          "role:info,need:part": {
+            "async": true
+          },
+          "role:source,source:github,get:package": {},
+          "role:source,source:github,pull:package": {}
+        }
+      },
+      "search": {
+        "msg": {
+          "role:search,search:query": {},
+          "role:search,insert:package": {}
+        }
+      }
+    },
+    "ent": {
+      "nodezoo": {
+        "search": {},
+        "github": {},
+        "npm": {}
+      }
+    },
+    "api": {
+      "http": {
+        "prefix": "/api",
+        "route": {
+          "query": {
+            "path": "/query",
+            "msg": {
+              "role": "search",
+              "cmd": "query",
+              "query": "req.query.q"
+            }
+          }
+        }
+      }
+    },
+    "theme": {
+      "light": {
+        "color": {
+          "bg0": "FFFFFF",
+          "bg1": "CCCCCC",
+          "fg0": "333333",
+          "fg1": "000000"
+        }
+      },
+      "dark": {
+        "color": {
+          "bg0": "000000",
+          "bg1": "333333",
+          "fg0": "CCCCCC",
+          "fg1": "FFFFFF"
+        }
+      }
+    },
+    "app": {
+      "web": {
+        "parts": {
+          "head": {},
+          "main": {}
+        },
+        "view": {
+          "intro": {},
+          "result": {},
+          "info": {}
+        },
+        "route": {
+          "home": {
+            "path": "/",
+            "view": "intro"
+          },
+          "package": {
+            "path": "/info/:package",
+            "view": "info"
+          }
+        }
+      }
+    }
+  }
+}

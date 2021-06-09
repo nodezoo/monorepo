@@ -1,0 +1,17 @@
+
+monitor: {
+  plugin: {
+    repl: {}
+  }
+}
+
+
+info: {
+  msg: {
+    'role:info,get:info': {
+      params: {
+        name: string
+      }
+    }
+  }
+}

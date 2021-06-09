@@ -1,0 +1,148 @@
+
+
+sys: shape: srv: {
+  &={
+    name: string
+    msg: {
+      &={
+        async: boolean
+      }
+    }
+  }
+}
+
+
+main: srv: /sys/shape/srv
+
+
+
+
+
+#####
+
+
+
+
+
+main: ent: nodezoo: search: {
+  term: string
+  when: integer
+}
+
+main: ent: nodezoo: github: {
+  name: string
+  owner: string
+  repo: string
+  stars: integer
+  forks: integer
+  last: integer
+}
+
+main: ent: nodezoo: npm: {
+  name: string
+}
+
+
+
+
+
+
+
+main: srv: monitor: {
+}
+
+
+main: srv: web: {
+}
+
+
+main: srv: info: {
+  msg: {
+    'role:info,collect:part': { async: true },
+    'role:info,get:info': {}
+  }
+}
+
+
+main: srv: npm: {
+  msg: {
+    'role:info,need:part': { async: true }
+    'role:source,source:npm,get:package': {}
+    'role:source,source:npm,pull:package': {}
+  }
+}
+
+
+main: srv: github: {
+  msg: {
+    'role:info,need:part': { async: true }
+    'role:source,source:github,get:package': {}
+    'role:source,source:github,pull:package': {}
+  }
+}
+
+
+main: srv: search: {
+  msg: {
+    'role:search,search:query': {}
+    'role:search,insert:package': {}
+  }
+}
+
+
+main: srv: @"srv.jsonic"
+
+
+
+main: api: http: {
+  prefix: '/api'
+  route: {
+    query: {
+      path: '/query'
+      msg: {role:search,cmd:query,query:'req.query.q'} 
+    }
+  }
+}
+
+
+
+main: theme: light: color: {
+  bg0: 'FFFFFF'
+  bg1: 'CCCCCC'
+  fg0: '333333'
+  fg1: '000000'
+}
+
+main: theme: dark: color: {
+  bg0: '000000'
+  bg1: '333333'
+  fg0: 'CCCCCC'
+  fg1: 'FFFFFF'
+}
+
+
+main: app: web: parts: {
+  head: {}
+  main: {}
+}
+
+main: app: web: view: {
+  intro: {}
+  result: {}
+  info: {}
+}
+
+
+
+main: app: web: route: {
+  home: {
+    path: '/'
+    view: intro
+  }
+  
+  package: {
+    path: '/info/:package'
+    view: info
+  }
+}
+
