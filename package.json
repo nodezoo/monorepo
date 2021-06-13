@@ -4,8 +4,11 @@
   "description": "Nodezoo system monorepo.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "model": "voxgig-model model/model.jsonic"
+    "test": "echo no-test",
+    "model": "voxgig-model model/model.jsonic",
+    "clean": "rm -rf node_modules package-lock.json yarn.lock",
+    "build": "echo no-build",
+    "reset": "npm run clean && npm i && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -18,13 +21,15 @@
   },
   "homepage": "https://github.com/nodezoo/monorepo#readme",
   "devDependencies": {
-    "@voxgig/model": "voxgig/model"
+    "@voxgig/model": "voxgig/model",
+    "jsonic": "jsonicjs/jsonic#nextgen"
   },
   "dependencies": {
+    "@seneca/reload": "^0.1.0",
+    "@seneca/sns-transport": "^0.3.0",
     "seneca": "^3.23.3",
     "seneca-entity": "^14.0.0",
     "seneca-promisify": "^2.0.0",
-    "seneca-repl": "^1.2.0",
-    "@seneca/reload": "senecajs/seneca-reload"
+    "seneca-repl": "^1.2.0"
   }
 }

@@ -1,7 +1,11 @@
 {
   "sys": {
     "model": {
-      "builders": {}
+      "builders": {
+        "create_sns_topics": {
+          "load": "build/create_sns_topics"
+        }
+      }
     }
   }
 }

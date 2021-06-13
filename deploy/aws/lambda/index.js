@@ -1,38 +1,42 @@
+
+const AWS = require('aws-sdk')
 const Seneca = require('seneca')
 const Model = require('model.json')
 
 
+const SNS = new AWS.SNS({apiVersion: '2010-03-31'})
 
 
 let srvname = process.env.NODEZOO_SRV
+let topic_prefix = process.env.NODEZOO_TOPIC_PREFIX
+
+console.log('INIT', srvname)
+
 
 let seneca = Seneca({legacy:false,log:'flat'})
 seneca.context.model = Model
 
 seneca
-    .use('promisify')
-    .use('reload', {active:false})
-    .use('srv/'+srvname+'/'+srvname+'-srv')
+  .test()
+  .use('promisify')
+  .use('sns-transport', {
+    topic: {
+      prefix: topic_prefix
+    },
+    SNS: () => SNS
+  })
+  .use('reload', {active:false})
+  .use('srv/'+srvname+'/'+srvname+'-srv')
+  .listen({type:'sns'})
+  .ready(()=>{
+    exports.handler = seneca.export('sns-transport/handler')
+  })
 
-exports.handler = async (event) => {
-  let out = null
-  try {
-    out = await seneca.post(event)
-  }
-  catch(e) {
-    out = {
-      ok:false,
-      code:e.code,
-      message:e.message,
-      details:e.details,
-      stack:e.stack,
-    }
-  }
-  
-  const res = {
-    statusCode: 200,
-    body: JSON.stringify(out),
-  }
-
-  return res
+/*
+exports.handler = function(event, context, callback) {
+  seneca.ready(function() {
+    let handler = seneca.export('sns-transport/handler')
+    handler(event, context, callback)
+  })
 }
+*/
