@@ -7,5 +7,5 @@ module.exports = search
 function search(options) {
   let reload = this.export('reload/make')(require)
 
-  Shared.messages(this, reload)
+  Shared.messages(this, options, reload, require)
 }

@@ -25,21 +25,25 @@ main: srv: /sys/shape/srv
 
 
 main: ent: nodezoo: search: {
-  term: string
-  when: integer
+  term: type: N
+  when: type: N
 }
 
 main: ent: nodezoo: github: {
-  name: string
-  owner: string
-  repo: string
-  stars: integer
-  forks: integer
-  last: integer
+  name: type: S
+  owner: type: S
+  repo: type: S
+  stars: type: N
+  forks: type: N
+  last: type: N
 }
 
 main: ent: nodezoo: npm: {
-  name: string
+  name: type: S
+  version: type: S
+  giturl: type: S
+  desc: type: S
+  readme: type: S
 }
 
 

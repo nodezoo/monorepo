@@ -52,9 +52,51 @@
     },
     "ent": {
       "nodezoo": {
-        "search": {},
-        "github": {},
-        "npm": {}
+        "search": {
+          "term": {
+            "type": "N"
+          },
+          "when": {
+            "type": "N"
+          }
+        },
+        "github": {
+          "name": {
+            "type": "S"
+          },
+          "owner": {
+            "type": "S"
+          },
+          "repo": {
+            "type": "S"
+          },
+          "stars": {
+            "type": "N"
+          },
+          "forks": {
+            "type": "N"
+          },
+          "last": {
+            "type": "N"
+          }
+        },
+        "npm": {
+          "name": {
+            "type": "S"
+          },
+          "version": {
+            "type": "S"
+          },
+          "giturl": {
+            "type": "S"
+          },
+          "desc": {
+            "type": "S"
+          },
+          "readme": {
+            "type": "S"
+          }
+        }
       }
     },
     "api": {

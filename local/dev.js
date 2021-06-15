@@ -7,12 +7,14 @@ const seneca = Seneca({log:'flat'})
 seneca.context.model = Model
 
 seneca
+  .test('print')
+  .error(console.log)
   .use('promisify')
+  .use('entity')
   .use('repl')
   .use('reload')
 
-for([name, srv] of Object.entries(Model.main.srv)) {
+
+for(const [name, srv] of Object.entries(Model.main.srv)) {
   seneca.use('../srv/'+name+'/'+name+'-srv.js')
 }
-
-
