@@ -45,8 +45,10 @@
       },
       "search": {
         "msg": {
-          "role:search,search:query": {},
-          "role:search,insert:package": {}
+          "role:info,collect:part": {
+            "async": true
+          },
+          "role:search,search:query": {}
         }
       }
     },

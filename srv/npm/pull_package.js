@@ -27,11 +27,12 @@ module.exports = function make_pull_package({options}) {
         version: dist_tags.latest,
         giturl:  repository.url,
         desc:    pkg.description || '',
-        // readme:  pkg.readme || ''
+        readme:  pkg.readme || ''
       }).save$()
 
       out.ok = true
       out.pkg = ent
+      delete out.pkg.readme
     }
     
     return out

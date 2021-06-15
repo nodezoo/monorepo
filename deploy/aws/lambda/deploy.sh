@@ -76,7 +76,7 @@ else
         --handler index.handler \
         --runtime nodejs14.x \
         --role "arn:aws:iam::${LAMBDA_ARN_ID}:role/nodezoo_lambda_srv" \
-        --timeout 33 \
+        --timeout 66 \
         > "$DIRNAME/log/$SRV-create.json"
 
     AWS_API_EXIT_VAL=$?

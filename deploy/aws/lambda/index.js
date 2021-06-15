@@ -20,7 +20,7 @@ let seneca = Seneca({legacy:false,log:'flat'})
 seneca.context.model = Model
 
 seneca
-  .test('print')
+  .test()
   .error(console.log)
   .use('promisify')
   .use('entity')

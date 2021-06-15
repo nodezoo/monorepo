@@ -25,6 +25,10 @@ module.exports = function make_get_package() {
       }
     }
 
+    // if(out.pkg) {
+    //   delete out.pkg.readme
+    // }
+    
     return out
   }
 }

@@ -5,6 +5,9 @@ module.exports = function make_need_part() {
     let seneca = this
     let name = msg.name
     
+    let start = Date.now()
+    console.log('BEGIN', name, start)
+
     let res = await seneca.post(
       'role:source,source:github,get:package',
       {name:msg.name}
@@ -17,5 +20,8 @@ module.exports = function make_need_part() {
         data: res.pkg
       })
     }
+
+    let end = Date.now()
+    console.log('END', name, end, end-start)
   }
 }

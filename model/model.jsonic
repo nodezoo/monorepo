@@ -88,8 +88,8 @@ main: srv: github: {
 
 main: srv: search: {
   msg: {
+    'role:info,collect:part': { async: true }
     'role:search,search:query': {}
-    'role:search,insert:package': {}
   }
 }
 
