@@ -39,13 +39,14 @@ seneca
   .client({type:'sns', pin:outbound})
   .use('srv/'+srvname+'/'+srvname+'-srv')
 
-exports.handler = seneca.export('sns-transport/handler')
+// exports.handler = seneca.export('sns-transport/handler')
 
-/*
+
 exports.handler = function(event, context, callback) {
   seneca.ready(function() {
+    console.log('EVENT', event)
     let handler = seneca.export('sns-transport/handler')
     return handler(event, context, callback)
   })
 }
-*/
+
