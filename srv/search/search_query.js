@@ -6,6 +6,8 @@ const CSD = new AWS.CloudSearchDomain({
 });
 
 
+// file: search_query.js
+// Implements role:search,search:query
 module.exports = function make_search_query() {
   return async function search_query(msg) {
     let seneca = this
@@ -16,16 +18,12 @@ module.exports = function make_search_query() {
       sort: 'stars desc',
     }
 
-    console.log('QUERY', params)
-    
     let res = await new Promise((res,rej) => {
       CSD.search(params, function(err, data) {
         if(err) return rej(err)
         return res(data)
       })
     })
-
-    console.log('RES', res)
 
     return {
       ok: true,

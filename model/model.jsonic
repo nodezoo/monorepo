@@ -52,6 +52,8 @@ main: ent: nodezoo: npm: {
 
 
 
+
+
 main: srv: monitor: {
 }
 
@@ -63,7 +65,8 @@ main: srv: web: {
 main: srv: info: {
   msg: {
     'role:info,collect:part': { async: true },
-    'role:info,get:info': {}
+    'role:info,get:info': {},
+    'role:info,test:true': {}
   }
 }
 

@@ -22,7 +22,8 @@
           },
           "role:info,get:info": {
             "params": {}
-          }
+          },
+          "role:info,test:true": {}
         }
       },
       "npm": {

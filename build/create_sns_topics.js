@@ -1,4 +1,7 @@
 
+  // TODO: filter only async
+
+
 const Fs = require('fs')
 const Seneca = require('seneca')
 
@@ -7,7 +10,6 @@ module.exports = async function(model, build) {
   const topics = []
 
   Object.entries(model.main.srv)
-  // TODO: filter only async
     .map(
       ([n,s])=>Object.keys(s.msg)
         .map(p=>Seneca.util.pincanon(p))
