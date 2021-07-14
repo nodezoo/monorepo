@@ -27,10 +27,14 @@
 ** AWS for the moment
 *** generate deployments for others?
 
-
 * data
 ** get all modules
 *** https://stackoverflow.com/questions/48251633/list-all-public-packages-in-the-npm-registry
 ** follower
 ** https://github.com/npm/registry/blob/master/docs/follower.md
+* environments
+** local dev via single process loading all services as modules
+*** all external deps exposed via seneca plugins
+** prod is AWS and AWS services
+
 
