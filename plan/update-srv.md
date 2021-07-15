@@ -7,7 +7,9 @@ npm and github services (and later others - these are the package data
 source services) should listen for this and then pull the latest data
 for the package.
 
-See https://github.com/npm/registry/blob/master/docs/follower.md
+See 
+https://github.com/npm/registry/blob/master/docs/follower.md
+https://stackoverflow.com/questions/48251633/list-all-public-packages-in-the-npm-registry
 
 Local development uses seneca-mem-store - no persistent data.
 
