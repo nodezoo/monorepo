@@ -8,7 +8,8 @@
     "model": "voxgig-model model/model.jsonic",
     "clean": "rm -rf node_modules package-lock.json yarn.lock",
     "build": "echo no-build",
-    "reset": "npm run clean && npm i && npm run build && npm run test"
+    "reset": "npm run clean && npm i && npm run build && npm run test",
+    "local": "node ./local/dev.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "@seneca/dynamo-store": "^0.6.0",
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
+    "changes-stream": "2.2.0",
     "seneca": "^3.23.3",
     "seneca-entity": "^14.0.0",
     "seneca-promisify": "^2.0.0"

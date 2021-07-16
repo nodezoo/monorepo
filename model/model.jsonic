@@ -97,6 +97,16 @@ main: srv: search: {
 }
 
 
+
+main: srv: update: {
+  msg: {
+    'role:update,cmd:start': {}
+    'role:update,cmd:stop': {}
+  }
+}
+
+
+
 main: srv: @"srv.jsonic"
 
 

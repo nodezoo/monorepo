@@ -51,6 +51,12 @@
           },
           "role:search,search:query": {}
         }
+      },
+      "update": {
+        "msg": {
+          "role:update,cmd:start": {},
+          "role:update,cmd:stop": {}
+        }
       }
     },
     "ent": {
