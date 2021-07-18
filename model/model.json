@@ -46,9 +46,6 @@
       },
       "search": {
         "msg": {
-          "role:info,collect:part": {
-            "async": true
-          },
           "role:search,search:query": {}
         }
       },
