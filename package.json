@@ -4,6 +4,7 @@
   "description": "Nodezoo system monorepo.",
   "main": "index.js",
   "scripts": {
+    "start-dev": "node local/dev.js",
     "test": "echo no-test",
     "model": "voxgig-model model/model.jsonic",
     "clean": "rm -rf node_modules package-lock.json yarn.lock",
