@@ -28,7 +28,8 @@
       },
       "update": {
         "msg": {
-          "role:update,cmd:ping": {}
+          "role:update,cmd:ping": {},
+          "role:update,cmd:download_registry": {}
         }
       },
       "npm": {

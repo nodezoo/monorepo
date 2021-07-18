@@ -73,7 +73,8 @@ main: srv: info: {
 
 main: srv: update: {
   msg: {
-    'role:update,cmd:ping': {}
+    'role:update,cmd:ping': {},
+    'role:update,cmd:download_registry': {}
   }
 }
 
