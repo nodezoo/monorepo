@@ -1,4 +1,3 @@
-
 const Shared = require('../../lib/shared')
 
 

@@ -26,6 +26,11 @@
           "role:info,test:true": {}
         }
       },
+      "update": {
+        "msg": {
+          "role:update,cmd:ping": {}
+        }
+      },
       "npm": {
         "msg": {
           "role:info,need:part": {

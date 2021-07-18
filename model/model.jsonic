@@ -71,6 +71,13 @@ main: srv: info: {
 }
 
 
+main: srv: update: {
+  msg: {
+    'role:update,cmd:ping': {}
+  }
+}
+
+
 main: srv: npm: {
   msg: {
     'role:info,need:part': { async: true }
