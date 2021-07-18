@@ -35,10 +35,10 @@ module.exports = function make_download_registry() {
           return
         }
 
-        const { id: package_id, value } = pkg_data
+        const { id: pkg_id } = pkg_data
 
         return seneca.make('nodezoo', 'npm')
-          .data$({ name: package_id })
+          .data$({ name: pkg_id })
           .save$(err => {
             if (err) {
               seneca.log.error(err)
