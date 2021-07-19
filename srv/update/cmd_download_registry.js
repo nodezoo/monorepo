@@ -1,6 +1,7 @@
 const Axios = require('axios')
 const JsonStream = require('JSONStream')
 const Qs = require('querystring')
+const Lib = require('../../lib/update')
 
 
 module.exports = function make_download_registry() {
@@ -52,27 +53,8 @@ module.exports = function make_download_registry() {
           }
 
 
-          const { id: pkg_id, doc } = pkg_data
-
-          const {
-            'dist-tags': { latest: pkg_version },
-            readmeFilename: pkg_readme,
-            description: pkg_desc
-          } = doc
-
-          const pkg_giturl = doc.repository && 'git' === doc.repository.type
-            ? doc.repository.url
-            : null
-
           return seneca.make('nodezoo', 'npm')
-            .data$({
-              name: pkg_id,
-              version: pkg_version,
-              giturl: pkg_giturl,
-              desc: pkg_desc,
-              readme: pkg_readme,
-              original_doc: JSON.stringify(doc)
-            })
+            .data$(Lib.entdata_of_npm_data(pkg_data))
             .save$(err => {
               if (err) {
                 seneca.log.error(err.message)
