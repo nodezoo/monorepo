@@ -6,10 +6,10 @@ module.exports = function make_download_registry() {
   return async function download_registry(msg) {
     const seneca = this
 
-    if (seneca.context.is_downloading) {
+    if (seneca.root.context.is_downloading) {
       return {
         ok: false,
-        why: 'Download is already in progress...'
+        why: 'The download is already in progress.'
       }
     }
 
@@ -18,12 +18,12 @@ module.exports = function make_download_registry() {
     })
 
 
-    seneca.context.is_downloading = true
+    seneca.root.context.is_downloading = true
 
     response.data
       .pipe(JsonStream.parse(['rows', true]))
       .on('data', pkg_data => {
-        if (!seneca.context.is_downloading) {
+        if (!seneca.root.context.is_downloading) {
           /* NOTE: If a download has been aborted, this code will be called
            * multiple times per response. That's okay, the #destroy() method
            * becomes a no-op after the first call - it's not like double
@@ -41,7 +41,7 @@ module.exports = function make_download_registry() {
           .data$({ name: pkg_id })
           .save$(err => {
             if (err) {
-              seneca.log.error(err)
+              seneca.log.error(err.message)
               return
             }
 
@@ -49,7 +49,7 @@ module.exports = function make_download_registry() {
           })
       })
       .once('close', () => {
-        seneca.context.is_downloading = false
+        seneca.root.context.is_downloading = false
       })
       .once('error', err => {
         /* NOTE: Since the 'close' event is always triggered after the 'error'
@@ -58,7 +58,7 @@ module.exports = function make_download_registry() {
          * to false.
          */
 
-        seneca.log.error(err)
+        seneca.log.error(err.message)
       })
 
 
