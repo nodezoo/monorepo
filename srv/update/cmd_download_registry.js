@@ -36,10 +36,27 @@ module.exports = function make_download_registry() {
             return
           }
 
-          const { id: pkg_id } = pkg_data
+
+          const { id: pkg_id, doc } = pkg_data
+
+          const {
+            'dist-tags': { latest: pkg_version },
+            readmeFilename: pkg_readme,
+            description: pkg_desc
+          } = doc
+
+          const pkg_giturl = doc.repository && 'git' === doc.repository.type
+            ? doc.repository.url
+            : null
 
           return seneca.make('nodezoo', 'npm')
-            .data$({ name: pkg_id })
+            .data$({
+              name: pkg_id,
+              version: pkg_version,
+              giturl: pkg_giturl,
+              desc: pkg_desc,
+              readme: pkg_readme
+            })
             .save$(err => {
               if (err) {
                 seneca.log.error(err.message)
