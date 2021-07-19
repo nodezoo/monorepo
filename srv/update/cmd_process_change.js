@@ -28,6 +28,13 @@ module.exports = function make_process_change() {
         }
 
 
+        /* NOTE: For more information on why we do this kind of checking,
+         * please see:
+         *
+         * https://github.com/npm/registry/blob/master/docs/follower.md#clean-up
+         *
+         * - the part on "design docs".
+         */
         const is_pkg_change = null != change.doc.name
 
         if (is_pkg_change) {
