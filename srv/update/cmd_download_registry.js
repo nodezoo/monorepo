@@ -14,7 +14,7 @@ module.exports = function make_download_registry() {
         }
       }
 
-      const response = await Axios.get('https://replicate.npmjs.com/_all_docs', {
+      const response = await Axios.get('https://replicate.npmjs.com/_all_docs?include_docs=true', {
         responseType: 'stream'
       })
 
