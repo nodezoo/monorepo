@@ -1,6 +1,6 @@
 
-module.exports = function make_stop_following_registry() {
-  return async function stop_following_registry(msg) {
+module.exports = function make_stop_follow() {
+  return async function stop_follow(msg) {
     const seneca = this
 
     const { feed } = seneca.root.context

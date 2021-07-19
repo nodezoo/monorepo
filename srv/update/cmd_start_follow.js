@@ -4,8 +4,8 @@ const Seneca = require('seneca')
 const NPM_URL = 'https://replicate.npmjs.com'
 
 
-module.exports = function make_follow_registry() {
-  return async function follow_registry(msg) {
+module.exports = function make_start_follow() {
+  return async function start_follow(msg) {
     const seneca = this
 
     if (seneca.root.context.feed) {

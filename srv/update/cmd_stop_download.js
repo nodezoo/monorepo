@@ -1,6 +1,6 @@
 
-module.exports = function make_stop_registry_download() {
-  return async function stop_registry_download(msg) {
+module.exports = function make_stop_download() {
+  return async function stop_download(msg) {
     const seneca = this
 
     const { is_downloading } = seneca.root.context

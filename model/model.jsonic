@@ -47,6 +47,10 @@ main: ent: nodezoo: npm: {
   original_doc: type: S
 }
 
+main: ent: nodezoo: orig: {
+  name: type: S
+}
+
 
 
 
@@ -112,19 +116,13 @@ main: srv: search: {
 main: srv: update: {
   msg: {
     'role:update,cmd:start_download': {}
-    #'role:update,cmd:stop,task:download': {}
+    'role:update,cmd:stop_download': {}
+    'role:update,cmd:start_follow': {}
+    'role:update,cmd:stop_follow': {}
+    'role:update,cmd:process_change': {}
+
     #'role:update,cmd:start,task:ingest': {}
     #'role:update,cmd:stop,task:ingest': {}
-    #'role:update,cmd:start,task:follow': {}
-    #'role:update,cmd:stop,task:follow': {}
-    
-
-    # refactor to above msgs
-    'role:update,cmd:download_registry': {},
-    'role:update,cmd:stop_registry_download': {},
-    'role:update,cmd:follow_registry': {},
-    'role:update,cmd:stop_following_registry': {},
-    'role:update,cmd:process_change': {},
   }
 }
 
