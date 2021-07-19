@@ -26,6 +26,17 @@
           "role:info,test:true": {}
         }
       },
+      "update": {
+        "msg": {
+          "role:update,cmd:download_registry": {},
+          "role:update,cmd:stop_registry_download": {},
+          "role:update,cmd:follow_registry": {},
+          "role:update,cmd:stop_following_registry": {},
+          "role:update,cmd:process_change": {},
+          "role:update,cmd:start": {},
+          "role:update,cmd:stop": {}
+        }
+      },
       "npm": {
         "msg": {
           "role:info,need:part": {
@@ -46,16 +57,7 @@
       },
       "search": {
         "msg": {
-          "role:info,collect:part": {
-            "async": true
-          },
           "role:search,search:query": {}
-        }
-      },
-      "update": {
-        "msg": {
-          "role:update,cmd:start": {},
-          "role:update,cmd:stop": {}
         }
       }
     },
@@ -103,6 +105,9 @@
             "type": "S"
           },
           "readme": {
+            "type": "S"
+          },
+          "original_doc": {
             "type": "S"
           }
         }

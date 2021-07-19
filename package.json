@@ -4,12 +4,12 @@
   "description": "Nodezoo system monorepo.",
   "main": "index.js",
   "scripts": {
+    "start-dev": "node local/dev.js",
     "test": "echo no-test",
     "model": "voxgig-model model/model.jsonic",
     "clean": "rm -rf node_modules package-lock.json yarn.lock",
     "build": "echo no-build",
-    "reset": "npm run clean && npm i && npm run build && npm run test",
-    "local": "node ./local/dev.js"
+    "reset": "npm run clean && npm i && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -23,8 +23,8 @@
   "homepage": "https://github.com/nodezoo/monorepo#readme",
   "devDependencies": {
     "@voxgig/model": "voxgig/model",
-    "jsonic": "jsonicjs/jsonic#4edd639987b75ef62a74e3904fb890f59d21379c",
     "aws-sdk": "^2.943.0",
+    "jsonic": "jsonicjs/jsonic#4edd639987b75ef62a74e3904fb890f59d21379c",
     "seneca-msg-test": "^3.2.0",
     "seneca-repl": "^1.2.0"
   },
@@ -34,7 +34,9 @@
     "@seneca/dynamo-store": "^0.6.0",
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
+    "axios": "0.21.1",
     "changes-stream": "2.2.0",
+    "JSONStream": "1.3.5",
     "seneca": "^3.23.3",
     "seneca-entity": "^14.0.0",
     "seneca-promisify": "^2.0.0"

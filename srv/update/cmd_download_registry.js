@@ -1,0 +1,100 @@
+const Axios = require('axios')
+const JsonStream = require('JSONStream')
+const Qs = require('querystring')
+const Lib = require('../../lib/update')
+
+
+module.exports = function make_download_registry() {
+  return async function download_registry(msg) {
+    const seneca = this
+
+    try {
+      if (seneca.root.context.is_downloading) {
+        return {
+          ok: false,
+          why: 'The download is already in progress.'
+        }
+      }
+
+
+      const q = { include_docs: true }
+
+      if (null != msg.limit && Number.isFinite(Number(msg.limit))) {
+        q.limit = msg.limit
+      } else if (!msg.all) {
+        return {
+          ok: false,
+          why: 'This is going to be a huge download - to confirm please' +
+            ' include the `all: true` option. Alternatively, you may pass' +
+            ' the numeric `limit` option.'
+        }
+      }
+
+      const response = await Axios.get(make_registry_url(q), {
+        responseType: 'stream'
+      })
+
+
+      seneca.root.context.is_downloading = true
+
+      response.data
+        .pipe(JsonStream.parse(['rows', true]))
+        .on('data', pkg_data => {
+          if (!seneca.root.context.is_downloading) {
+            /* NOTE: If a download has been aborted, this code will be called
+             * multiple times per response. That's okay, the #destroy() method
+             * becomes a no-op after the first call - it's not like double
+             * "free"-ing of a pointer in C.
+             */
+
+            response.data.destroy()
+
+            return
+          }
+
+
+          return seneca.make('nodezoo', 'npm')
+            .data$(Lib.entdata_of_npm_data(pkg_data))
+            .save$(err => {
+              if (err) {
+                seneca.log.error(err.message)
+                return
+              }
+
+              return
+            })
+        })
+        .once('close', () => {
+          seneca.root.context.is_downloading = false
+        })
+        .once('error', err => {
+          /* NOTE: Since the 'close' event is always triggered after the 'error'
+           * event (or at least that's the way it's supposed to be) - we leave it
+           * up to the handler of the 'close' event to set the `is_downloading` flag
+           * to false.
+           */
+
+          seneca.log.error(err.message)
+        })
+
+
+      return {
+        ok: true,
+        data: { message: 'Downloading...' }
+      }
+    } catch (err) {
+      seneca.log.error(err.message)
+
+      seneca.root.context.is_downloading = false
+
+      return {
+        ok: false,
+        why: 'Something went wrong. Please check the logs for more information.'
+      }
+    }
+  }
+
+  function make_registry_url(q = {}) {
+    return 'https://replicate.npmjs.com/_all_docs?' + Qs.stringify(q)
+  }
+}
