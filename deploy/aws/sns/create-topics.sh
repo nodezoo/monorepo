@@ -1,7 +1,6 @@
 aws sns create-topic --name nodezoo_collect_part_role_info
 aws sns create-topic --name nodezoo_get_info_role_info
 aws sns create-topic --name nodezoo_role_info_test_true
-aws sns create-topic --name nodezoo_cmd_ping_role_update
 aws sns create-topic --name nodezoo_cmd_download_registry_role_update
 aws sns create-topic --name nodezoo_cmd_stop_registry_download_role_update
 aws sns create-topic --name nodezoo_cmd_follow_registry_role_update
