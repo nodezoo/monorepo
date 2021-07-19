@@ -18,21 +18,13 @@
       "info": {
         "msg": {
           "role:info,collect:part": {
-            "async": true
+            "async": true,
+            "filename": "collect.js"
           },
           "role:info,get:info": {
             "params": {}
           },
           "role:info,test:true": {}
-        }
-      },
-      "update": {
-        "msg": {
-          "role:update,cmd:process_change": {},
-          "role:update,cmd:start_download": {},
-          "role:update,cmd:stop_download": {},
-          "role:update,cmd:start_follow": {},
-          "role:update,cmd:stop_follow": {}
         }
       },
       "npm": {
@@ -56,6 +48,15 @@
       "search": {
         "msg": {
           "role:search,search:query": {}
+        }
+      },
+      "update": {
+        "msg": {
+          "role:update,cmd:start_download": {},
+          "role:update,cmd:stop_download": {},
+          "role:update,cmd:start_follow": {},
+          "role:update,cmd:stop_follow": {},
+          "role:update,cmd:process_change": {}
         }
       }
     },

@@ -1,24 +1,23 @@
 
-// TODO: replace with Axios
-var Wreck = require('@hapi/wreck')
+const Axios = require('axios')
 
 
-module.exports = function make_pull_package({options}) {
+module.exports = function make_pull_package({ options }) {
   return async function pull_package(msg) {
     const seneca = this
-    const name = msg.name
-    
+
+    const { name } = msg
     const pkgurl = options.registry + name
-    const { res, payload } = await Wreck.get(pkgurl)
 
-    out = { ok:false }
+    const { res, payload } = await Axios.get(pkgurl)
+    const out = { ok: false }
     
-    if( 200 === res.statusCode) {
-      var pkg = JSON.parse(payload.toString())
+    if (200 === res.statusCode) {
+      const pkg = JSON.parse(payload.toString())
 
-      var dist_tags  = pkg['dist-tags'] || {}
-      var latest     = ((pkg.versions||{})[dist_tags.latest]) || {}
-      var repository = latest.repository || {}
+      const dist_tags  = pkg['dist-tags'] || {}
+      const latest     = ((pkg.versions||{})[dist_tags.latest]) || {}
+      const repository = latest.repository || {}
 
       let npm = seneca.entity('nodezoo/npm')
       npm = await npm.load$(name) || npm.data$({id$:name})

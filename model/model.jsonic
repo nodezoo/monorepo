@@ -69,20 +69,9 @@ main: srv: web: {
 
 main: srv: info: {
   msg: {
-    'role:info,collect:part': { async: true },
+    'role:info,collect:part': { async: true, filename: 'collect.js' },
     'role:info,get:info': {},
     'role:info,test:true': {}
-  }
-}
-
-
-main: srv: update: {
-  msg: {
-    'role:update,cmd:download_registry': {},
-    'role:update,cmd:stop_registry_download': {},
-    'role:update,cmd:follow_registry': {},
-    'role:update,cmd:stop_following_registry': {},
-    'role:update,cmd:process_change': {}
   }
 }
 
