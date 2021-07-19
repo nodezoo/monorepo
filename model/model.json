@@ -28,10 +28,6 @@
       },
       "update": {
         "msg": {
-          "role:update,cmd:download_registry": {},
-          "role:update,cmd:stop_registry_download": {},
-          "role:update,cmd:follow_registry": {},
-          "role:update,cmd:stop_following_registry": {},
           "role:update,cmd:process_change": {},
           "role:update,cmd:start_download": {},
           "role:update,cmd:stop_download": {},
@@ -110,6 +106,11 @@
             "type": "S"
           },
           "original_doc": {
+            "type": "S"
+          }
+        },
+        "orig": {
+          "name": {
             "type": "S"
           }
         }

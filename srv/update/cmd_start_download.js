@@ -16,7 +16,6 @@
 const Axios = require('axios')
 const JsonStream = require('JSONStream')
 const Qs = require('querystring')
-const Lib = require('../../lib/update')
 
 
 module.exports = function make_start_download() {
@@ -54,14 +53,15 @@ module.exports = function make_start_download() {
       console.log('Download state', download.state) // 'running' | 'stopped'
       download.start()
       */
-      
-      
-      const response = await Axios.get(make_registry_url(q), {
+
+
+      const response = await Axios.get(make_npm_registry_url(q), {
         responseType: 'stream'
       })
 
 
-      // TODO: maybe use Axios events?
+      /* QUESTION: Maybe use Axios events?
+       */
       seneca.root.context.is_downloading = true
 
       response.data
@@ -118,12 +118,12 @@ module.exports = function make_start_download() {
 
       return {
         ok: false,
-        why: 'Something went wrong. Please check the logs for more information.'
+        why: 'server_error'
       }
     }
   }
 
-  function make_registry_url(q = {}) {
+  function make_npm_registry_url(q = {}) {
     return 'https://replicate.npmjs.com/_all_docs?' + Qs.stringify(q)
   }
 }

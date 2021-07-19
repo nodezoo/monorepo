@@ -1,5 +1,4 @@
 const Seneca = require('seneca')
-const Lib = require('../../lib/update')
 
 
 module.exports = function make_process_change() {
@@ -38,12 +37,14 @@ module.exports = function make_process_change() {
         const is_pkg_change = null != change.doc.name
 
         if (is_pkg_change) {
+          const { id: pkg_name } = pkg_data
+
           
           // TODO: emit need:part
 
           // TODO: remove as npm srv will do this
           return seneca.make('nodezoo', 'npm')
-            .data$(Lib.entdata_of_npm_data(change))
+            .data$({ name: pkg_name })
             .save$({ upsert$: ['name'] }, (err) => {
               if (err) {
                 seneca.log.error(err.message)
