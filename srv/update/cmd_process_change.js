@@ -38,8 +38,7 @@ module.exports = function make_process_change() {
       if (is_pkg_change) {
         const { id: pkg_name } = pkg_data
 
-        // TODO:
-        //await seneca.post('???,need:part', { name: pkg_name })
+        await seneca.post('role:info,need:part', { name: pkg_name })
 
         return { ok: true }
       }
