@@ -33,8 +33,7 @@
           "role:update,cmd:follow_registry": {},
           "role:update,cmd:stop_following_registry": {},
           "role:update,cmd:process_change": {},
-          "role:update,cmd:start": {},
-          "role:update,cmd:stop": {}
+          "role:update,cmd:start_download": {}
         }
       },
       "npm": {

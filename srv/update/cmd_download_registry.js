@@ -1,3 +1,16 @@
+
+
+// PROCESSING APPROACH
+//
+// step 1: download all the data, or continue downloading... as below
+//           can we pause and restart the download? from certain points?
+//           maybe we should just download the ids?
+// step 2: separate "process" (ie. action), collect all the meta data, from github
+//           for everything nodezoo/orig
+//           use need:part to get actual data
+//           pause and restartable - how do you track it (nodezoo/orig timestamp?)
+//           we can assume there is only one list of all the packages (from step 1)
+
 const Axios = require('axios')
 const JsonStream = require('JSONStream')
 const Qs = require('querystring')
@@ -5,10 +18,15 @@ const Lib = require('../../lib/update')
 
 
 module.exports = function make_download_registry() {
+
+  // Create download object etc.
+
   return async function download_registry(msg) {
     const seneca = this
 
     try {
+      // TODO: make this idempotent
+      // it's not an error to start downloading if already downloading
       if (seneca.root.context.is_downloading) {
         return {
           ok: false,
@@ -16,25 +34,38 @@ module.exports = function make_download_registry() {
         }
       }
 
-
       const q = { include_docs: true }
 
+      // TODO: validation will be done by seneca-joi (or similar) and specific in model
+      // thus no need to do this here.
       if (null != msg.limit && Number.isFinite(Number(msg.limit))) {
         q.limit = msg.limit
       } else if (!msg.all) {
         return {
           ok: false,
+
+          // TODO: make this a code instead
           why: 'This is going to be a huge download - to confirm please' +
             ' include the `all: true` option. Alternatively, you may pass' +
             ' the numeric `limit` option.'
         }
       }
 
+      // TODO: put all the Axios stuff into a separate utility
+      // reference from seneca.root.context
+      /*
+      const download = seneca.root.context.download
+      console.log('Download state', download.state) // 'running' | 'stopped'
+      download.start()
+      */
+      
+      
       const response = await Axios.get(make_registry_url(q), {
         responseType: 'stream'
       })
 
 
+      // TODO: maybe use Axios events?
       seneca.root.context.is_downloading = true
 
       response.data
@@ -52,7 +83,7 @@ module.exports = function make_download_registry() {
             return
           }
 
-
+          // TODO: save to nodezoo/orig
           return seneca.make('nodezoo', 'npm')
             .data$(Lib.entdata_of_npm_data(pkg_data))
             .save$(err => {

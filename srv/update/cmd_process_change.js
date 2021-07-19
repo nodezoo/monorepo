@@ -38,6 +38,10 @@ module.exports = function make_process_change() {
         const is_pkg_change = null != change.doc.name
 
         if (is_pkg_change) {
+          
+          // TODO: emit need:part
+
+          // TODO: remove as npm srv will do this
           return seneca.make('nodezoo', 'npm')
             .data$(Lib.entdata_of_npm_data(change))
             .save$({ upsert$: ['name'] }, (err) => {

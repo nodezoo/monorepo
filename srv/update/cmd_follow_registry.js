@@ -12,6 +12,7 @@ module.exports = function make_follow_registry() {
       return { ok: false, why: 'The registry is already being followed.' }
     }
 
+    // TODO: same idea as download - separate util in lib
     seneca.root.context.feed = new ChangesStream({
       db: NPM_URL,
       since: 'now',
