@@ -113,6 +113,8 @@ main: srv: update: {
   msg: {
     'role:update,cmd:start_download': {}
     #'role:update,cmd:stop,task:download': {}
+    #'role:update,cmd:start,task:ingest': {}
+    #'role:update,cmd:stop,task:ingest': {}
     #'role:update,cmd:start,task:follow': {}
     #'role:update,cmd:stop,task:follow': {}
     

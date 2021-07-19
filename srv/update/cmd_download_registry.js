@@ -3,9 +3,11 @@
 // PROCESSING APPROACH
 //
 // step 1: download all the data, or continue downloading... as below
+//           "download"
 //           can we pause and restart the download? from certain points?
 //           maybe we should just download the ids?
 // step 2: separate "process" (ie. action), collect all the meta data, from github
+//           "ingest"
 //           for everything nodezoo/orig
 //           use need:part to get actual data
 //           pause and restartable - how do you track it (nodezoo/orig timestamp?)
