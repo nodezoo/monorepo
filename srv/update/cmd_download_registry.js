@@ -1,5 +1,6 @@
 const Axios = require('axios')
 const JsonStream = require('JSONStream')
+const Qs = require('querystring')
 
 
 module.exports = function make_download_registry() {
@@ -14,7 +15,21 @@ module.exports = function make_download_registry() {
         }
       }
 
-      const response = await Axios.get('https://replicate.npmjs.com/_all_docs?include_docs=true', {
+
+      const q = { include_docs: true }
+
+      if (null != msg.limit && Number.isFinite(Number(msg.limit))) {
+        q.limit = msg.limit
+      } else if (!msg.all) {
+        return {
+          ok: false,
+          why: 'This is going to be a huge download - to confirm please' +
+            ' include the `all: true` option. Alternatively, you may pass' +
+            ' the numeric `limit` option.'
+        }
+      }
+
+      const response = await Axios.get(make_registry_url(q), {
         responseType: 'stream'
       })
 
@@ -95,5 +110,9 @@ module.exports = function make_download_registry() {
         why: 'Something went wrong. Please check the logs for more information.'
       }
     }
+  }
+
+  function make_registry_url(q = {}) {
+    return 'https://replicate.npmjs.com/_all_docs?' + Qs.stringify(q)
   }
 }
