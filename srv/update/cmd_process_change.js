@@ -8,8 +8,6 @@ module.exports = function make_process_change() {
 
     const { change } = msg
 
-    console.dir(change, { depth: 32 }) // dbg
-
     if (null == change) {
       /* NOTE: A null-change is just no change. How do we process no change?
        * That's right - we relax and do nothing at all!
