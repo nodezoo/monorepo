@@ -55,7 +55,8 @@ module.exports = function make_download_registry() {
               version: pkg_version,
               giturl: pkg_giturl,
               desc: pkg_desc,
-              readme: pkg_readme
+              readme: pkg_readme,
+              original_doc: JSON.stringify(doc)
             })
             .save$(err => {
               if (err) {
