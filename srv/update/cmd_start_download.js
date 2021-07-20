@@ -19,14 +19,14 @@ const Qs = require('querystring')
 
 
 module.exports = function make_start_download() {
-
-  // Create download object etc.
-
   return async function start_download(msg) {
     const seneca = this
 
+    seneca.root.context.npm_download = seneca.root.context.npm_download ||
+      { in_progress: false }
+
     try {
-      if (seneca.root.context.is_downloading) {
+      if (seneca.root.context.npm_download.in_progress) {
         return {
           ok: true,
           data: {
@@ -62,12 +62,12 @@ module.exports = function make_start_download() {
 
       /* QUESTION: Maybe use Axios events?
        */
-      seneca.root.context.is_downloading = true
+      seneca.root.context.npm_download.in_progress = true
 
       response.data
         .pipe(JsonStream.parse(['rows', true]))
         .on('data', pkg_data => {
-          if (!seneca.root.context.is_downloading) {
+          if (!seneca.root.context.npm_download.in_progress) {
             /* NOTE: If a download has been aborted, this code will be called
              * multiple times per response. That's okay, the #destroy() method
              * becomes a no-op after the first call - it won't crash like it
@@ -94,12 +94,12 @@ module.exports = function make_start_download() {
             })
         })
         .once('close', () => {
-          seneca.root.context.is_downloading = false
+          seneca.root.context.npm_download.in_progress = false
         })
         .once('error', err => {
           /* NOTE: Since the 'close' event is always triggered after the 'error'
            * event (or at least that's the way it's supposed to be) - we leave it
-           * up to the handler of the 'close' event to set the `is_downloading` flag
+           * up to the handler of the 'close' event to set the `in_progress` flag
            * to false.
            */
 
@@ -114,7 +114,7 @@ module.exports = function make_start_download() {
     } catch (err) {
       seneca.log.error(err.message)
 
-      seneca.root.context.is_downloading = false
+      seneca.root.context.npm_download.in_progress = false
 
       return {
         ok: false,

@@ -3,10 +3,13 @@ module.exports = function make_stop_download() {
   return async function stop_download(msg) {
     const seneca = this
 
-    const { is_downloading } = seneca.root.context
-    seneca.root.context.is_downloading = false
+    seneca.root.context.npm_download = seneca.root.context.npm_download ||
+      { in_progress: false }
 
-    if (is_downloading) {
+    const { in_progress } = seneca.root.context.npm_download
+    seneca.root.context.npm_download.in_progress = false
+
+    if (in_progress) {
       return { ok: true, data: { message: 'Stopping the download...' } }
     }
 

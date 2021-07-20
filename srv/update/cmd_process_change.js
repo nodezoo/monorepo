@@ -2,7 +2,7 @@ const Seneca = require('seneca')
 
 
 module.exports = function make_process_change() {
-  return function process_change(msg) {
+  return async function process_change(msg) {
     const seneca = this
 
     try {
