@@ -37,9 +37,6 @@
       },
       "github": {
         "msg": {
-          "role:info,need:part": {
-            "async": true
-          },
           "role:source,source:github,get:package": {},
           "role:source,source:github,pull:package": {}
         }
@@ -55,7 +52,8 @@
           "role:update,cmd:stop_download": {},
           "role:update,cmd:start_follow": {},
           "role:update,cmd:stop_follow": {},
-          "role:update,cmd:process_change": {}
+          "role:update,cmd:process_change": {},
+          "role:update,cmd:reify": {}
         }
       }
     },

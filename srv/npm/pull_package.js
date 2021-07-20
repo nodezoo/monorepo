@@ -7,13 +7,13 @@ module.exports = function make_pull_package({ options }) {
     const seneca = this
 
     const { name } = msg
-    const pkgurl = options.registry + name
+    const pkgurl = options.registry + encodeURIComponent(name)
 
-    const { res, payload } = await Axios.get(pkgurl)
+    const response = await Axios.get(pkgurl)
     const out = { ok: false }
-    
-    if (200 === res.statusCode) {
-      const pkg = JSON.parse(payload.toString())
+
+    if (200 === response.status) {
+      const pkg = response.data
 
       const dist_tags  = pkg['dist-tags'] || {}
       const latest     = ((pkg.versions||{})[dist_tags.latest]) || {}

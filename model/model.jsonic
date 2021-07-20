@@ -86,7 +86,7 @@ main: srv: npm: {
 
 main: srv: github: {
   msg: {
-    'role:info,need:part': { async: true }
+    #'role:info,need:part': { async: true }
     'role:source,source:github,get:package': {}
     'role:source,source:github,pull:package': {}
   }
@@ -108,9 +108,8 @@ main: srv: update: {
     'role:update,cmd:start_follow': {}
     'role:update,cmd:stop_follow': {}
     'role:update,cmd:process_change': {}
-
-    #'role:update,cmd:start,task:ingest': {}
-    #'role:update,cmd:stop,task:ingest': {}
+    'role:update,cmd:reify': {}
+    #'role:update,cmd:stop_reify': {}
   }
 }
 

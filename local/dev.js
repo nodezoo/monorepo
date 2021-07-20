@@ -1,9 +1,8 @@
-
 const Seneca = require('seneca')
 const Model = require('../model/model.json')
 
 
-const seneca = Seneca({log:'none'})
+const seneca = Seneca({ log: 'flat' })
 seneca.context.model = Model
 
 seneca
