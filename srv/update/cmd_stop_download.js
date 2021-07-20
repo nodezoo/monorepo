@@ -4,7 +4,7 @@ const NpmDownload = require('./lib/download')
 module.exports = function make_stop_download() {
   return async function stop_download(msg) {
     const seneca = this
-    const stopped = await NpmDownload.terminate()
+    const stopped = NpmDownload.terminate()
 
     if (stopped) {
       return {
