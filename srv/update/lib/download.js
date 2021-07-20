@@ -4,12 +4,13 @@ const Qs = require('querystring')
 
 
 class NpmDownload {
-  constructor() {
+  constructor(seneca) {
+    this.seneca = seneca
     this.response = null
     this.is_downloading = false
   }
 
-  async start(q, listener) {
+  async start(q) {
     const self = this
 
     if (self.is_downloading) {
@@ -37,7 +38,12 @@ class NpmDownload {
           return
         }
 
-        listener.emit('data', pkg_data)
+        const { id: pkg_name } = pkg_data
+
+        await self.seneca.make('nodezoo', 'orig')
+          .data$({ name: pkg_name })
+          .save$()
+          .catch(err => self.seneca.log.error(err.message))
 
         return
       })
@@ -50,7 +56,7 @@ class NpmDownload {
          * up to the handler of the 'close' event to reset the download's state.
          */
 
-        listener.emit('error', err)
+        self.seneca.log.error(err.message)
 
         return
       })
@@ -58,7 +64,7 @@ class NpmDownload {
     return true
   }
 
-  terminate() {
+  stop() {
     if (!this.is_downloading) {
       return false
     }
@@ -75,4 +81,4 @@ function make_npm_registry_url(q = {}) {
 }
 
 
-module.exports = new NpmDownload()
+module.exports = NpmDownload

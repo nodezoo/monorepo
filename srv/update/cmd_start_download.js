@@ -21,6 +21,10 @@ module.exports = function make_start_download() {
   return async function start_download(msg) {
     const seneca = this
 
+    seneca.root.context.npm_download =
+      seneca.root.context.npm_download || new NpmDownload(seneca)
+
+
     const q = { include_docs: false }
 
     if (null != msg.limit) {
@@ -32,26 +36,9 @@ module.exports = function make_start_download() {
       }
     }
 
-    // TODO: put all the Axios stuff into a separate utility
-    // reference from seneca.root.context
-    /*
-    const download = seneca.root.context.download
-    console.log('Download state', download.state) // 'running' | 'stopped'
-    download.start()
-    */
 
-    const listener = new EventEmitter()
-      .on('data', async (pkg_data) => {
-        const { id: pkg_name } = pkg_data
-
-        await seneca.make('nodezoo', 'orig')
-          .data$({ name: pkg_name })
-          .save$()
-          .catch(err => seneca.log.error(err.message))
-      })
-      .on('error', err => seneca.log.error(err.message))
-
-    const started = await NpmDownload.start(q, listener)
+    const started = await seneca.root.context
+      .npm_download.start(q)
 
     if (!started) {
       return {
