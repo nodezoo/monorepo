@@ -104,9 +104,6 @@
           },
           "readme": {
             "type": "S"
-          },
-          "original_doc": {
-            "type": "S"
           }
         },
         "orig": {

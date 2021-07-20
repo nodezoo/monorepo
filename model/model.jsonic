@@ -44,7 +44,6 @@ main: ent: nodezoo: npm: {
   giturl: type: S
   desc: type: S
   readme: type: S
-  original_doc: type: S
 }
 
 main: ent: nodezoo: orig: {
