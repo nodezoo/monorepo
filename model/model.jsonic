@@ -69,7 +69,7 @@ main: srv: web: {
 
 main: srv: info: {
   msg: {
-    'role:info,collect:part': { async: true, filename: 'collect.js' },
+    'role:info,collect:part': { async: true },
     'role:info,get:info': {},
     'role:info,test:true': {}
   }

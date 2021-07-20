@@ -18,8 +18,7 @@
       "info": {
         "msg": {
           "role:info,collect:part": {
-            "async": true,
-            "filename": "collect.js"
+            "async": true
           },
           "role:info,get:info": {
             "params": {}
