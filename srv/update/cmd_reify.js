@@ -7,7 +7,18 @@ module.exports = function make_reify() {
       .list$({ reified_at: null, fields$: ['name'] })
 
     const requests = pkgs.map(async (pkg) => {
-      await seneca.post('role:info,need:part', { name: pkg.name })
+      const res = await seneca.post('role:info,need:part', {
+        name: pkg.name
+      })
+
+      if (!res.ok) {
+        /* NOTE: If the reification action for this particular package has
+         * failed for some reason, we do not want to mark its corresponding
+         * nodezoo/orig entity as "reified".
+         */
+
+        return
+      }
 
       await pkg
         .data$({

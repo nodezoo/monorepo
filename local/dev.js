@@ -10,6 +10,7 @@ seneca
   .error(console.log)
   .use('promisify')
   .use('entity')
+  .use('mem-store')
   .use('repl')
   .use('reload')
 

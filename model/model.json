@@ -28,9 +28,7 @@
       },
       "npm": {
         "msg": {
-          "role:info,need:part": {
-            "async": true
-          },
+          "role:info,need:part": {},
           "role:source,source:npm,get:package": {},
           "role:source,source:npm,pull:package": {}
         }
