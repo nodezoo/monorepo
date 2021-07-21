@@ -48,6 +48,7 @@ main: ent: nodezoo: npm: {
 
 main: ent: nodezoo: orig: {
   name: type: S
+  reified_at: type: S
 }
 
 

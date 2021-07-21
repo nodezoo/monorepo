@@ -40,9 +40,13 @@ class NpmDownload {
 
         const { id: pkg_name } = pkg_data
 
+        /* NOTE: Setting reified_at to null, coupled with the upsert on the
+         * `name` field, will cause the package to be re-reified when the
+         * reification action is requested after the download process is done.
+         */
         await self.seneca.make('nodezoo', 'orig')
-          .data$({ name: pkg_name })
-          .save$()
+          .data$({ name: pkg_name, reified_at: null })
+          .save$({ upsert$: ['name'] })
           .catch(err => self.seneca.log.error(err.message))
 
         return

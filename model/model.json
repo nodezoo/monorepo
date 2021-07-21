@@ -107,6 +107,9 @@
         "orig": {
           "name": {
             "type": "S"
+          },
+          "reified_at": {
+            "type": "S"
           }
         }
       }
