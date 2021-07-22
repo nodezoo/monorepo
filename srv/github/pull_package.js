@@ -1,5 +1,5 @@
-
 const { Octokit } = require("@octokit/rest")
+const { sleep } = require('../../lib/shared')
 
 
 module.exports = function make_pull_package() {
@@ -27,9 +27,9 @@ module.exports = function make_pull_package() {
       owner = m[1]
       repo = m[2]
     }
-    
+
     const pkg = await octokit.repos.get({ owner, repo })
-          
+
     out = { ok:true }
     
     let github = seneca.entity('nodezoo/github')
@@ -56,7 +56,11 @@ module.exports = function make_pull_package() {
 
     // Might be new, wait for npm pull
     if(null == npment) {
-      await new Promise((r)=>setTimeout(r,555))
+      /* QUESTION: Can we put the repository url in nodezoo/orig instead of
+       * adding a dependency on time here?
+       */
+      await sleep(2e3)
+
       npment = await seneca.entity('nodezoo/npm').load$(name)
     }
 
