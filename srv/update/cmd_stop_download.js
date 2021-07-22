@@ -11,17 +11,11 @@ module.exports = function make_stop_download() {
 
     const stopped = seneca.root.context.npm_download.stop()
 
-    if (stopped) {
-      return {
-        ok: true,
-        data: { message: 'Stopping the download...' }
-      }
-    }
 
+    const message = stopped
+      ? 'Stopping the download...'
+      : 'No download is currently in progress.'
 
-    return {
-      ok: true,
-      data: { message: 'No download is currently in progress.' }
-    }
+    return { ok: true, data: { message } }
   }
 }

@@ -40,16 +40,11 @@ module.exports = function make_start_download() {
     const started = await seneca.root.context
       .npm_download.start(q)
 
-    if (!started) {
-      return {
-        ok: true,
-        data: { message: 'The download is already in progress.' }
-      }
-    }
 
-    return {
-      ok: true,
-      data: { message: 'Downloading...' }
-    }
+    const message = started
+      ? 'Downloading...'
+      : 'The download is already in progress.'
+
+    return { ok: true, data: { message } }
   }
 }
