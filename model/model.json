@@ -28,13 +28,18 @@
       },
       "npm": {
         "msg": {
-          "role:info,need:part": {},
+          "role:info,need:part": {
+            "async": true
+          },
           "role:source,source:npm,get:package": {},
           "role:source,source:npm,pull:package": {}
         }
       },
       "github": {
         "msg": {
+          "role:info,need:part": {
+            "async": true
+          },
           "role:source,source:github,get:package": {},
           "role:source,source:github,pull:package": {}
         }
@@ -51,7 +56,8 @@
           "role:update,cmd:start_follow": {},
           "role:update,cmd:stop_follow": {},
           "role:update,cmd:process_change": {},
-          "role:update,cmd:reify": {}
+          "role:update,cmd:start_ingest": {},
+          "role:update,cmd:stop_ingest": {}
         }
       }
     },
@@ -106,7 +112,7 @@
           "name": {
             "type": "S"
           },
-          "reified_at": {
+          "ingested_at": {
             "type": "S"
           }
         }

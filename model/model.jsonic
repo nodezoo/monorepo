@@ -48,7 +48,7 @@ main: ent: nodezoo: npm: {
 
 main: ent: nodezoo: orig: {
   name: type: S
-  reified_at: type: S
+  ingested_at: type: S
 }
 
 
@@ -69,8 +69,8 @@ main: srv: web: {
 
 main: srv: info: {
   msg: {
-    'role:info,collect:part': { async: true },
-    'role:info,get:info': {},
+    'role:info,collect:part': { async: true }
+    'role:info,get:info': {}
     'role:info,test:true': {}
   }
 }
@@ -78,7 +78,7 @@ main: srv: info: {
 
 main: srv: npm: {
   msg: {
-    'role:info,need:part': {}
+    'role:info,need:part': { async: true }
     'role:source,source:npm,get:package': {}
     'role:source,source:npm,pull:package': {}
   }
@@ -87,7 +87,7 @@ main: srv: npm: {
 
 main: srv: github: {
   msg: {
-    #'role:info,need:part': { async: false } # TODO
+    'role:info,need:part': { async: true }
     'role:source,source:github,get:package': {}
     'role:source,source:github,pull:package': {}
   }
@@ -109,8 +109,8 @@ main: srv: update: {
     'role:update,cmd:start_follow': {}
     'role:update,cmd:stop_follow': {}
     'role:update,cmd:process_change': {}
-    'role:update,cmd:reify': {}
-    #'role:update,cmd:stop_reify': {}
+    'role:update,cmd:start_ingest': {}
+    'role:update,cmd:stop_ingest': {}
   }
 }
 
