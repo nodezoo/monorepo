@@ -1,3 +1,5 @@
+const Ingest = require('./lib/ingest')
+
 
 module.exports = function make_stop_ingest() {
   return async function stop_ingest(msg) {

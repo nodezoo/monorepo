@@ -25,6 +25,8 @@ class Ingest {
         sleep_ms_between_fetches = 1e3
       } = msg
 
+      const stats = { total_ingested: 0 }
+
 
       let is_first_iteration = true
 
@@ -45,10 +47,10 @@ class Ingest {
         is_first_iteration = false
 
 
-        // TODO: print counters on every iteration
-        //
         const pkgs = await seneca.make('nodezoo', 'orig')
           .list$(pkgs_q)
+
+        seneca.log.info(`Preparing to ingest ${pkgs.length} packages.`)
 
 
         /* NOTE: An astute reader would notice that in case of error, some
@@ -70,6 +72,12 @@ class Ingest {
           seneca.act('role:info,need:part', { name: pkg.name })
           await sleep(sleep_ms_between_fetches)
         }
+
+
+        stats.total_ingested += pkgs.length
+
+        seneca.log.info('Total ingested packages so far: ' +
+          stats.total_ingested)
 
 
         await sleep(sleep_ms_between_iterations)
