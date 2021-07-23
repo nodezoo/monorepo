@@ -20,14 +20,12 @@ module.exports = function make_need_part() {
         data: res.pkg
       })
 
-      return { ok: true }
+      return
     }
 
     const end = Date.now()
     console.log('END', name, end, end - start) // dbg
 
-    // TODO: Specify the error code in the `why` field.
-    //
-    return { ok: false }
+    return
   }
 }
