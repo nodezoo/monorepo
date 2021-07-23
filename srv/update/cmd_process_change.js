@@ -31,7 +31,7 @@ module.exports = function make_process_change() {
      *
      * - the part on "design docs".
      */
-    const { id: pkg_name } = pkg_data
+    const { id: pkg_name } = change
 
     seneca.act('role:info,need:part', { name: pkg_name })
 
