@@ -1,6 +1,5 @@
 const ChangesStream = require('changes-stream')
-
-const NPM_URL = 'https://replicate.npmjs.com'
+const Shared = require('../../../lib/shared')
 
 
 class Follower {
@@ -17,7 +16,7 @@ class Follower {
     }
 
     this.feed = new ChangesStream({
-      db: NPM_URL,
+      db: Shared.NPM_REPLICATE_URL(),
       since: 'now',
 
       /* NOTE: need:part will take care of fetching the data. In the future,

@@ -7,7 +7,7 @@ module.exports = npm
 
 // TODO: move to model
 module.exports.defaults = {
-  registry: 'https://replicate.npmjs.com/',
+  registry: Shared.NPM_REPLICATE_URL() + '/',
 }
 
 

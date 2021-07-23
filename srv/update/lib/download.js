@@ -1,6 +1,7 @@
 const Axios = require('axios')
 const JsonStream = require('JSONStream')
 const Qs = require('querystring')
+const Shared = require('../../../lib/shared')
 
 
 class NpmDownload {
@@ -81,7 +82,7 @@ class NpmDownload {
 
 
 function make_npm_registry_url(q = {}) {
-  return 'https://replicate.npmjs.com/_all_docs?' + Qs.stringify(q)
+  return Shared.NPM_REPLICATE_URL() + '/_all_docs?' + Qs.stringify(q)
 }
 
 
