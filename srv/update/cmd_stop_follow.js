@@ -3,28 +3,16 @@ module.exports = function make_stop_follow() {
   return async function stop_follow(msg) {
     const seneca = this
 
-    const { feed } = seneca.root.context
+    seneca.root.context.feed =
+      seneca.root.context.feed || new Follower(seneca)
 
-    if (feed) {
-      feed.cleanup()
-      feed.destroy()
+    const stopped = seneca.root.context.feed.stop()
 
-      seneca.root.context.feed = null
+    const message = stopped
+      ? 'The feed has been stopped'
+      : 'The feed was not running'
 
-      return {
-        ok: true,
-        data: {
-          message: 'Stopping...'
-        }
-      }
-    }
-
-    return {
-      ok: true,
-      data: {
-        message: 'I will succeed, although the registry was not being followed.'
-      }
-    }
+    return { ok: true, data: { message } }
   }
 }
 

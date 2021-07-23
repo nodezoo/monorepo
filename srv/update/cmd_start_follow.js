@@ -1,45 +1,23 @@
-const ChangesStream = require('changes-stream')
-const Seneca = require('seneca')
-
-const NPM_URL = 'https://replicate.npmjs.com'
+const Follower = require('./lib/follower')
 
 
 module.exports = function make_start_follow() {
   return async function start_follow(msg) {
     const seneca = this
 
-    if (seneca.root.context.feed) {
-      return { ok: false, why: 'The registry is already being followed.' }
-    }
+    seneca.root.context.feed =
+      seneca.root.context.feed || new Follower(seneca)
 
-    // TODO: same idea as download - separate util in lib
-    seneca.root.context.feed = new ChangesStream({
-      db: NPM_URL,
-      since: 'now',
-      include_docs: true
-    })
 
-    seneca.root.context.feed.on('data', change => {
-      return seneca.act(
-        'role:update,cmd:process_change',
+    const started = await seneca.root.context
+      .feed.start()
 
-        { change },
 
-        function (err) {
-          if (err) {
-            seneca.log.error(err.message)
-            return
-          }
+    const message = started
+      ? 'Following the registry...'
+      : 'The registry is already being followed.'
 
-          return
-        }
-      )
-    })
-
-    return {
-      ok: true,
-      data: { message: 'Following the registry...' }
-    }
+    return { ok: true, data: { message } }
   }
 }
 
