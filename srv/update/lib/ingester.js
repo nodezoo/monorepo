@@ -1,9 +1,11 @@
+const Assert = require('assert')
 const { sleep } = require('../../../lib/shared')
 
 
-class Ingest {
-  constructor(seneca) {
+class Ingester {
+  constructor(seneca, options) {
     this.seneca = seneca
+    this.options = options
     this.is_ingesting = false
   }
 
@@ -20,10 +22,28 @@ class Ingest {
 
 
     setImmediate(async () => {
+      Assert(null != self.options, 'options')
+      Assert(null != self.options.ingester, 'options.ingester')
+
+
+      const default_sleep_ms_between_iterations = self.options
+        .ingester.sleep_ms_between_iterations
+
+      Assert(null != default_sleep_ms_between_iterations,
+        'options.sleep_ms_between_iterations')
+
+
+      const default_sleep_ms_between_fetches = self.options
+        .ingester.sleep_ms_between_fetches
+
+      Assert(null != default_sleep_ms_between_fetches,
+        'options.sleep_ms_between_fetches')
+
+
       const {
-        sleep_ms_between_iterations = 5e3,
-        sleep_ms_between_fetches = 1e3
-      } = msg
+        sleep_ms_between_iterations = default_sleep_ms_between_iterations,
+        sleep_ms_between_fetches = default_sleep_ms_between_fetches
+      } = msg 
 
       const stats = { total_ingested: 0 }
 
@@ -99,4 +119,4 @@ class Ingest {
   }
 }
 
-module.exports = Ingest
+module.exports = Ingester

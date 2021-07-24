@@ -17,12 +17,19 @@ const { EventEmitter } = require('events')
 const NpmDownload = require('./lib/download')
 
 
-module.exports = function make_start_download() {
+module.exports = function make_start_download(options_wrapper) {
+  /*
+   * QUESTION: Why are the plugin options nested inside an object?
+   * E.g. `{ options }` vs `options`
+   */
+  const { options } = options_wrapper
+
+
   return async function start_download(msg) {
     const seneca = this
 
     seneca.root.context.npm_download =
-      seneca.root.context.npm_download || new NpmDownload(seneca)
+      seneca.root.context.npm_download || new NpmDownload(seneca, options)
 
 
     const q = { include_docs: false }

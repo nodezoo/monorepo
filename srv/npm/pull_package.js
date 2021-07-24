@@ -1,16 +1,29 @@
-
+const Assert = require('assert')
 const Axios = require('axios')
 
 
-module.exports = function make_pull_package({ options }) {
+module.exports = function make_pull_package(options_wrapper) {
+  Assert(null != options_wrapper.options, 'options_wrapper.options')
+  const { options } = options_wrapper
+
+
   return async function pull_package(msg) {
     const seneca = this
 
+
+    Assert(null != msg.name, 'msg.name')
     const { name } = msg
-    const pkgurl = options.registry + encodeURIComponent(name)
+
+
+    Assert(null != options.npm_registry_url,
+      'options.npm_registry_url')
+
+    const pkgurl = options.npm_registry_url + '/' + encodeURIComponent(name)
+
 
     const response = await Axios.get(pkgurl)
     const out = { ok: false }
+
 
     if (200 === response.status) {
       const pkg = response.data

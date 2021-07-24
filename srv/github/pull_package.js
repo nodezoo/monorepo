@@ -1,20 +1,29 @@
+const Assert = require('assert')
 const { Octokit } = require("@octokit/rest")
 const { sleep } = require('../../lib/shared')
 
 
-module.exports = function make_pull_package() {
+module.exports = function make_pull_package(options_wrapper) {
+  /*
+   * QUESTION: Why are the plugin options nested inside an object?
+   * E.g. `{ options }` vs `options`
+   */
+  const { options } = options_wrapper
   const octokit = new Octokit()
   
   return async function pull_package(msg) {
     const seneca = this
-    const name = msg.name
 
-    let owner = msg.owner
-    let repo = msg.repo
+    Assert(null != msg.name, 'msg.name')
+    const { name } = msg
+
+
+    let owner = msg.owner || null
+    let repo = msg.repo || null
 
     // role:info,need:part only has name
     if(null == owner) {
-      let giturl = await get_giturl(seneca, name)
+      let giturl = await get_giturl(seneca, name, options)
       if('' == giturl) {
         return {ok:false,why:'no-giturl',name}
       }
@@ -49,21 +58,26 @@ module.exports = function make_pull_package() {
 
     return out
   }
+}
 
 
-  async function get_giturl(seneca,name) {
-    let npment = await seneca.entity('nodezoo/npm').load$(name)
+async function get_giturl(seneca, name, options) {
+  let npment = await seneca.entity('nodezoo/npm').load$(name)
 
-    // Might be new, wait for npm pull
-    if(null == npment) {
-      /* QUESTION: Can we put the repository url in nodezoo/orig instead of
-       * adding a dependency on time here?
-       */
-      await sleep(2e3)
+  // Might be new, wait for npm pull
+  if(null == npment) {
+    Assert(null != options.github_srv, 'options.github_srv')
 
-      npment = await seneca.entity('nodezoo/npm').load$(name)
-    }
+    Assert(null != options.github_srv.wait_ms_on_npm,
+      'options.github_srv.wait_ms_on_npm')
 
-    return npment && npment.giturl || ''
+    const { github_srv: { wait_ms_on_npm } } = options
+
+    await sleep(wait_ms_on_npm)
+
+
+    npment = await seneca.entity('nodezoo/npm').load$(name)
   }
+
+  return npment && npment.giturl || ''
 }

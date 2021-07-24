@@ -1,3 +1,4 @@
+const Assert = require('assert')
 const Axios = require('axios')
 const JsonStream = require('JSONStream')
 const Qs = require('querystring')
@@ -5,8 +6,9 @@ const Shared = require('../../../lib/shared')
 
 
 class NpmDownload {
-  constructor(seneca) {
+  constructor(seneca, options) {
     this.seneca = seneca
+    this.options = options
     this.response = null
     this.is_downloading = false
   }
@@ -18,9 +20,8 @@ class NpmDownload {
       return false
     }
 
-    self.response = await Axios.get(make_npm_registry_url(q), {
-      responseType: 'stream'
-    })
+    const url = make_npm_registry_url(q, self.options)
+    self.response = await Axios.get(url, { responseType: 'stream' })
 
     self.is_downloading = true
 
@@ -81,8 +82,12 @@ class NpmDownload {
 }
 
 
-function make_npm_registry_url(q = {}) {
-  return Shared.NPM_REPLICATE_URL() + '/_all_docs?' + Qs.stringify(q)
+function make_npm_registry_url(q, options) {
+  Assert(null != options.npm_registry_url, 'options.npm_registry_url')
+
+  const { npm_registry_url } = options
+
+  return npm_registry_url + '/_all_docs?' + Qs.stringify(q)
 }
 
 

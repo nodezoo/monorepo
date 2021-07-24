@@ -3,20 +3,22 @@ const Shared = require('../../../lib/shared')
 
 
 class Follower {
-  constructor(seneca) {
+  constructor(seneca, options) {
     this.seneca = seneca
+    this.options = options
     this.feed = null
   }
 
   async start() {
     const seneca = this.seneca
+    const { npm_registry_url } = this.options
 
     if (this.feed) {
       return false
     }
 
     this.feed = new ChangesStream({
-      db: Shared.NPM_REPLICATE_URL(),
+      db: npm_registry_url,
       since: 'now',
 
       /* NOTE: need:part will take care of fetching the data. In the future,
