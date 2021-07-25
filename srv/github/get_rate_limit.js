@@ -1,13 +1,14 @@
 const Axios = require('axios')
-const { Octokit } = require("@octokit/rest")
+const OctokitLib = require('./lib/octokit_lib')
 
 
 module.exports = function make_get_rate_limit() {
-  const octokit = new Octokit()
-
   return async function get_rate_limit(msg) {
     const seneca = this
 
+    seneca.root.context.octokit = OctokitLib.get_instance(seneca)
+
+    const { octokit } = seneca.root.context
     const { data } = await octokit.rest.rateLimit.get()
 
     return { ok: true, data }

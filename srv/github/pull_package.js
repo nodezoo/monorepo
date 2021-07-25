@@ -1,5 +1,5 @@
 const Assert = require('assert')
-const { Octokit } = require("@octokit/rest")
+const OctokitLib = require('./lib/octokit_lib')
 const { sleep } = require('../../lib/shared')
 
 
@@ -9,10 +9,13 @@ module.exports = function make_pull_package(options_wrapper) {
    * E.g. `{ options }` vs `options`
    */
   const { options } = options_wrapper
-  const octokit = new Octokit()
-  
+
   return async function pull_package(msg) {
     const seneca = this
+
+    seneca.root.context.octokit = OctokitLib.get_instance(seneca)
+    const { octokit } = seneca.root.context
+
 
     Assert(null != msg.name, 'msg.name')
     const { name } = msg
