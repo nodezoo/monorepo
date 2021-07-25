@@ -13,7 +13,6 @@
 //           one should be able to pause and resume - how do you track it (nodezoo/orig timestamp?)
 //           we can assume there is only one list of all the packages (from step 1)
 
-const { EventEmitter } = require('events')
 const NpmDownload = require('./lib/download')
 
 
