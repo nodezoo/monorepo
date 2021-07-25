@@ -41,7 +41,8 @@
             "async": true
           },
           "role:source,source:github,get:package": {},
-          "role:source,source:github,pull:package": {}
+          "role:source,source:github,pull:package": {},
+          "role:source,source:github,get:rate_limit": {}
         }
       },
       "search": {

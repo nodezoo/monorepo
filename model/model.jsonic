@@ -90,6 +90,7 @@ main: srv: github: {
     'role:info,need:part': { async: true }
     'role:source,source:github,get:package': {}
     'role:source,source:github,pull:package': {}
+    'role:source,source:github,get:rate_limit': {}
   }
 }
 
