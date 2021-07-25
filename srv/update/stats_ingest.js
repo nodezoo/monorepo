@@ -1,7 +1,7 @@
 const Ingester = require('./lib/ingester')
 
 
-module.exports = function make_stat_ingest(options_wrapper) {
+module.exports = function make_stats_ingest(options_wrapper) {
   /*
    * QUESTION: Why are the plugin options nested inside an object?
    * E.g. `{ options }` vs `options`

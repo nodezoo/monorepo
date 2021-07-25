@@ -29,7 +29,7 @@ class Follower {
 
     this.feed.on('data', change => {
       return seneca.act(
-        'role:update,cmd:process_change',
+        'role:update,process:change',
 
         { change },
 

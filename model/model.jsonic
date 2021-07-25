@@ -105,14 +105,14 @@ main: srv: search: {
 
 main: srv: update: {
   msg: {
-    'role:update,cmd:start_download': {}
-    'role:update,cmd:stop_download': {}
-    'role:update,cmd:start_follow': {}
-    'role:update,cmd:stop_follow': {}
-    'role:update,cmd:process_change': {}
-    'role:update,cmd:start_ingest': {}
-    'role:update,cmd:stop_ingest': {}
-    'role:update,cmd:stat_ingest': {}
+    'role:update,start:download': {}
+    'role:update,start:follow': {}
+    'role:update,start:ingest': {}
+    'role:update,stop:download': {}
+    'role:update,stop:follow': {}
+    'role:update,stop:ingest': {}
+    'role:update,process:change': {}
+    'role:update,stats:ingest': {}
   }
 }
 
