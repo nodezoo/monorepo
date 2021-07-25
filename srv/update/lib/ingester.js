@@ -7,6 +7,32 @@ class Ingester {
     this.seneca = seneca
     this.options = options
     this.is_ingesting = false
+    this.stats_instance = { start: null, npkgs_lifetime: 0, npkgs_iteration: 0 }
+  }
+
+  stats() {
+    const {
+      start,
+      npkgs_lifetime,
+      npkgs_iteration
+    } = this.stats_instance
+
+
+    const now = new Date()
+
+    const uptime_ms = null == start
+      ? 0
+      : now.getTime() - start.getTime()
+
+    const uptime_sec = Math.floor(uptime_ms / 1e3)
+
+
+    return {
+      start,
+      npkgs_lifetime,
+      npkgs_iteration,
+      uptime_sec
+    }
   }
 
   async start(msg) {
@@ -19,6 +45,7 @@ class Ingester {
     }
 
     self.is_ingesting = true
+    self.stats_instance.start = new Date()
 
 
     setImmediate(async () => {
@@ -45,8 +72,6 @@ class Ingester {
         sleep_ms_between_fetches = default_sleep_ms_between_fetches
       } = msg 
 
-      const stats = { total_ingested: 0 }
-
 
       let is_first_iteration = true
 
@@ -70,8 +95,6 @@ class Ingester {
         const pkgs = await seneca.make('nodezoo', 'orig')
           .list$(pkgs_q)
 
-        seneca.log.info(`Preparing to ingest ${pkgs.length} packages.`)
-
 
         /* NOTE: An astute reader would notice that in case of error, some
          * packages will not be ingested, yet still be marked as ingested.
@@ -90,14 +113,12 @@ class Ingester {
 
         for (const pkg of pkgs) {
           seneca.act('role:info,need:part', { name: pkg.name })
+
+          self.stats_instance.npkgs_lifetime++
+          self.stats_instance.npkgs_iteration++
+
           await sleep(sleep_ms_between_fetches)
         }
-
-
-        stats.total_ingested += pkgs.length
-
-        seneca.log.info('Total ingested packages so far: ' +
-          stats.total_ingested)
 
 
         await sleep(sleep_ms_between_iterations)

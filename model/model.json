@@ -57,7 +57,8 @@
           "role:update,cmd:stop_follow": {},
           "role:update,cmd:process_change": {},
           "role:update,cmd:start_ingest": {},
-          "role:update,cmd:stop_ingest": {}
+          "role:update,cmd:stop_ingest": {},
+          "role:update,cmd:stat_ingest": {}
         }
       }
     },

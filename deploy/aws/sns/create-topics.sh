@@ -15,3 +15,4 @@ aws sns create-topic --name nodezoo_cmd_stop_follow_role_update
 aws sns create-topic --name nodezoo_cmd_process_change_role_update
 aws sns create-topic --name nodezoo_cmd_start_ingest_role_update
 aws sns create-topic --name nodezoo_cmd_stop_ingest_role_update
+aws sns create-topic --name nodezoo_cmd_stat_ingest_role_update
