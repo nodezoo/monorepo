@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "local": "node local/dev.js",
-    "test": "echo no-test",
+    "test": "echo -n 'Please use `npm run test-fast` instead.\n\n'",
+    "test-fast": "./node_modules/jasmine/bin/jasmine.js --config=test/support/jasmine.json",
     "model": "voxgig-model model/model.jsonic",
     "clean": "rm -rf node_modules package-lock.json yarn.lock",
     "build": "echo no-build",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@voxgig/model": "voxgig/model",
     "aws-sdk": "^2.943.0",
+    "jasmine": "3.8.0",
     "jsonic": "jsonicjs/jsonic#4edd639987b75ef62a74e3904fb890f59d21379c",
     "seneca-msg-test": "^3.2.0",
     "seneca-repl": "^1.2.0"
