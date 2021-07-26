@@ -76,6 +76,9 @@ class Ingester {
       let is_first_iteration = true
 
       while (self.is_ingesting) {
+        self.stats_instance.npkgs_iteration = 0
+
+
         const pkgs_q = { fields$: ['name'] }
 
         if (msg.resume || !is_first_iteration) {
