@@ -116,6 +116,12 @@ main: srv: update: {
   }
 }
 
+main: srv: user: {
+  msg: {
+    'role:user,scope:auth,login:user': {}
+  }
+}
+
 
 
 main: srv: @"srv.jsonic"
