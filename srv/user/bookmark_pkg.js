@@ -4,28 +4,14 @@ module.exports = function make_bookmark_pkg() {
     const seneca = this
 
 
-    /* BEGIN: auth
-     */
+    const auth = await Auth.user(msg, { seneca })
 
-    if ('string' !== typeof msg.auth_token) {
-      return { ok: false, why: 'unauthorized' }
-    }
-
-    const { auth_token } = msg
-
-    const auth = await seneca.post('auth:user,sys:user', {
-      token: auth_token
-    })
-
-    if (!auth.ok) {
+    if (!auth) {
       return { ok: false, why: 'unauthorized' }
     }
 
     const { user } = auth
     const { id: user_id } = user
-
-    /* END: auth
-     */
 
 
     /* BEGIN: checking that the package exists in our db

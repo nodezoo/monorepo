@@ -124,6 +124,14 @@
           "ingested_at": {
             "type": "S"
           }
+        },
+        "bookmark": {
+          "name": {
+            "type": "S"
+          },
+          "owner_id": {
+            "type": "S"
+          }
         }
       }
     },
