@@ -24,7 +24,7 @@ describe('load bookmark', () => {
 
 
     it('shall not pass', async () => {
-      await setup_logged_in_user({
+      await register_and_login_user({
         email: 'alice@example.com',
         pass: '012345678'
       }, { seneca })
@@ -49,7 +49,7 @@ describe('load bookmark', () => {
 
 
     it('responds with a validation error', async () => {
-      const { auth_token } = await setup_logged_in_user({
+      const { auth_token } = await register_and_login_user({
         email: user_email,
         pass: user_pass
       }, { seneca })
@@ -78,7 +78,7 @@ describe('load bookmark', () => {
 
 
     it('responds with "not found"', async () => {
-      const { auth_token } = await setup_logged_in_user({
+      const { auth_token } = await register_and_login_user({
         email: user_email,
         pass: user_pass
       }, { seneca })
@@ -93,10 +93,12 @@ describe('load bookmark', () => {
       const { id: another_user_id } = another_user
       Assert(another_user_id, 'another_user.id')
 
-      const bookmark_id = await setup_bookmark({
-        owner_id: another_user_id,
-        name: 'seneca-mem-store'
-      }, { seneca })
+      const { id: bookmark_id } = await seneca.make('nodezoo', 'bookmark')
+        .data$({
+          owner_id: another_user_id,
+          name: 'seneca-mem-store'
+        })
+        .save$()
 
 
       const msg = { auth_token, id: bookmark_id }
@@ -119,7 +121,7 @@ describe('load bookmark', () => {
 
 
     it('returns the bookmark', async () => {
-      const { auth_token, user } = await setup_logged_in_user({
+      const { auth_token, user } = await register_and_login_user({
         email: user_email,
         pass: user_pass
       }, { seneca })
@@ -128,10 +130,12 @@ describe('load bookmark', () => {
       const { id: user_id } = user
       Assert(user_id, 'user.id')
 
-      const bookmark_id = await setup_bookmark({
-        owner_id: user_id,
-        name: pkg_name
-      }, { seneca })
+      const { id: bookmark_id } = await seneca.make('nodezoo', 'bookmark')
+        .data$({
+          owner_id: user_id,
+          name: pkg_name
+        })
+        .save$()
 
 
       const msg = { auth_token, id: bookmark_id }
@@ -151,28 +155,4 @@ describe('load bookmark', () => {
     })
   })
 })
-
-
-async function setup_logged_in_user({ email, pass }, { seneca }) {
-  await register_user({ email, pass }, { seneca })
-
-  const {
-    login: { token: auth_token },
-    user
-  } = await login_user({ email, pass }, { seneca })
-
-  Assert(auth_token, 'auth_token')
-  Assert(user, 'user')
-
-  return { auth_token, user }
-}
-
-
-async function setup_bookmark(attrs, { seneca }) {
-  const bookmark = await seneca.make('nodezoo', 'bookmark')
-    .data$(attrs)
-    .save$()
-
-  return bookmark.id
-}
 
