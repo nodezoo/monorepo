@@ -23,9 +23,7 @@ module.exports = function make_list_bookmarks() {
     return {
       ok: true,
       data: {
-        bookmarks: user_bookmarks.map(b => {
-          return { name: b.name }
-        })
+        bookmarks: user_bookmarks
       }
     }
   }

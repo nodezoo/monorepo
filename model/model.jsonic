@@ -125,6 +125,7 @@ main: srv: user: {
     'role:user,scope:auth,login:user': {}
     'role:user,scope:pkg,add:bookmark': {}
     'role:user,scope:pkg,list:bookmarks': {}
+    'role:user,scope:pkg,load:bookmark': {}
   }
 }
 
