@@ -61,6 +61,12 @@
           "role:update,process:change": {},
           "role:update,stats:ingest": {}
         }
+      },
+      "user": {
+        "msg": {
+          "role:user,scope:auth,login:user": {},
+          "role:user,scope:pkg,bookmark:pkg": {}
+        }
       }
     },
     "ent": {
