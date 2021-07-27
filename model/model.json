@@ -65,7 +65,8 @@
       "user": {
         "msg": {
           "role:user,scope:auth,login:user": {},
-          "role:user,scope:pkg,bookmark:pkg": {}
+          "role:user,scope:pkg,bookmark:pkg": {},
+          "role:user,scope:pkg,list:bookmarks": {}
         }
       }
     },
