@@ -123,7 +123,7 @@ main: srv: update: {
 main: srv: user: {
   msg: {
     'role:user,scope:auth,login:user': {}
-    'role:user,scope:pkg,bookmark:pkg': {}
+    'role:user,scope:pkg,add:bookmark': {}
     'role:user,scope:pkg,list:bookmarks': {}
   }
 }

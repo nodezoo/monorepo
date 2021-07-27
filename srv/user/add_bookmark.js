@@ -1,6 +1,6 @@
 
-module.exports = function make_bookmark_pkg() {
-  return async function bookmark_pkg(msg) {
+module.exports = function make_add_bookmark() {
+  return async function add_bookmark(msg) {
     const seneca = this
 
 
