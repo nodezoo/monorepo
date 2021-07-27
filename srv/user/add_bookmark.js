@@ -1,3 +1,5 @@
+const Auth = require('./lib/auth')
+
 
 module.exports = function make_add_bookmark() {
   return async function add_bookmark(msg) {
@@ -37,7 +39,7 @@ module.exports = function make_add_bookmark() {
     if (!npm_pkg) {
       return {
         ok: false,
-        why: 'not_found',
+        why: 'not-found',
         details: { what: 'package' }
       }
     }
@@ -49,7 +51,7 @@ module.exports = function make_add_bookmark() {
     /* BEGIN: make a bookmark
      */
 
-    await seneca.make('nodezoo', 'bookmark')
+    const { id: bookmark_id } = await seneca.make('nodezoo', 'bookmark')
       .data$({ name: pkg_name, owner_id: user_id })
       .save$({ upsert$: ['name', 'owner_id'] })
 
@@ -57,7 +59,7 @@ module.exports = function make_add_bookmark() {
      */
 
 
-    return { ok: true }
+    return { ok: true, data: { bookmark_id } }
   }
 }
 

@@ -19,7 +19,9 @@ describe('load bookmark', () => {
 
 
     it('shall not pass', async () => {
-      const res = await load_bookmark.call(seneca, {})
+      const msg = {}
+      const res = await load_bookmark.call(seneca, msg)
+
       expect(res).toEqual({ ok: false, why: 'unauthorized' })
     })
   })
