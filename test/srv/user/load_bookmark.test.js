@@ -1,7 +1,14 @@
 const Assert = require('assert')
 const Seneca = require('seneca')
 const TestHelpers = require('../../support/helpers')
-const { register_user, login_user, make_seneca } = TestHelpers
+
+const {
+  make_seneca,
+  register_user,
+  login_user,
+  register_and_login_user
+} = TestHelpers
+
 const make_load_bookmark = require('../../../srv/user/load_bookmark')
 
 

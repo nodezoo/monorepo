@@ -48,7 +48,7 @@ class TestHelpers {
   }
 
 
-  static register_and_login_user(args, ctx) {
+  static async register_and_login_user(args, ctx) {
     Assert(args, 'args')
     Assert.strictEqual(typeof args.email, 'string', 'args.email')
     Assert.strictEqual(typeof args.pass, 'string', 'args.pass')
@@ -62,12 +62,12 @@ class TestHelpers {
     const { seneca } = ctx
 
 
-    await register_user({ email, pass }, { seneca })
+    await TestHelpers.register_user({ email, pass }, { seneca })
 
     const {
       login: { token: auth_token },
       user
-    } = await login_user({ email, pass }, { seneca })
+    } = await TestHelpers.login_user({ email, pass }, { seneca })
 
     Assert(auth_token, 'auth_token')
     Assert(user, 'user')
