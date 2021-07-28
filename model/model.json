@@ -26,16 +26,6 @@
           "role:info,test:true": {}
         }
       },
-      "update": {
-        "msg": {
-          "role:update,cmd:download_registry": {},
-          "role:update,cmd:stop_registry_download": {},
-          "role:update,cmd:follow_registry": {},
-          "role:update,cmd:stop_following_registry": {},
-          "role:update,cmd:process_change": {},
-          "role:update,cmd:start_download": {}
-        }
-      },
       "npm": {
         "msg": {
           "role:info,need:part": {
@@ -51,12 +41,25 @@
             "async": true
           },
           "role:source,source:github,get:package": {},
-          "role:source,source:github,pull:package": {}
+          "role:source,source:github,pull:package": {},
+          "role:source,source:github,get:rate_limit": {}
         }
       },
       "search": {
         "msg": {
           "role:search,search:query": {}
+        }
+      },
+      "update": {
+        "msg": {
+          "role:update,start:download": {},
+          "role:update,start:follow": {},
+          "role:update,start:ingest": {},
+          "role:update,stop:download": {},
+          "role:update,stop:follow": {},
+          "role:update,stop:ingest": {},
+          "role:update,process:change": {},
+          "role:update,stats:ingest": {}
         }
       }
     },
@@ -105,8 +108,13 @@
           },
           "readme": {
             "type": "S"
+          }
+        },
+        "orig": {
+          "name": {
+            "type": "S"
           },
-          "original_doc": {
+          "ingested_at": {
             "type": "S"
           }
         }

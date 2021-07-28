@@ -1,20 +1,32 @@
+const Assert = require('assert')
+const OctokitLib = require('./lib/octokit_lib')
+const { sleep } = require('../../lib/shared')
 
-const { Octokit } = require("@octokit/rest")
 
+module.exports = function make_pull_package(options_wrapper) {
+  /*
+   * QUESTION: Why are the plugin options nested inside an object?
+   * E.g. `{ options }` vs `options`
+   */
+  const { options } = options_wrapper
 
-module.exports = function make_pull_package() {
-  const octokit = new Octokit()
-  
   return async function pull_package(msg) {
     const seneca = this
-    const name = msg.name
 
-    let owner = msg.owner
-    let repo = msg.repo
+    seneca.root.context.octokit = OctokitLib.get_instance(seneca)
+    const { octokit } = seneca.root.context
+
+
+    Assert(null != msg.name, 'msg.name')
+    const { name } = msg
+
+
+    let owner = msg.owner || null
+    let repo = msg.repo || null
 
     // role:info,need:part only has name
     if(null == owner) {
-      let giturl = await get_giturl(seneca, name)
+      let giturl = await get_giturl(seneca, name, options)
       if('' == giturl) {
         return {ok:false,why:'no-giturl',name}
       }
@@ -27,9 +39,9 @@ module.exports = function make_pull_package() {
       owner = m[1]
       repo = m[2]
     }
-    
+
     const pkg = await octokit.repos.get({ owner, repo })
-          
+
     out = { ok:true }
     
     let github = seneca.entity('nodezoo/github')
@@ -49,17 +61,26 @@ module.exports = function make_pull_package() {
 
     return out
   }
+}
 
 
-  async function get_giturl(seneca,name) {
-    let npment = await seneca.entity('nodezoo/npm').load$(name)
+async function get_giturl(seneca, name, options) {
+  let npment = await seneca.entity('nodezoo/npm').load$(name)
 
-    // Might be new, wait for npm pull
-    if(null == npment) {
-      await new Promise((r)=>setTimeout(r,555))
-      npment = await seneca.entity('nodezoo/npm').load$(name)
-    }
+  // Might be new, wait for npm pull
+  if(null == npment) {
+    Assert(null != options.github_srv, 'options.github_srv')
 
-    return npment && npment.giturl || ''
+    Assert(null != options.github_srv.wait_ms_on_npm,
+      'options.github_srv.wait_ms_on_npm')
+
+    const { github_srv: { wait_ms_on_npm } } = options
+
+    await sleep(wait_ms_on_npm)
+
+
+    npment = await seneca.entity('nodezoo/npm').load$(name)
   }
+
+  return npment && npment.giturl || ''
 }

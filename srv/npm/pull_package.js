@@ -1,24 +1,36 @@
+const Assert = require('assert')
+const Axios = require('axios')
 
-// TODO: replace with Axios
-var Wreck = require('@hapi/wreck')
+
+module.exports = function make_pull_package(options_wrapper) {
+  Assert(null != options_wrapper.options, 'options_wrapper.options')
+  const { options } = options_wrapper
 
 
-module.exports = function make_pull_package({options}) {
   return async function pull_package(msg) {
     const seneca = this
-    const name = msg.name
-    
-    const pkgurl = options.registry + name
-    const { res, payload } = await Wreck.get(pkgurl)
 
-    out = { ok:false }
-    
-    if( 200 === res.statusCode) {
-      var pkg = JSON.parse(payload.toString())
 
-      var dist_tags  = pkg['dist-tags'] || {}
-      var latest     = ((pkg.versions||{})[dist_tags.latest]) || {}
-      var repository = latest.repository || {}
+    Assert(null != msg.name, 'msg.name')
+    const { name } = msg
+
+
+    Assert(null != options.npm_registry_url,
+      'options.npm_registry_url')
+
+    const pkgurl = options.npm_registry_url + '/' + encodeURIComponent(name)
+
+
+    const response = await Axios.get(pkgurl)
+    const out = { ok: false }
+
+
+    if (200 === response.status) {
+      const pkg = response.data
+
+      const dist_tags  = pkg['dist-tags'] || {}
+      const latest     = ((pkg.versions||{})[dist_tags.latest]) || {}
+      const repository = latest.repository || {}
 
       let npm = seneca.entity('nodezoo/npm')
       npm = await npm.load$(name) || npm.data$({id$:name})
