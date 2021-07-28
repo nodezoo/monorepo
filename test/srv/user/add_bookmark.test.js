@@ -1,5 +1,6 @@
 const Assert = require('assert')
 const Seneca = require('seneca')
+const Fixtures = require('../../support/fixtures')
 const TestHelpers = require('../../support/helpers')
 
 const {
@@ -12,7 +13,7 @@ const {
 const make_add_bookmark = require('../../../srv/user/add_bookmark')
 
 
-fdescribe('add bookmark', () => { // fcs
+describe('add bookmark', () => {
   describe('when the auth token is missing from the msg', () => {
     const seneca = make_seneca()
     const add_bookmark = make_add_bookmark()
@@ -108,6 +109,7 @@ fdescribe('add bookmark', () => { // fcs
     })
   })
 
+
   describe('when a package with the name exists', () => {
     const seneca = make_seneca()
     const add_bookmark = make_add_bookmark()
@@ -125,7 +127,9 @@ fdescribe('add bookmark', () => { // fcs
       }, { seneca })
 
 
-      await create_pkg({ name: pkg_name }, { seneca })
+      await seneca.make('nodezoo', 'npm')
+        .data$(Fixtures.npm({ name: pkg_name }))
+        .save$()
 
 
       const msg = { auth_token, name: pkg_name }
@@ -168,19 +172,19 @@ fdescribe('add bookmark', () => { // fcs
       }, { seneca })
 
 
-      await create_pkg({ name: pkg_name }, { seneca })
+      await seneca.make('nodezoo', 'npm')
+        .data$(Fixtures.npm({ name: pkg_name }))
+        .save$()
 
 
       const { id: user_id } = user
       Assert(user_id, 'user.id')
 
-      // TODO: Use a fixture.
-      //
       await seneca.make('nodezoo', 'bookmark')
-        .data$({
+        .data$(Fixtures.bookmark({
           owner_id: user_id,
           name: pkg_name
-        })
+        }))
         .save$()
 
 
@@ -201,6 +205,7 @@ fdescribe('add bookmark', () => { // fcs
       expect(num_bookmarks).toEqual(1)
     })
   })
+
 
   describe('when another user has previously bookmarked this package', () => {
     const seneca = make_seneca()
@@ -225,19 +230,19 @@ fdescribe('add bookmark', () => { // fcs
       }, { seneca })
 
 
-      await create_pkg({ name: pkg_name }, { seneca })
+      await seneca.make('nodezoo', 'npm')
+        .data$(Fixtures.npm({ name: pkg_name }))
+        .save$()
 
 
       const { id: another_user_id } = another_user
       Assert(another_user_id, 'another_user.id')
 
-      // TODO: Use a fixture.
-      //
       await seneca.make('nodezoo', 'bookmark')
-        .data$({
+        .data$(Fixtures.bookmark({
           owner_id: another_user_id,
           name: pkg_name
-        })
+        }))
         .save$()
 
 
@@ -259,30 +264,4 @@ fdescribe('add bookmark', () => { // fcs
     })
   })
 })
-
-
-// TODO: Replace with a fixture helper.
-//
-async function create_pkg(given_attrs, ctx) {
-  const DEFAULT_ATTRS = {
-    name: 'seneca',
-    version: '1.0.0',
-    giturl: null,
-    desc: 'lorem ipsum',
-    readme: 'lorem ipsum dolor sit amet'
-  }
-
-  Assert(given_attrs, 'given_attrs')
-  const attrs = { ...DEFAULT_ATTRS, ...given_attrs }
-
-
-  Assert(ctx, 'ctx')
-  Assert(ctx.seneca, 'ctx.seneca')
-  const { seneca } = ctx
-
-
-  return seneca.make('nodezoo', 'npm')
-    .data$(attrs)
-    .save$()
-}
 
