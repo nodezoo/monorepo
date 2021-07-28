@@ -61,6 +61,13 @@
           "role:update,process:change": {},
           "role:update,stats:ingest": {}
         }
+      },
+      "user": {
+        "msg": {
+          "role:user,scope:auth,login:user": {},
+          "role:user,scope:pkg,bookmark:pkg": {},
+          "role:user,scope:pkg,list:bookmarks": {}
+        }
       }
     },
     "ent": {
@@ -115,6 +122,14 @@
             "type": "S"
           },
           "ingested_at": {
+            "type": "S"
+          }
+        },
+        "bookmark": {
+          "name": {
+            "type": "S"
+          },
+          "owner_id": {
             "type": "S"
           }
         }

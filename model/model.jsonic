@@ -51,6 +51,10 @@ main: ent: nodezoo: orig: {
   ingested_at: type: S
 }
 
+main: ent: nodezoo: bookmark: {
+  name: type: S
+  owner_id: type: S
+}
 
 
 
@@ -113,6 +117,15 @@ main: srv: update: {
     'role:update,stop:ingest': {}
     'role:update,process:change': {}
     'role:update,stats:ingest': {}
+  }
+}
+
+main: srv: user: {
+  msg: {
+    'role:user,scope:auth,login:user': {}
+    'role:user,scope:pkg,add:bookmark': {}
+    'role:user,scope:pkg,list:bookmarks': {}
+    'role:user,scope:pkg,load:bookmark': {}
   }
 }
 

@@ -13,6 +13,7 @@ seneca
   .use('mem-store')
   .use('repl')
   .use('reload')
+  .use('user')
 
 
 const options = {
