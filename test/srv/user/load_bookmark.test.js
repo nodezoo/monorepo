@@ -1,5 +1,6 @@
 const Assert = require('assert')
 const Seneca = require('seneca')
+const Fixtures = require('../../support/fixtures')
 const TestHelpers = require('../../support/helpers')
 
 const {
@@ -118,6 +119,42 @@ describe('load bookmark', () => {
     })
   })
 
+
+  describe('when belongs to the user, but the npm pkg is missing', () => {
+    const seneca = make_seneca()
+    const load_bookmark = make_load_bookmark()
+
+
+    const user_email = 'bob@example.com'
+    const user_pass = 'abcdefghij'
+
+
+    it('responds with "not found"', async () => {
+      const { auth_token, user } = await register_and_login_user({
+        email: user_email,
+        pass: user_pass
+      }, { seneca })
+
+
+      const { id: user_id } = user
+      Assert(user_id, 'user.id')
+
+      const { id: bookmark_id } = await seneca.make('nodezoo', 'bookmark')
+        .data$({
+          owner_id: user_id,
+          name: 'seneca-mem-store'
+        })
+        .save$()
+
+
+      const msg = { auth_token, id: bookmark_id }
+      const res = await load_bookmark.call(seneca, msg)
+
+
+      expect(res).toEqual({ ok: false, why: 'not-found' })
+    })
+  })
+
   
   describe('when the bookmark belongs to the user', () => {
     const seneca = make_seneca()
@@ -134,6 +171,11 @@ describe('load bookmark', () => {
         email: user_email,
         pass: user_pass
       }, { seneca })
+
+
+      await seneca.make('nodezoo', 'npm')
+        .data$(Fixtures.npm({ name: pkg_name }))
+        .save$()
 
 
       const { id: user_id } = user
@@ -158,6 +200,76 @@ describe('load bookmark', () => {
             id: bookmark_id,
             owner_id: user_id,
             name: pkg_name
+          },
+
+          npm: {
+            version: jasmine.any(String),
+            giturl: jasmine.any(String),
+            desc: jasmine.any(String),
+            readme: jasmine.any(String)
+          },
+
+          github: null
+        }
+      })
+    })
+  })
+
+
+  describe('when the bookmark includes info from GitHub', () => {
+    const seneca = make_seneca()
+    const load_bookmark = make_load_bookmark()
+
+
+    const user_email = 'bob@example.com'
+    const user_pass = 'abcdefghij'
+    const pkg_name = 'seneca-mem-store'
+
+
+    it('returns the bookmark', async () => {
+      const { auth_token, user } = await register_and_login_user({
+        email: user_email,
+        pass: user_pass
+      }, { seneca })
+
+
+      await seneca.make('nodezoo', 'npm')
+        .data$(Fixtures.npm({ name: pkg_name }))
+        .save$()
+
+      await seneca.make('nodezoo', 'github')
+        .data$(Fixtures.github({ name: pkg_name }))
+        .save$()
+
+
+      const { id: user_id } = user
+      Assert(user_id, 'user.id')
+
+      const { id: bookmark_id } = await seneca.make('nodezoo', 'bookmark')
+        .data$({
+          owner_id: user_id,
+          name: pkg_name
+        })
+        .save$()
+
+
+      const msg = { auth_token, id: bookmark_id }
+      const res = await load_bookmark.call(seneca, msg)
+
+
+      expect(res).toEqual({
+        ok: true,
+        data: {
+          bookmark: jasmine.any(Object),
+
+          npm: jasmine.any(Object),
+
+          github: {
+            owner: jasmine.any(String),
+            repo: jasmine.any(String),
+            stars: jasmine.any(Number),
+            forks: jasmine.any(Number),
+            last: jasmine.any(Number)
           }
         }
       })

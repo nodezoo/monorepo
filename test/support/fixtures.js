@@ -15,9 +15,21 @@ class Fixtures {
     return {
       name: Faker.random.alphaNumeric(8),
       version: '1.0.0',
-      giturl: null,
+      giturl: 'https://github.com/senecajs/seneca',
       desc: Faker.lorem.paragraph(),
       readme: Faker.lorem.paragraph(),
+      ...overrides
+    }
+  }
+
+  static github(overrides = {}) {
+    return {
+      name: Faker.random.alphaNumeric(8),
+      owner: Faker.internet.userName(),
+      repo: Faker.random.alphaNumeric(16),
+      stars: 99,
+      forks: 99,
+      last: 99,
       ...overrides
     }
   }
