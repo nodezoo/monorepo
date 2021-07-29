@@ -4,8 +4,25 @@ module.exports = function make_fake_search_query() {
     const seneca = this
 
 
-    const pkgs = await seneca.make('nodezoo', 'npm')
-      .list$(safe_query(msg))
+    const q = msg.q || {}
+    const safe_query = {}
+
+    safe_query.limit$ = 'number' === q.limit$ ? q.limit$ : 5 
+    if ('string' === typeof q.name) safe_query.name = q.name
+
+
+    let pkgs
+
+    pkgs = await seneca.make('nodezoo', 'npm')
+      .list$(safe_query)
+
+
+    const is_prefix_search = safe_query.name &&
+      'string' === typeof q.name.starts_with$
+
+    if (is_prefix_search) {
+      pkgs = pkgs.filter(pkg => pkg.name.startsWith(q.name.starts_with$))
+    }
 
 
     return {
@@ -13,26 +30,5 @@ module.exports = function make_fake_search_query() {
       data: { pkgs }
     }
   }
-}
-
-
-function safe_query(msg) {
-  const out = {}
-
-
-  const q = msg.q || {}
-
-
-  out.limit$ = 'number' === typeof q.limit$
-    ? q.limit$
-    : 10
-
-
-  if ('string' === typeof q.name) {
-    out.name = q.name
-  }
-
-
-  return out 
 }
 
