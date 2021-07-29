@@ -16,6 +16,20 @@ seneca
   .use('user')
 
 
+/**
+ * WARNING: TODO:
+ * This is for testing purposes ONLY.
+ * Please remove this once the frontend has been implemented.
+ */
+const SqliteStore = require('seneca-sqlite-store')
+
+seneca.use(SqliteStore, {
+  database: './local/my_precious.db'
+})
+
+/*
+ **/
+
 const options = {
   npm_registry_url: 'https://replicate.npmjs.com',
 
