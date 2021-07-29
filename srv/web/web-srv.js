@@ -29,21 +29,6 @@ function web(options) {
   })
 
 
-  app.post('/seneca/pkgs', (req, res, next) => {
-    const msg = req.body
-
-
-    return seneca.act('role:search,fake_search:query', msg,
-      function (err, out) {
-        if (err) {
-          return next(err)
-        }
-
-        return res.json(out)
-      })
-  })
-
-
   app.use((err, req, res, next) => {
     console.error(err)
     return res.sendStatus(500)
