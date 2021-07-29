@@ -47,7 +47,8 @@
       },
       "search": {
         "msg": {
-          "role:search,search:query": {}
+          "role:search,search:query": {},
+          "role:search,fake_search:query": {}
         }
       },
       "update": {

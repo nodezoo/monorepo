@@ -6,8 +6,11 @@ function web(options) {
   const app = Express()
 
 
-  app.get('/api/test', (req, res, next) => {
-    seneca.act('role:info,test:true', function (err, out) {
+  app.use(Express.json())
+
+
+  app.get('/api/pkgs', (req, res, next) => {
+    seneca.act('role:search,fake_search:query', req.body, function (err, out) {
       if (err) {
         return next(err)
       }
