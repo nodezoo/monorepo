@@ -1,22 +1,46 @@
 const Express = require('express')
+const Path = require('path')
 
 
 function web(options) {
   const seneca = this
+
+
+  /* TODO: Implement the hybrid approach to allow hot-reloading. See the
+   * following links for more information:
+   *
+   *   https://stackoverflow.com/questions/33385288/do-i-need-webpack-dev-server-if-i-am-using-a-node-server-like-express
+   *   https://stackoverflow.com/questions/26203725/how-to-allow-for-webpack-dev-server-to-allow-entry-points-from-react-router
+   */
+
   const app = Express()
 
 
   app.use(Express.json())
 
 
-  app.get('/api/pkgs', (req, res, next) => {
-    seneca.act('role:search,fake_search:query', req.body, function (err, out) {
-      if (err) {
-        return next(err)
-      }
+  const VIEWS_PATH = Path.join(__dirname, 'www', 'dist')
+  app.use(Express.static(VIEWS_PATH))
 
-      return res.json(out)
-    })
+
+  app.get('/*', (req, res) => {
+    const index = Path.join(VIEWS_PATH, 'index.html')
+    return res.sendFile(index)
+  })
+
+
+  app.post('/seneca/pkgs', (req, res, next) => {
+    const msg = req.body
+
+
+    return seneca.act('role:search,fake_search:query', msg,
+      function (err, out) {
+        if (err) {
+          return next(err)
+        }
+
+        return res.json(out)
+      })
   })
 
 
