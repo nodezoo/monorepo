@@ -29,6 +29,35 @@ function web(options) {
   })
 
 
+  app.post('/seneca/pkgsWithNameStartingWith', (req, res, next) => {
+    const { prefix = null } = req.body
+
+    if ('string' !== typeof prefix) {
+      return res.sendStatus(422)
+    }
+
+    const msg = {
+      q: {
+        name: { starts_with$: prefix }
+      }
+    }
+
+    seneca.act('role:search,fake_search:query', msg, (err, out) => {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        return res.sendStatus(500)
+      }
+
+      const { data: { pkgs } } = out
+
+      return res.json({ pkgs })
+    })
+  })
+
+
   app.use((err, req, res, next) => {
     console.error(err)
     return res.sendStatus(500)
