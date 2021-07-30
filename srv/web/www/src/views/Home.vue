@@ -12,7 +12,7 @@
             <v-container>
               <v-row>
                 <v-col>
-                  <v-text-field label="Search" v-model="search">
+                  <v-text-field label="Search" v-model="search" @input="onSearchInput">
                   </v-text-field>
                 </v-col>
 
@@ -46,20 +46,58 @@
   import Api from '@/lib/api'
 
 
+  const TYPING_CHECK_WAIT_MS = 300
+
+
   export default {
     name: 'Home',
 
+
     data: () => ({
       pkgs: [],
-      search: ''
+      search: '',
+      last_typed_at: null
     }),
 
+
     methods: {
-      async onSubmitSearch() {
+      async searchForPackages() {
         this.pkgs = await Api.pkgsWithNameStartingWith(this.search)
           .then(res => res.data.pkgs)
+      },
+
+
+      async onSubmitSearch() {
+        await this.searchForPackages()
+      },
+
+
+      isCurrentlyTyping() {
+        if (!this.last_typed_at) {
+          return false
+        }
+
+        const now = new Date()
+        const last_typed = now.getTime() - this.last_typed_at.getTime()
+
+        return last_typed < TYPING_CHECK_WAIT_MS
+      },
+
+
+      async onSearchInput() {
+        const self = this
+        self.last_typed_at = new Date()
+
+        setTimeout(async () => {
+          if (self.isCurrentlyTyping()) {
+            return
+          }
+
+          await self.searchForPackages()
+        }, 300)
       }
     },
+
 
     components: {}
   }

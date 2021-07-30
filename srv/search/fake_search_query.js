@@ -18,29 +18,34 @@ module.exports = function make_fake_search_query() {
       let pkgs
 
       if (is_empty_prefix) {
-        pkgs = []
-      } else {
-        /* TODO: Implement support for extended operators in all
-         * seneca store plugins.
-         */
-        const matching_names = await seneca.make('nodezoo', 'npm')
-          .list$({ fields$: ['name'], all$: true })
-          .then(pkgs => pkgs.map(pkg => pkg.name))
-          .then(pkgs_names => {
-            return pkgs_names
-              .filter(pkg_name => pkg_name.startsWith(prefix))
+        return {
+          ok: true,
+          data: { pkgs: [] }
+        }
+      }
+
+      /* TODO: Implement support for extended operators in all
+       * seneca store plugins, and then use seneca-entity as
+       * opposed to the native SQL driver.
+       */
+
+      const db = await seneca.make('nodezoo', 'npm').native$()
+
+      return new Promise((resolve, reject) => {
+        const sql = `select * from nodezoo_npm where name like ? limit 10`
+        const startswith = s => s + '%'
+
+        return db.all(sql, [startswith(prefix)], (err, pkgs) => {
+          if (err) {
+            return reject(err)
+          }
+
+          return resolve({
+            ok: true,
+            data: { pkgs }
           })
-
-        const matching_pkgs = matching_names.map(name =>
-          seneca.make('nodezoo', 'npm').load$({ name }))
-
-        pkgs = await Promise.all(matching_pkgs)
-      }
-
-      return {
-        ok: true,
-        data: { pkgs }
-      }
+        })
+      })
     }
 
     return {
