@@ -12,6 +12,13 @@ class Api {
       prefix
     })
   }
+
+
+  static async bookmarkPkg(pkg_name) {
+    return api.post('/bookmarkPkg', {
+      name: pkg_name
+    })
+  }
 }
 
 

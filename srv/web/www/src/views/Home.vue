@@ -35,6 +35,11 @@
             <v-card-title>{{ pkg.name }}</v-card-title>
             <v-card-subtitle>{{ pkg.version }}</v-card-subtitle>
             <v-card-text>{{ pkg.desc }}</v-card-text>
+            <v-card-actions>
+              <v-btn fab plain @click.prevent="onToggleBookmarkPkg($event, pkg.name)">
+                <v-icon>mdi-heart-plus-outline</v-icon>
+              </v-btn>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -61,6 +66,11 @@
 
 
     methods: {
+      async onToggleBookmarkPkg(_event, pkg_name) {
+        await Api.bookmarkPkg(pkg_name)
+      },
+
+
       async searchForPackages() {
         this.pkgs = await Api.pkgsWithNameStartingWith(this.search)
           .then(res => res.data.pkgs)

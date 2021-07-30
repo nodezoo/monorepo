@@ -2,6 +2,12 @@ const Express = require('express')
 const Path = require('path')
 
 
+//
+// TODO: Remove this once Auth has been implemented.
+//
+const TEST_USER_AUTH_TOKEN = '2bfe7bbc-d6d0-4d3a-b694-579ff642ebb4'
+
+
 function web(options) {
   const seneca = this
 
@@ -54,6 +60,33 @@ function web(options) {
       const { data: { pkgs } } = out
 
       return res.json({ pkgs })
+    })
+  })
+
+
+  app.post('/seneca/bookmarkPkg', (req, res, next) => {
+    //
+    // TODO: !!! AUTH !!!
+    //
+
+    const { name: pkg_name } = req.body
+
+    if (null == pkg_name) {
+      return res.sendStatus(422)
+    }
+
+    const msg = { auth_token: TEST_USER_AUTH_TOKEN, name: pkg_name }
+
+    seneca.act('role:user,scope:pkg,add:bookmark', msg, function (err, out) {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        return res.sendStatus(500)
+      }
+
+      return res.sendStatus(201)
     })
   })
 
