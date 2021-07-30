@@ -2,44 +2,28 @@
   <v-main>
     <v-container>
       <v-row>
-        <v-col>
+        <v-col class="text-center">
           <img src="@/assets/logo.png" alt="Node Zoo logo">
+          <p>Search <a href="#">Node.js</a> packages</p>
         </v-col>
       </v-row>
       <v-row>
-        <v-col>
+        <v-col class="text-center">
           <v-form @submit.prevent="onSubmitSearch">
-            <v-container>
-              <v-row>
-                <v-col>
-                  <v-text-field label="Search" v-model="search" @input="onSearchInput">
-                  </v-text-field>
-                </v-col>
-
-                <v-col>
-                  <v-btn type="submit" fab plain>
-                    <v-icon>mdi-magnify</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
+            <v-text-field label="Search" v-model="search" @input="onSearchInput" />
           </v-form>
         </v-col>
       </v-row>
-      <v-row v-for="pkg in pkgs">
+      <v-row v-for="pkg in pkgs" :key="pkg.name">
         <v-col>
           <v-card
-            elevation="1"
+            elevation="0"
             tile
+            color="grey lighten-5"
           >
             <v-card-title>{{ pkg.name }}</v-card-title>
             <v-card-subtitle>{{ pkg.version }}</v-card-subtitle>
             <v-card-text>{{ pkg.desc }}</v-card-text>
-            <v-card-actions>
-              <v-btn fab plain @click.prevent="onToggleBookmarkPkg($event, pkg.name)">
-                <v-icon>mdi-heart-plus-outline</v-icon>
-              </v-btn>
-            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -59,7 +43,18 @@
 
 
     data: () => ({
-      pkgs: [],
+      pkgs: [
+        {
+          name: 'fakename1',
+          version: '0.0.0',
+          desc: 'fakedesc1'
+        },
+        {
+          name: 'fakename2',
+          version: '0.0.0',
+          desc: 'fakedesc2'
+        }
+      ],
       search: '',
       last_typed_at: null
     }),
