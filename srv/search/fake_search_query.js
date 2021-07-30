@@ -5,29 +5,51 @@ module.exports = function make_fake_search_query() {
 
 
     const q = msg.q || {}
-    const safe_query = {}
-
-    safe_query.limit$ = 'number' === q.limit$ ? q.limit$ : 5 
-    if ('string' === typeof q.name) safe_query.name = q.name
 
 
-    let pkgs
-
-    pkgs = await seneca.make('nodezoo', 'npm')
-      .list$(safe_query)
-
-
-    const is_prefix_search = safe_query.name &&
+    const is_prefix_search = q.name &&
       'string' === typeof q.name.starts_with$
 
     if (is_prefix_search) {
-      pkgs = pkgs.filter(pkg => pkg.name.startsWith(q.name.starts_with$))
+      const prefix = q.name.starts_with$
+      const is_empty_prefix = '' === prefix.trim()
+
+
+      let pkgs
+
+      if (is_empty_prefix) {
+        pkgs = []
+      } else {
+        /* TODO: Implement support for extended operators in all
+         * seneca store plugins.
+         */
+        const matching_names = await seneca.make('nodezoo', 'npm')
+          .list$({ fields$: ['name'], all$: true })
+          .then(pkgs => pkgs.map(pkg => pkg.name))
+          .then(pkgs_names => {
+            return pkgs_names
+              .filter(pkg_name => pkg_name.startsWith(prefix))
+          })
+
+        const matching_pkgs = matching_names.map(name =>
+          seneca.make('nodezoo', 'npm').load$({ name }))
+
+        pkgs = await Promise.all(matching_pkgs)
+      }
+
+      return {
+        ok: true,
+        data: { pkgs }
+      }
     }
 
-
     return {
-      ok: true,
-      data: { pkgs }
+      ok: false,
+      why: 'not-impl',
+      details: {
+        message: 'Sorry, only searching by the prefix of a package' +
+          ' name is currently supported'
+      }
     }
   }
 }
