@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ShowPkg from '../views/ShowPkg.vue'
+import MyFavorites from '../views/MyFavorites.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/pkgs/:name',
     name: 'ShowPkg',
     component: ShowPkg
+  },
+  {
+    path: '/me/favorites',
+    name: 'MyFavorites',
+    component: MyFavorites
   },
   {
     path: '/login',

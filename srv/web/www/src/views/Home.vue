@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-row>
+      <router-link to="/me/favorites">Favorites</router-link>
+    </v-row>
+    <v-row>
       <v-col class="text-center">
         <v-form @submit.prevent="onSubmitSearch">
           <v-text-field label="Search" v-model="search" @input="onSearchInput" />
@@ -19,6 +22,9 @@
           </router-link>
           <v-card-subtitle>0.0.0_VER_PLAC</v-card-subtitle>
           <v-card-text><lorem_DESC_PLAC</v-card-text>
+          <v-card-actions>
+            <v-btn @click="doBookmarkPkg($event, { name: pkg.name })">Like</v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -44,8 +50,9 @@
 
 
     methods: {
-      async onToggleBookmarkPkg(_event, pkg_name) {
-        await Api.bookmarkPkg(pkg_name)
+      async doBookmarkPkg(_event, args) {
+        const { name } = args
+        await Api.doBookmarkPkg({ name })
       },
 
 
