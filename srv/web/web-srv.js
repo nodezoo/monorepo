@@ -1,5 +1,7 @@
 const Express = require('express')
 const Path = require('path')
+const Shared = require('../../lib/shared')
+const { pick } = Shared
 
 
 //
@@ -35,7 +37,7 @@ function web(options) {
   })
 
 
-  app.post('/seneca/pkgsWithNameStartingWith', (req, res, next) => {
+  app.post('/seneca/listPkgsWithNamePrefix', (req, res, next) => {
     const { prefix = null } = req.body
 
     if ('string' !== typeof prefix) {
@@ -58,13 +60,34 @@ function web(options) {
       }
 
       const { data: { pkgs } } = out
+      const pkgs_names = pkgs.map(pkg => pick(pkg, ['name']))
 
-      return res.json({ pkgs })
+      return res.json({ pkgs: pkgs_names })
     })
   })
 
 
-  app.post('/seneca/bookmarkPkg', (req, res, next) => {
+  app.post('/seneca/showPkg', (req, res, next) => {
+    const { name: pkg_name } = req.body
+
+    if (null == pkg_name) {
+      return res.sendStatus(422)
+    }
+
+    const msg = { name: pkg_name }
+
+    seneca.make('nodezoo', 'npm')
+      .load$({ name: pkg_name }, function (err, pkg) {
+        if (err) {
+          return next(err)
+        }
+
+        return res.json({ pkg: pick(pkg, ['name']) })
+      })
+  })
+
+
+  app.post('/seneca/doBookmarkPkg', (req, res, next) => {
     //
     // TODO: !!! AUTH !!!
     //
@@ -87,6 +110,30 @@ function web(options) {
       }
 
       return res.sendStatus(201)
+    })
+  })
+
+
+  app.post('/seneca/listMyBookmarkedPkgs', (req, res, next) => {
+    //
+    // TODO: !!! AUTH !!!
+    //
+
+    const msg = { auth_token: TEST_USER_AUTH_TOKEN }
+
+    seneca.act('role:user,scope:pkg,list:bookmarks', msg, function (err, out) {
+      if (err) {
+        return next(err)
+      }
+
+      const { bookmarks } = out.data
+
+      // TODO: Fetch packages' data.
+      //
+
+      const pkgs_names = bookmarks.map(b => pick(b, ['name']))
+
+      return res.json({ pkgs: pkgs_names })
     })
   })
 

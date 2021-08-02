@@ -14,9 +14,11 @@
           tile
           color="grey lighten-5"
         >
-          <v-card-title>{{ pkg.name }}</v-card-title>
-          <v-card-subtitle>{{ pkg.version }}</v-card-subtitle>
-          <v-card-text>{{ pkg.desc }}</v-card-text>
+          <router-link :to="'/pkgs/' + pkg.name">
+            <v-card-title>{{ pkg.name }}</v-card-title>
+          </router-link>
+          <v-card-subtitle>0.0.0_VER_PLAC</v-card-subtitle>
+          <v-card-text><lorem_DESC_PLAC</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -47,14 +49,15 @@
       },
 
 
-      async searchForPackages() {
-        this.pkgs = await Api.pkgsWithNameStartingWith(this.search)
+      async searchForPkgs() {
+        this.pkgs = await Api
+          .listPkgsWithNamePrefix({ prefix: this.search })
           .then(res => res.data.pkgs)
       },
 
 
       async onSubmitSearch() {
-        await this.searchForPackages()
+        await this.searchForPkgs()
       },
 
 
@@ -79,7 +82,7 @@
             return
           }
 
-          await self.searchForPackages()
+          await self.searchForPkgs()
         }, 300)
       }
     },
