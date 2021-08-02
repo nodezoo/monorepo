@@ -1,34 +1,26 @@
 <template>
-  <v-main>
-    <v-container>
-      <v-row>
-        <v-col class="text-center">
-          <img src="@/assets/logo.png" alt="Node Zoo logo">
-          <p>Search <a href="#">Node.js</a> packages</p>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col class="text-center">
-          <v-form @submit.prevent="onSubmitSearch">
-            <v-text-field label="Search" v-model="search" @input="onSearchInput" />
-          </v-form>
-        </v-col>
-      </v-row>
-      <v-row v-for="pkg in pkgs" :key="pkg.name">
-        <v-col>
-          <v-card
-            elevation="0"
-            tile
-            color="grey lighten-5"
-          >
-            <v-card-title>{{ pkg.name }}</v-card-title>
-            <v-card-subtitle>{{ pkg.version }}</v-card-subtitle>
-            <v-card-text>{{ pkg.desc }}</v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-main>
+  <v-container>
+    <v-row>
+      <v-col class="text-center">
+        <v-form @submit.prevent="onSubmitSearch">
+          <v-text-field label="Search" v-model="search" @input="onSearchInput" />
+        </v-form>
+      </v-col>
+    </v-row>
+    <v-row v-for="pkg in pkgs" :key="pkg.name">
+      <v-col>
+        <v-card
+          elevation="0"
+          tile
+          color="grey lighten-5"
+        >
+          <v-card-title>{{ pkg.name }}</v-card-title>
+          <v-card-subtitle>{{ pkg.version }}</v-card-subtitle>
+          <v-card-text>{{ pkg.desc }}</v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -43,18 +35,7 @@
 
 
     data: () => ({
-      pkgs: [
-        {
-          name: 'fakename1',
-          version: '0.0.0',
-          desc: 'fakedesc1'
-        },
-        {
-          name: 'fakename2',
-          version: '0.0.0',
-          desc: 'fakedesc2'
-        }
-      ],
+      pkgs: [],
       search: '',
       last_typed_at: null
     }),
