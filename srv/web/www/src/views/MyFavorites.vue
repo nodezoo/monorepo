@@ -34,7 +34,12 @@
 
     methods: {
       async listMyBookmarks() {
-        const { data: { pkgs } } = await Api.listMyBookmarkedPkgs()
+        const auth_token = this.$session?.get('AUTH_TOKEN')
+
+        const { data: { pkgs } } = await Api.listMyBookmarkedPkgs({
+          auth_token
+        })
+
         this.pkgs = pkgs
       }
     },

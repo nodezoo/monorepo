@@ -1,5 +1,6 @@
 const Express = require('express')
 const Path = require('path')
+const Morgan = require('morgan')
 const Shared = require('../../lib/shared')
 const { pick } = Shared
 
@@ -27,6 +28,9 @@ function web(options) {
   app.use(Express.json())
 
 
+  app.use(Morgan('combined'))
+
+
   const VIEWS_PATH = Path.join(__dirname, 'www', 'dist')
   app.use(Express.static(VIEWS_PATH))
 
@@ -34,6 +38,31 @@ function web(options) {
   app.get('/*', (req, res) => {
     const index = Path.join(VIEWS_PATH, 'index.html')
     return res.sendFile(index)
+  })
+
+
+  app.post('/seneca/loginUser', (req, res, next) => {
+    const { email, pass } = req.body
+
+    if (null == email || null == pass) {
+      return res.sendStatus(422)
+    }
+    
+    const msg = { email, pass }
+
+    seneca.act('role:user,scope:auth,login:user', msg, function (err, out) {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        return res.sendStatus(401)
+      }
+
+      const { data: { auth_token } } = out
+
+      return res.json({ auth_token })
+    })
   })
 
 
@@ -119,11 +148,25 @@ function web(options) {
     // TODO: !!! AUTH !!!
     //
 
-    const msg = { auth_token: TEST_USER_AUTH_TOKEN }
+    const authorization = req.get('authorization')
+    const msg = { auth_token: tokenOfAuthorizationHeader(authorization) }
 
     seneca.act('role:user,scope:pkg,list:bookmarks', msg, function (err, out) {
       if (err) {
         return next(err)
+      }
+
+      if (!out.ok) {
+
+        // TODO: Ugly. Refactor this ASAP.
+        //
+        if ('unauthorized' === out.why) {
+          return res.sendStatus(401)
+        }
+
+        console.error(err)
+
+        return res.sendStatus(500)
       }
 
       const { bookmarks } = out.data
@@ -145,6 +188,19 @@ function web(options) {
 
 
   app.listen(8080)
+}
+
+
+function tokenOfAuthorizationHeader(authorization) {
+  if ('string' !== typeof authorization) {
+    return res.sendStatus(401)
+  }
+
+  if (!authorization.match(/^Bearer \S+/)) {
+    return res.sendStatus(401)
+  }
+
+  return authorization.replace('Bearer ', '')
 }
 
 

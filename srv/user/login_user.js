@@ -32,8 +32,7 @@ module.exports = function make_login_user() {
     const { pass } = msg
 
 
-    const auth = await seneca
-      .post('login:user,sys:user', { email, pass })
+    const auth = await helpLogin({ email, pass }, { seneca })
 
     if (!auth.ok) {
       return { ok: false, why: 'unauthorized' }
@@ -47,5 +46,23 @@ module.exports = function make_login_user() {
       data: { auth_token }
     }
   }
+}
+
+
+async function helpLogin(args, ctx) {
+  const { email, pass } = args
+  const { seneca } = ctx
+
+
+  const already_authed = await seneca
+    .post('auth:user,sys:user', { email })
+
+  if (already_authed.ok) {
+    return already_authed
+  }
+
+
+  return seneca
+    .post('login:user,sys:user', { email, pass })
 }
 

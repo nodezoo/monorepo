@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <router-link to="/me/favorites">Favorites</router-link>
+      <router-link to="/login">Sign in</router-link>
     </v-row>
     <v-row>
       <v-col class="text-center">
