@@ -12,20 +12,7 @@
     </v-row>
     <v-row v-for="pkg in pkgs" :key="pkg.name">
       <v-col>
-        <v-card
-          elevation="0"
-          tile
-          color="grey lighten-5"
-        >
-          <router-link :to="'/pkgs/' + pkg.name">
-            <v-card-title>{{ pkg.name }}</v-card-title>
-          </router-link>
-          <v-card-subtitle>0.0.0_VER_PLAC</v-card-subtitle>
-          <v-card-text><lorem_DESC_PLAC</v-card-text>
-          <v-card-actions>
-            <v-btn @click="doBookmarkPkg($event, { name: pkg.name })">Like</v-btn>
-          </v-card-actions>
-        </v-card>
+        <PkgSummaryCard :pkg_name="pkg.name" />
       </v-col>
     </v-row>
   </v-container>
@@ -33,6 +20,7 @@
 
 <script>
   import Api from '@/lib/api'
+  import PkgSummaryCard from '@/components/PkgSummaryCard.vue'
 
 
   const TYPING_CHECK_WAIT_MS = 300
@@ -50,12 +38,6 @@
 
 
     methods: {
-      async doBookmarkPkg(_event, args) {
-        const { name } = args
-        await Api.doBookmarkPkg({ name })
-      },
-
-
       async searchForPkgs() {
         this.pkgs = await Api
           .listPkgsWithNamePrefix({ prefix: this.search })
@@ -95,6 +77,8 @@
     },
 
 
-    components: {}
+    components: {
+      PkgSummaryCard
+    }
   }
 </script>
