@@ -60,6 +60,24 @@ function web(options) {
   })
 
 
+  app.post('/seneca/logoutUser', authenticate({ seneca }), (req, res, next) => {
+    const { user: { id: user_id } } = req.auth$
+    const msg = { user_id }
+
+    seneca.act('logout:user,sys:user', msg, function (err, out) {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        return res.sendStatus(500)
+      }
+
+      return res.sendStatus(200)
+    })
+  })
+
+
   app.post('/seneca/listPkgsWithNamePrefix', (req, res, next) => {
     const { prefix = null } = req.body
 

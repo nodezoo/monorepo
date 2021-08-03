@@ -13,6 +13,18 @@ class Api {
   }
 
 
+  static async logoutUser(args) {
+    const { auth_token } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    return api.post('/logoutUser', {}, { headers })
+  }
+
+
   static async isPkgBookmarkedByMe(args) {
     const { auth_token, name } = args
     const headers = {}
