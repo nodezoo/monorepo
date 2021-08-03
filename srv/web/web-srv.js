@@ -5,12 +5,6 @@ const Shared = require('../../lib/shared')
 const { pick } = Shared
 
 
-//
-// TODO: Remove this once Auth has been implemented.
-//
-const TEST_USER_AUTH_TOKEN = '2bfe7bbc-d6d0-4d3a-b694-579ff642ebb4'
-
-
 function web(options) {
   const seneca = this
 
@@ -117,13 +111,22 @@ function web(options) {
 
 
   app.post('/seneca/doBookmarkPkg', (req, res, next) => {
+    const authorization = req.get('authorization')
+    const auth_token = tokenOfAuthorizationHeader(authorization)
+
+    if (!auth_token) {
+      return res.sendStatus(401)
+    }
+
+
     const { name: pkg_name } = req.body
 
     if (null == pkg_name) {
       return res.sendStatus(422)
     }
 
-    const msg = { auth_token: TEST_USER_AUTH_TOKEN, name: pkg_name }
+
+    const msg = { auth_token, name: pkg_name }
 
     seneca.act('role:user,scope:pkg,add:bookmark', msg, function (err, out) {
       if (err) {
