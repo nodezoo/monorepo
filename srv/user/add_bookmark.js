@@ -1,5 +1,3 @@
-const Auth = require('./lib/auth')
-
 
 module.exports = function make_add_bookmark() {
   return async function add_bookmark(msg) {

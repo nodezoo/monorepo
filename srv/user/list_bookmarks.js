@@ -1,4 +1,3 @@
-const Auth = require('./lib/auth')
 const Shared = require('../../lib/shared')
 const { pick } = Shared
 
