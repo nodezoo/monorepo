@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-row>
-      <router-link to="/login">Sign in</router-link>
+      <router-link v-if="$session.exists()" to="/logout">Sign out</router-link>
+      <router-link v-else to="/login">Sign in</router-link>
     </v-row>
     <v-row>
       <v-col class="text-center">
