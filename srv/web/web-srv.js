@@ -117,10 +117,6 @@ function web(options) {
 
 
   app.post('/seneca/doBookmarkPkg', (req, res, next) => {
-    //
-    // TODO: !!! AUTH !!!
-    //
-
     const { name: pkg_name } = req.body
 
     if (null == pkg_name) {
@@ -143,30 +139,60 @@ function web(options) {
   })
 
 
-  app.post('/seneca/listMyBookmarkedPkgs', (req, res, next) => {
-    //
-    // TODO: !!! AUTH !!!
-    //
-
+  app.post('/seneca/isPkgBookmarkedByMe', (req, res, next) => {
     const authorization = req.get('authorization')
-    const msg = { auth_token: tokenOfAuthorizationHeader(authorization) }
+    const auth_token = tokenOfAuthorizationHeader(authorization)
 
+    if (!auth_token) {
+      return res.sendStatus(401)
+    }
+
+
+    const { name: req_pkg_name } = req.body
+
+    if (!req_pkg_name) {
+      return res.sendStatus(422)
+    }
+
+
+    const msg = { auth_token }
+
+    // TODO: Set up a designated action to handle this logic.
+    //
     seneca.act('role:user,scope:pkg,list:bookmarks', msg, function (err, out) {
       if (err) {
         return next(err)
       }
 
-      if (!out.ok) {
+      const { bookmarks } = out.data
 
-        // TODO: Ugly. Refactor this ASAP.
-        //
-        if ('unauthorized' === out.why) {
-          return res.sendStatus(401)
-        }
+      const bookmark = bookmarks.find(b => b.name === req_pkg_name)
+      const is_bookmarked = null != bookmark
 
-        console.error(err)
+      return res.json({ is_bookmarked })
+    })
+  })
 
-        return res.sendStatus(500)
+
+  app.post('/seneca/listMyBookmarkedPkgs', (req, res, next) => {
+    // TODO: AUTH !!!
+    //
+    // Secure this HTTPS endpoint.
+    //
+    // ---
+
+    const authorization = req.get('authorization')
+    const auth_token = tokenOfAuthorizationHeader(authorization)
+
+    if (!auth_token) {
+      return res.sendStatus(401)
+    }
+
+    const msg = { auth_token }
+
+    seneca.act('role:user,scope:pkg,list:bookmarks', msg, function (err, out) {
+      if (err) {
+        return next(err)
       }
 
       const { bookmarks } = out.data
@@ -193,11 +219,11 @@ function web(options) {
 
 function tokenOfAuthorizationHeader(authorization) {
   if ('string' !== typeof authorization) {
-    return res.sendStatus(401)
+    return null
   }
 
   if (!authorization.match(/^Bearer \S+/)) {
-    return res.sendStatus(401)
+    return null
   }
 
   return authorization.replace('Bearer ', '')

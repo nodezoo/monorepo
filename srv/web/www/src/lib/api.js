@@ -13,6 +13,18 @@ class Api {
   }
 
 
+  static async isPkgBookmarkedByMe(args) {
+    const { auth_token, name } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    return api.post('/isPkgBookmarkedByMe', { name }, { headers })
+  }
+
+
   static async listPkgsWithNamePrefix(args) {
     const { prefix } = args
     return api.post('/listPkgsWithNamePrefix', { prefix })
@@ -20,10 +32,8 @@ class Api {
 
 
   static async listMyBookmarkedPkgs(args = {}) {
-    const headers = {}
-
-
     const { auth_token } = args
+    const headers = {}
 
     if ('string' === typeof auth_token) {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
