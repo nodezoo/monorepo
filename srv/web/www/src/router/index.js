@@ -94,12 +94,12 @@ router.beforeEach((to, from, next) => {
   if (isAuthRequired &&
     (!session?.exists() || !session?.has('AUTH_TOKEN'))) {
     //
-    // TODO: Call backend to check the token's validity.
+    // NOTE: Call backend to check the token's validity.
+    // QUESTION: Should we bother doing that here though?
     //
 
     return next({
-      path: '/login',
-      params: { nextUrl: to.fullPath }
+      path: '/login'
     })
   }
 

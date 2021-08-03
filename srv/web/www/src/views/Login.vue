@@ -46,11 +46,7 @@
         this.$session.set('AUTH_TOKEN', auth_token)
 
 
-        if (null == this.$route.params.nextUrl) {
-          this.$router.push('/')
-        } else {
-          this.$router.push(this.$route.params.nextUrl)
-        }
+        this.$router.push('/')
 
         return
       }
