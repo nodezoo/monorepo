@@ -110,13 +110,8 @@ function web(options) {
   })
 
 
-  app.post('/seneca/doBookmarkPkg', (req, res, next) => {
-    const authorization = req.get('authorization')
-    const auth_token = tokenOfAuthorizationHeader(authorization)
-
-    if (!auth_token) {
-      return res.sendStatus(401)
-    }
+  app.post('/seneca/doBookmarkPkg', authenticate({ seneca }), (req, res, next) => {
+    const { user: { id: user_id } } = req.auth$
 
 
     const { name: pkg_name } = req.body
@@ -126,7 +121,7 @@ function web(options) {
     }
 
 
-    const msg = { auth_token, name: pkg_name }
+    const msg = { user_id, name: pkg_name }
 
     seneca.act('role:user,scope:pkg,add:bookmark', msg, function (err, out) {
       if (err) {
@@ -142,21 +137,9 @@ function web(options) {
   })
 
 
-  app.post('/seneca/listMyBookmarkedPkgs', (req, res, next) => {
-    // TODO: AUTH !!!
-    //
-    // Secure this HTTPS endpoint.
-    //
-    // ---
-
-    const authorization = req.get('authorization')
-    const auth_token = tokenOfAuthorizationHeader(authorization)
-
-    if (!auth_token) {
-      return res.sendStatus(401)
-    }
-
-    const msg = { auth_token }
+  app.post('/seneca/listMyBookmarkedPkgs', authenticate({ seneca }), (req, res, next) => {
+    const { user: { id: user_id } } = req.auth$
+    const msg = { user_id }
 
     seneca.act('role:user,scope:pkg,list:bookmarks', msg, function (err, out) {
       if (err) {
@@ -185,16 +168,47 @@ function web(options) {
 }
 
 
-function tokenOfAuthorizationHeader(authorization) {
-  if ('string' !== typeof authorization) {
-    return null
-  }
+// TODO: Move under middlewares/
+//
+function authenticate({ seneca }) {
+  return (req, res, next) => {
+    const authorization = req.get('authorization')
 
-  if (!authorization.match(/^Bearer \S+/)) {
-    return null
-  }
 
-  return authorization.replace('Bearer ', '')
+    if ('string' !== typeof authorization) {
+      return res.sendStatus(401)
+    }
+
+
+    if (!authorization.match(/^Bearer \S+/)) {
+      return res.sendStatus(401)
+    }
+
+
+    const token = authorization.replace('Bearer ', '')
+    const msg = { token }
+
+
+    // TODO: Do not call @seneca/user directly !!!
+    //
+    seneca.act('auth:user,sys:user', msg, function (err, out) {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        console.error(out) // dbg
+        return res.sendStatus(401)
+      }
+
+
+      const { user } = out
+      req.auth$ = { user: pick(user, ['id']) }
+
+
+      return next()
+    })
+  }
 }
 
 

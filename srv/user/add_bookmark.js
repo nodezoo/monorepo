@@ -6,14 +6,18 @@ module.exports = function make_add_bookmark() {
     const seneca = this
 
 
-    const auth = await Auth.user(msg, { seneca })
+    const { user_id } = msg
 
-    if (!auth) {
-      return { ok: false, why: 'unauthorized' }
+    if (null == user_id) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['user_id'],
+          why_exactly: 'required'
+        }
+      }
     }
-
-    const { user } = auth
-    const { id: user_id } = user
 
 
     /* BEGIN: checking that the package exists in our db
