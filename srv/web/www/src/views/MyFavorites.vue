@@ -7,8 +7,7 @@
     </v-row>
     <v-row v-for="pkg in pkgs" :key="pkg.name">
       <v-col>
-        <PkgSummaryCard :pkg_name="pkg.name" />
-      </v-col>
+        <PkgSummaryCard :pkg_name="pkg.name" /> </v-col>
     </v-row>
   </v-container>
 </template>

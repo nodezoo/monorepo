@@ -47,8 +47,17 @@ class Api {
 
 
   static async doBookmarkPkg(args) {
+    const { auth_token } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+
     const { name } = args
-    return api.post('/doBookmarkPkg', { name })
+
+    return api.post('/doBookmarkPkg', { name }, { headers })
   }
 
 

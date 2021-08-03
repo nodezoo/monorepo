@@ -139,41 +139,6 @@ function web(options) {
   })
 
 
-  app.post('/seneca/isPkgBookmarkedByMe', (req, res, next) => {
-    const authorization = req.get('authorization')
-    const auth_token = tokenOfAuthorizationHeader(authorization)
-
-    if (!auth_token) {
-      return res.sendStatus(401)
-    }
-
-
-    const { name: req_pkg_name } = req.body
-
-    if (!req_pkg_name) {
-      return res.sendStatus(422)
-    }
-
-
-    const msg = { auth_token }
-
-    // TODO: Set up a designated action to handle this logic.
-    //
-    seneca.act('role:user,scope:pkg,list:bookmarks', msg, function (err, out) {
-      if (err) {
-        return next(err)
-      }
-
-      const { bookmarks } = out.data
-
-      const bookmark = bookmarks.find(b => b.name === req_pkg_name)
-      const is_bookmarked = null != bookmark
-
-      return res.json({ is_bookmarked })
-    })
-  })
-
-
   app.post('/seneca/listMyBookmarkedPkgs', (req, res, next) => {
     // TODO: AUTH !!!
     //

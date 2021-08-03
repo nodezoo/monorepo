@@ -11,7 +11,9 @@
     </v-card-title>
     <v-card-subtitle>0.0.0_VER_PLAC</v-card-subtitle>
     <v-card-text>lorem_DESC_PLAC</v-card-text>
-    <v-card-text>{{ is_pkg_bookmarked ? 'Unlike' : 'Like' }}</v-card-text>
+    <v-card-actions>
+      <slot name="actions"></slot>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -20,18 +22,6 @@
 
   export default {
     name: 'PkgSummaryCard',
-
-    data: () => ({
-      is_pkg_bookmarked: false
-    }),
-
-    async mounted() {
-      const auth_token = this.$session?.get('AUTH_TOKEN')
-
-      this.is_pkg_bookmarked = await Api
-        .isPkgBookmarkedByMe({ name: this.pkg_name, auth_token })
-        .then(res => res.data.is_bookmarked)
-    },
 
     props: {
       pkg_name: {
