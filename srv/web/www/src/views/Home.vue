@@ -1,9 +1,19 @@
 <template>
   <v-container>
-    <v-row>
-      <router-link v-if="$session.exists()" to="/logout">Sign out</router-link>
-      <router-link v-else to="/login">Sign in</router-link>
+
+    <v-row v-if="$session && $session.exists()">
+      <v-col>
+        <router-link to="/logout">Sign out</router-link>
+        <router-link to="/me/favorites">Favorites</router-link>
+      </v-col>
     </v-row>
+
+    <v-row v-else>
+      <v-col>
+        <router-link to="/login">Sign in</router-link>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col class="text-center">
         <v-form @submit.prevent="onSubmitSearch">
