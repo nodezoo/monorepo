@@ -9,6 +9,7 @@ aws sns create-topic --name nodezoo_get_package_role_source_source_github
 aws sns create-topic --name nodezoo_pull_package_role_source_source_github
 aws sns create-topic --name nodezoo_get_rate_limit_role_source_source_github
 aws sns create-topic --name nodezoo_role_search_search_query
+aws sns create-topic --name nodezoo_fake_search_query_role_search
 aws sns create-topic --name nodezoo_role_update_start_download
 aws sns create-topic --name nodezoo_role_update_start_follow
 aws sns create-topic --name nodezoo_role_update_start_ingest
@@ -18,5 +19,6 @@ aws sns create-topic --name nodezoo_role_update_stop_ingest
 aws sns create-topic --name nodezoo_process_change_role_update
 aws sns create-topic --name nodezoo_role_update_stats_ingest
 aws sns create-topic --name nodezoo_login_user_role_user_scope_auth
-aws sns create-topic --name nodezoo_bookmark_pkg_role_user_scope_pkg
+aws sns create-topic --name nodezoo_add_bookmark_role_user_scope_pkg
 aws sns create-topic --name nodezoo_list_bookmarks_role_user_scope_pkg
+aws sns create-topic --name nodezoo_load_bookmark_role_user_scope_pkg

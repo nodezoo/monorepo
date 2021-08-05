@@ -32,8 +32,16 @@ module.exports = function make_login_user() {
     const { pass } = msg
 
 
+    // NOTE: We do not allow multiple logins per user. When a user with an
+    // existing login tries to re-login, we log him out first, then log him
+    // back in.
+    //
+    await seneca.post('logout:user,sys:user', { email })
+
+
     const auth = await seneca
       .post('login:user,sys:user', { email, pass })
+
 
     if (!auth.ok) {
       return { ok: false, why: 'unauthorized' }

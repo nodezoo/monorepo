@@ -1,4 +1,3 @@
-const Auth = require('./lib/auth')
 const Shared = require('../../lib/shared')
 const { pick } = Shared
 
@@ -8,14 +7,18 @@ module.exports = function make_list_bookmarks() {
     const seneca = this
 
 
-    const auth = await Auth.user(msg, { seneca })
+    const { user_id } = msg
 
-    if (!auth) {
-      return { ok: false, why: 'unauthorized' }
+    if (null == user_id) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['user_id'],
+          why_exactly: 'required'
+        }
+      }
     }
-
-    const { user } = auth
-    const { id: user_id } = user
 
 
     const user_bookmarks = await seneca.make('nodezoo', 'bookmark')

@@ -102,6 +102,10 @@ main: srv: github: {
 main: srv: search: {
   msg: {
     'role:search,search:query': {}
+
+    # TODO: Delete this action once the search has been implemented.
+    #
+    'role:search,fake_search:query': {}
   }
 }
 

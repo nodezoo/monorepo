@@ -1,21 +1,31 @@
 
-module.exports = function make_add_bookmark() {
-  return async function add_bookmark(msg) {
+module.exports = function make_bookmark_pkg() {
+  return async function bookmark_pkg(msg) {
     const seneca = this
 
 
-    const { user_id } = msg
+    /* BEGIN: auth
+     */
 
-    if (null == user_id) {
-      return {
-        ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['user_id'],
-          why_exactly: 'required'
-        }
-      }
+    if ('string' !== typeof msg.auth_token) {
+      return { ok: false, why: 'unauthorized' }
     }
+
+    const { auth_token } = msg
+
+    const auth = await seneca.post('auth:user,sys:user', {
+      token: auth_token
+    })
+
+    if (!auth.ok) {
+      return { ok: false, why: 'unauthorized' }
+    }
+
+    const { user } = auth
+    const { id: user_id } = user
+
+    /* END: auth
+     */
 
 
     /* BEGIN: checking that the package exists in our db
@@ -41,7 +51,7 @@ module.exports = function make_add_bookmark() {
     if (!npm_pkg) {
       return {
         ok: false,
-        why: 'not-found',
+        why: 'not_found',
         details: { what: 'package' }
       }
     }
@@ -53,7 +63,7 @@ module.exports = function make_add_bookmark() {
     /* BEGIN: make a bookmark
      */
 
-    const { id: bookmark_id } = await seneca.make('nodezoo', 'bookmark')
+    await seneca.make('nodezoo', 'bookmark')
       .data$({ name: pkg_name, owner_id: user_id })
       .save$({ upsert$: ['name', 'owner_id'] })
 
@@ -61,7 +71,7 @@ module.exports = function make_add_bookmark() {
      */
 
 
-    return { ok: true, data: { bookmark_id } }
+    return { ok: true }
   }
 }
 
