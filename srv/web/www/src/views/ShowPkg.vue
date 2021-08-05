@@ -1,10 +1,15 @@
 <template>
-  <h1>{{ pkg_name }}</h1>
+  <div>
+    <h1>{{ pkg_name }}</h1>
+    <PkgHistoryChart />
+  </div>
 </template>
 
 
 <script>
   import Api from '@/lib/api'
+  import PkgHistoryChart from '@/components/PkgHistoryChart.vue'
+
 
   export default {
     name: 'ShowPkg',
@@ -21,6 +26,10 @@
       const { params: { name: pkg_name } } = this.$route
 
       this.pkg_name = pkg_name
+    },
+
+    components: {
+      PkgHistoryChart
     }
   }
 </script>
