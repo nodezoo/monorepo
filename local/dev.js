@@ -31,6 +31,18 @@ if (process.env.DEV_SQLITE_DB) {
 /*
  **/
 
+
+if (process.env.DEV_CREATE_FAKE_HISTORIES) {
+  const CreateFakeHistories = require('../devtools/create_fake_histories')
+
+  CreateFakeHistories.run({
+    seneca,
+    num_pkgs: 1,
+    since: '2021-08-01'
+  })
+}
+
+
 const options = {
   npm_registry_url: 'https://replicate.npmjs.com',
 
