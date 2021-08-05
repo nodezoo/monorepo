@@ -21,12 +21,13 @@ seneca
  * This is for testing purposes ONLY.
  * Please remove this once the frontend has been implemented.
  */
-const SqliteStore = require('seneca-sqlite-store')
+if (process.env.DEV_SQLITE_DB) {
+  const SqliteStore = require('seneca-sqlite-store')
 
-seneca.use(SqliteStore, {
-  database: './local/my_precious.db'
-})
-
+  seneca.use(SqliteStore, {
+    database: process.env.DEV_SQLITE_DB
+  })
+}
 /*
  **/
 

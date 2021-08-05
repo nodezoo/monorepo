@@ -45,6 +45,12 @@
           "role:source,source:github,get:rate_limit": {}
         }
       },
+      "history": {
+        "msg": {
+          "role:history,add:history": {},
+          "role:history,pull:npm_history": {}
+        }
+      },
       "search": {
         "msg": {
           "role:search,search:query": {},
@@ -133,6 +139,23 @@
           },
           "owner_id": {
             "type": "S"
+          }
+        },
+        "history": {
+          "day": {
+            "type": "S"
+          },
+          "npm_downloads": {
+            "type": "N"
+          },
+          "gh_stars": {
+            "type": "N"
+          },
+          "gh_forks": {
+            "type": "N"
+          },
+          "gh_issues": {
+            "type": "N"
           }
         }
       }

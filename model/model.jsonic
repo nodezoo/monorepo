@@ -56,6 +56,14 @@ main: ent: nodezoo: bookmark: {
   owner_id: type: S
 }
 
+main: ent: nodezoo: history: {
+  day: type: S
+  npm_downloads: type: N
+  gh_stars: type: N
+  gh_forks: type: N
+  gh_issues: type: N
+}
+
 
 
 
@@ -95,6 +103,14 @@ main: srv: github: {
     'role:source,source:github,get:package': {}
     'role:source,source:github,pull:package': {}
     'role:source,source:github,get:rate_limit': {}
+  }
+}
+
+
+main: srv: history: {
+  msg: {
+    'role:history,add:history': {}
+    'role:history,pull:npm_history': {}
   }
 }
 
