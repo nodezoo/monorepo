@@ -1,24 +1,12 @@
 const Assert = require('assert')
 const NpmDownloadStats = require('download-stats')
 const Shared = require('../../lib/shared')
-const { startOfDayUTC, nextDay, isValidDate } = Shared
+const { today, tomorrow } = Shared
 
 
 module.exports = function make_pull_npm_history() {
   return async function pull_npm_history(msg) {
     const seneca = this
-
-
-    if (null == msg.day || !isValidDate(new Date(msg.day))) {
-      return {
-        ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['day'],
-          why_exactly: 'required'
-        }
-      }
-    }
 
 
     if ('string' !== typeof msg.pkg_name) {
@@ -32,11 +20,12 @@ module.exports = function make_pull_npm_history() {
       }
     }
 
+    const { pkg_name } = msg
+
 
     return new Promise((resolve, _reject) => {
-      const { pkg_name } = msg
-      const day = startOfDayUTC(msg.day)
-      const stats_pull = NpmDownloadStats.get(day, nextDay(day), pkg_name)
+      const day = today()
+      const stats_pull = NpmDownloadStats.get(day, tomorrow(), pkg_name)
 
 
       stats_pull.once('error', err => {

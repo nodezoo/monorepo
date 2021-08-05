@@ -57,6 +57,7 @@ main: ent: nodezoo: bookmark: {
 }
 
 main: ent: nodezoo: history: {
+  name: type: S
   day: type: S
   npm_downloads: type: N
   gh_stars: type: N
@@ -111,6 +112,7 @@ main: srv: history: {
   msg: {
     'role:history,add:history': {}
     'role:history,pull:npm_history': {}
+    'role:history,pull:github_history': {}
   }
 }
 

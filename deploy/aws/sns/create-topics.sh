@@ -10,6 +10,7 @@ aws sns create-topic --name nodezoo_pull_package_role_source_source_github
 aws sns create-topic --name nodezoo_get_rate_limit_role_source_source_github
 aws sns create-topic --name nodezoo_add_history_role_history
 aws sns create-topic --name nodezoo_pull_npm_history_role_history
+aws sns create-topic --name nodezoo_pull_github_history_role_history
 aws sns create-topic --name nodezoo_role_search_search_query
 aws sns create-topic --name nodezoo_fake_search_query_role_search
 aws sns create-topic --name nodezoo_role_update_start_download

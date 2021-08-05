@@ -48,7 +48,8 @@
       "history": {
         "msg": {
           "role:history,add:history": {},
-          "role:history,pull:npm_history": {}
+          "role:history,pull:npm_history": {},
+          "role:history,pull:github_history": {}
         }
       },
       "search": {
@@ -142,6 +143,9 @@
           }
         },
         "history": {
+          "name": {
+            "type": "S"
+          },
           "day": {
             "type": "S"
           },
