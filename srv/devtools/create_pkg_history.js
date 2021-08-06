@@ -19,7 +19,7 @@ module.exports = function make_create_pkg_history() {
     const now = new Date()
 
     for (let day = new Date(since); day <= now; day = next_day(day)) {
-      seneca.make('nodezoo', 'history')
+      /* skip await */ seneca.make('nodezoo', 'history')
         .data$({
           name,
           day: make_timestamp(day),

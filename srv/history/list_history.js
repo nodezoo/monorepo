@@ -54,8 +54,7 @@ module.exports = function make_list_history() {
     ]))
 
 
-    return {
-      ok: true, data: { history, since } }
+    return { ok: true, data: { history, since } }
   }
 }
 

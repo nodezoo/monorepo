@@ -82,7 +82,8 @@
         "sns_topic": false,
         "msg": {
           "role:devtools,fake:true,create:pkg_history": {},
-          "role:devtools,fake:true,create:npm_pkg": {}
+          "role:devtools,fake:true,create:npm_pkg": {},
+          "role:devtools,create:user": {}
         }
       }
     },

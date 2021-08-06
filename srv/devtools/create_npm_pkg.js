@@ -11,7 +11,7 @@ module.exports = function make_create_npm_pkg() {
       giturl = null
     } = msg
 
-    seneca.make('nodezoo', 'npm')
+    await seneca.make('nodezoo', 'npm')
       .data$({
         name,
         version: '0.0.0',
@@ -19,15 +19,9 @@ module.exports = function make_create_npm_pkg() {
         desc: Faker.lorem.sentence(),
         readme: Faker.lorem.sentence()
       })
-      .save$((err, out) => {
-        if (err) {
-          return { ok: false, details: { message: err.message } }
-        }
+      .save$()
 
-        return { ok: true, data: { ent: out } }
-      })
-
-    return
+    return { ok: true, data: { ent: out } }
   }
 }
 

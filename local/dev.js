@@ -14,6 +14,8 @@ seneca
   .use('repl')
   .use('reload')
   .use('user')
+  .use('member')
+  .use('group')
 
 
 /**
@@ -48,3 +50,18 @@ const options = {
 for(const [name, srv] of Object.entries(Model.main.srv)) {
   seneca.use('../srv/'+name+'/'+name+'-srv.js', options)
 }
+
+
+seneca.ready(() => {
+  seneca.act('make:group,role:group', {
+    owner_id: null,
+    group: { name: 'Premium Users', mark: 'pu', code: 'PremiumUsers' },
+    unique: true
+  }, err => {
+    if (err) {
+      console.error(err)
+      process.exit(1)
+    }
+  })
+})
+

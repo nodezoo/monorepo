@@ -48,7 +48,9 @@
     "morgan": "1.10.0",
     "seneca": "^3.23.3",
     "seneca-entity": "^14.0.0",
+    "seneca-group": "0.9.0",
     "seneca-mem-store": "6.0.3",
+    "seneca-member": "1.1.0",
     "seneca-promisify": "^2.0.0",
     "seneca-sqlite-store": "0.0.3"
   }
