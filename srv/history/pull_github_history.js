@@ -60,11 +60,11 @@ module.exports = function make_pull_github_history() {
 
     await seneca.make('nodezoo', 'history')
       .data$({
-        name:      pkg_name,
-        gh_stars:  pkg.data.stargazers_count,
-        gh_forks:  pkg.data.forks_count,
+        name: pkg_name,
+        gh_stars: pkg.data.stargazers_count,
+        gh_forks: pkg.data.forks_count,
         gh_issues: pkg.data.open_issues_count, 
-        day:       make_timestamp(today)
+        day: make_timestamp(today)
       })
       .save$({ upsert$: ['name', 'day'] })
 

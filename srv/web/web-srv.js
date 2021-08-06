@@ -78,6 +78,47 @@ function web(options) {
   })
 
 
+  app.post('/seneca/listPkgHistory', (req, res, next) => {
+    if ('string' !== typeof req.body.name) {
+      return res.sendStatus(422)
+    }
+
+    const { name: pkg_name } = req.body
+
+
+    if ('string' !== typeof req.body.since) {
+      return res.sendStatus(422)
+    }
+
+
+    const is_valid_date_format = /^\d{4}-\d{2}-\d{2}$/.test(req.body.since)
+
+    if (!is_valid_date_format) {
+      return res.sendStatus(422)
+    }
+
+
+    const { since } = req.body
+
+
+    const msg = { pkg_name, since }
+
+    seneca.act('role:history,list:history', msg, (err, out) => {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        return res.sendStatus(500)
+      }
+
+      const { data: { history } } = out
+
+      return res.json({ history })
+    })
+  })
+
+
   app.post('/seneca/listPkgsWithNamePrefix', (req, res, next) => {
     const { prefix = null } = req.body
 

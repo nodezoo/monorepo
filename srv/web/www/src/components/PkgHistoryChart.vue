@@ -1,25 +1,13 @@
 <template>
   <LineChart
-
-    :chartData="{
-      labels: ['30 Jul', '31 Jul', '1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug'],
-      datasets: [
-        {
-          label: 'Downloads by day',
-          data: [60, 50, 45, 47, 37, 51, 55],
-          fill: false
-        },
-        {
-          label: 'Forks by day'
-        }
-      ]
-    }"
-
-    :options="{ maintainAspectRatio: false }" />
+    v-if="chartData"
+    :chartData="chartData"
+    :options="chartOptions" />
 </template>
 
 
 <script>
+  import Moment from 'moment'
   import Api from '@/lib/api'
   import LineChart from '@/components/LineChart.vue'
 
@@ -27,11 +15,32 @@
   export default {
     name: 'PkgHistoryChart',
 
+    methods: {
+    },
+
     data: () => ({
-      pkg_name: ''
+      chartData: null,
+      chartOptions: { maintainAspectRatio: false }
     }),
 
-    mounted() {
+    async mounted() {
+      setTimeout(() => {
+        this.chartData = {
+          labels: ['A', 'B', 'C'],
+          datasets: [{
+            label: 'TEST_LABEL_PLAC',
+            data: [50, 30, 40],
+            fill: false
+          }]
+        }
+      }, 1e3)
+    },
+
+    props: {
+      pkg_name: {
+        type: String,
+        required: true
+      }
     },
 
     components: {

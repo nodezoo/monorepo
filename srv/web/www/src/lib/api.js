@@ -7,6 +7,12 @@ const api = Axios.create({ baseURL: 'http://localhost:8080/seneca/' })
 
 
 class Api {
+  static async listPkgHistory(args) {
+    const { name, since } = args
+    return api.post('/listPkgHistory', { name, since })
+  }
+
+
   static async loginUser(args) {
     const { email, pass } = args
     return api.post('/loginUser', { email, pass })
