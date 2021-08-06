@@ -32,6 +32,9 @@ module.exports = function make_create_pkg_history() {
           if (err) console.error(err)
         })
     }
+
+
+    return { ok: true }
   }
 }
 
