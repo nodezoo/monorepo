@@ -16,6 +16,10 @@
     name: 'PkgHistoryChart',
 
     methods: {
+      daysAgo(ndays) {
+        return Moment().subtract(7, 'days')
+          .format('YYYY-MM-DD')
+      }
     },
 
     data: () => ({
@@ -24,16 +28,21 @@
     }),
 
     async mounted() {
-      setTimeout(() => {
-        this.chartData = {
-          labels: ['A', 'B', 'C'],
-          datasets: [{
-            label: 'TEST_LABEL_PLAC',
-            data: [50, 30, 40],
-            fill: false
-          }]
-        }
-      }, 1e3)
+      const { data: { history } } = await Api.listPkgHistory({
+        name: this.pkg_name,
+        since: this.daysAgo(7) 
+      })
+
+      this.history = history
+
+      this.chartData = {
+        labels: this.history.map(record => record.day),
+        datasets: [{
+          label: 'Downloads by day',
+          data: this.history.map(record => record.npm_downloads),
+          fill: false
+        }]
+      }
     },
 
     props: {
