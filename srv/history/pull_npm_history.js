@@ -1,7 +1,12 @@
 const Assert = require('assert')
 const Moment = require('moment')
 const NpmDownloadStats = require('download-stats')
-const { make_timestamp } = require('./lib/shared')
+
+const {
+  make_timestamp,
+  is_valid_timestamp
+} = require('./lib/shared')
+
 const Shared = require('../../lib/shared')
 const { today, tomorrow } = Shared
 
@@ -25,9 +30,23 @@ module.exports = function make_pull_npm_history() {
     const { pkg_name } = msg
 
 
+    const { date = null } = msg
+
+    if (!is_valid_timestamp(msg.date)) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['date'],
+          why_exactly: 'required'
+        }
+      }
+    }
+
+
     return new Promise((resolve, _reject) => {
-      const day = today()
-      const stats_pull = NpmDownloadStats.get(day, tomorrow(), pkg_name)
+      const day = today(date)
+      const stats_pull = NpmDownloadStats.get(day, tomorrow(day), pkg_name)
 
 
       stats_pull.once('error', err => {

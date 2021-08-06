@@ -1,4 +1,7 @@
-const { pick } = require('../../lib/shared')
+const {
+  pick,
+  is_valid_timestamp
+} = require('../../lib/shared')
 
 const NUM_DAYS_IN_LEAP_YEAR = 366
 
@@ -22,7 +25,7 @@ module.exports = function make_list_history() {
     const { pkg_name } = msg
 
 
-    if ('string' !== typeof msg.since) {
+    if (!is_valid_timestamp(msg.since)) {
       return {
         ok: false,
         why: 'invalid-field',
@@ -32,21 +35,6 @@ module.exports = function make_list_history() {
         }
       }
     }
-
-
-    const is_valid_date_format = /^\d{4}-\d{2}-\d{2}$/.test(msg.since)
-
-    if (!is_valid_date_format) {
-      return {
-        ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['since'],
-          why_exactly: 'format'
-        }
-      }
-    }
-
 
     const { since } = msg
 
