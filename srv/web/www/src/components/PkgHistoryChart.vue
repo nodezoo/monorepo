@@ -28,9 +28,21 @@
     }),
 
     async mounted() {
+      // TODO: NOTE TO SELF: PLEASE remove this logic (the one
+      // responsible for checking whether the user is logged in or not)
+      // - into a separate component or util.
+
+      if (!this.$session?.exists()) {
+        return
+      }
+
+      const auth_token = this.$session?.get('AUTH_TOKEN')
+
+
       const { data: { history } } = await Api.listPkgHistory({
+        auth_token,
         name: this.pkg_name,
-        since: this.daysAgo(7) 
+        since: this.daysAgo(7)
       })
 
       this.history = history

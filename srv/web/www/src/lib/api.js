@@ -8,8 +8,14 @@ const api = Axios.create({ baseURL: 'http://localhost:8080/seneca/' })
 
 class Api {
   static async listPkgHistory(args) {
-    const { name, since } = args
-    return api.post('/listPkgHistory', { name, since })
+    const { auth_token, name, since } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    return api.post('/listPkgHistory', { name, since }, { headers })
   }
 
 

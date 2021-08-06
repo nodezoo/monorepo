@@ -11,7 +11,7 @@ module.exports = function make_create_npm_pkg() {
       giturl = null
     } = msg
 
-    await seneca.make('nodezoo', 'npm')
+    const out = await seneca.make('nodezoo', 'npm')
       .data$({
         name,
         version: '0.0.0',

@@ -1,3 +1,5 @@
+const { pick } = require('../../lib/shared')
+
 
 module.exports = function make_fake_search_query() {
   return async function fake_search_query(msg) {
@@ -6,16 +8,14 @@ module.exports = function make_fake_search_query() {
 
     const q = msg.q || {}
 
-
     const is_prefix_search = q.name &&
       'string' === typeof q.name.starts_with$
+
 
     if (is_prefix_search) {
       const prefix = q.name.starts_with$
       const is_empty_prefix = '' === prefix.trim()
 
-
-      let pkgs
 
       if (is_empty_prefix) {
         return {
@@ -24,28 +24,29 @@ module.exports = function make_fake_search_query() {
         }
       }
 
-      /* TODO: Implement support for extended operators in all
-       * seneca store plugins, and then use seneca-entity as
-       * opposed to the native SQL driver.
-       */
 
-      const db = await seneca.make('nodezoo', 'npm').native$()
-
-      return new Promise((resolve, reject) => {
-        const sql = `select * from nodezoo_npm where name like ? limit 10`
-        const startswith = s => s + '%'
-
-        return db.all(sql, [startswith(prefix)], (err, pkgs) => {
-          if (err) {
-            return reject(err)
+      const ents = await seneca.make('nodezoo', 'npm')
+        .list$({
+          limit$: 10,
+          name: {
+            startswith$: prefix
           }
-
-          return resolve({
-            ok: true,
-            data: { pkgs }
-          })
         })
-      })
+
+
+      const pkgs = ents.map(ent => pick(ent, [
+        'name',
+        'version',
+        'giturl',
+        'desc',
+        'readme'
+      ]))
+      
+
+      return {
+        ok: true,
+        data: { pkgs }
+      }
     }
 
     return {

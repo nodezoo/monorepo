@@ -78,45 +78,52 @@ function web(options) {
   })
 
 
-  app.post('/seneca/listPkgHistory', (req, res, next) => {
-    if ('string' !== typeof req.body.name) {
-      return res.sendStatus(422)
-    }
+  app.post(
+    '/seneca/listPkgHistory',
 
-    const { name: pkg_name } = req.body
+    authenticate({ seneca }),
 
+    premiumUsersOnly({ seneca }),
 
-    if ('string' !== typeof req.body.since) {
-      return res.sendStatus(422)
-    }
-
-
-    const is_valid_date_format = /^\d{4}-\d{2}-\d{2}$/.test(req.body.since)
-
-    if (!is_valid_date_format) {
-      return res.sendStatus(422)
-    }
-
-
-    const { since } = req.body
-
-
-    const msg = { pkg_name, since }
-
-    seneca.act('role:history,list:history', msg, (err, out) => {
-      if (err) {
-        return next(err)
+    (req, res, next) => {
+      if ('string' !== typeof req.body.name) {
+        return res.sendStatus(422)
       }
 
-      if (!out.ok) {
-        return res.sendStatus(500)
+      const { name: pkg_name } = req.body
+
+
+      if ('string' !== typeof req.body.since) {
+        return res.sendStatus(422)
       }
 
-      const { data: { history } } = out
 
-      return res.json({ history })
+      const is_valid_date_format = /^\d{4}-\d{2}-\d{2}$/.test(req.body.since)
+
+      if (!is_valid_date_format) {
+        return res.sendStatus(422)
+      }
+
+
+      const { since } = req.body
+
+
+      const msg = { pkg_name, since }
+
+      seneca.act('role:history,list:history', msg, (err, out) => {
+        if (err) {
+          return next(err)
+        }
+
+        if (!out.ok) {
+          return res.sendStatus(500)
+        }
+
+        const { data: { history } } = out
+
+        return res.json({ history })
+      })
     })
-  })
 
 
   app.post('/seneca/listPkgsWithNamePrefix', (req, res, next) => {
@@ -229,6 +236,38 @@ function web(options) {
 
 // TODO: Move under middlewares/
 //
+function premiumUsersOnly({ seneca }) {
+  return (req, res, next) => {
+    if (null == req.auth$?.user?.id) {
+      return res.sendStatus(401)
+    }
+
+    const { user: { id: user_id } } = req.auth$
+    const msg = { user_id }
+
+    seneca.act('role:user,is:premium', msg, (err, out) => {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out.ok) {
+        return res.sendStatus(500)
+      }
+
+      const { data: { is_premium } } = out
+
+      if (!is_premium) {
+        return res.sendStatus(402)
+      }
+
+      return next()
+    })
+  }
+}
+
+
+// TODO: Move under middlewares/
+//
 function authenticate({ seneca }) {
   return (req, res, next) => {
     const authorization = req.get('authorization')
@@ -256,7 +295,7 @@ function authenticate({ seneca }) {
       }
 
       if (!out.ok) {
-        console.error(out) // dbg
+        console.error(out)
         return res.sendStatus(401)
       }
 

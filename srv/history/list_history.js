@@ -1,7 +1,11 @@
 const {
   pick,
-  is_valid_timestamp
 } = require('../../lib/shared')
+
+const { 
+  is_valid_timestamp
+} = require('./lib/shared')
+
 
 const NUM_DAYS_IN_LEAP_YEAR = 366
 

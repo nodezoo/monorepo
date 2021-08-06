@@ -25,3 +25,4 @@ aws sns create-topic --name nodezoo_login_user_role_user_scope_auth
 aws sns create-topic --name nodezoo_add_bookmark_role_user_scope_pkg
 aws sns create-topic --name nodezoo_list_bookmarks_role_user_scope_pkg
 aws sns create-topic --name nodezoo_load_bookmark_role_user_scope_pkg
+aws sns create-topic --name nodezoo_is_premium_role_user

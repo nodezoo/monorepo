@@ -21,6 +21,7 @@
 
         if ('string' === typeof auth_token) {
           await Api.logoutUser({ auth_token })
+            .catch(console.error)
         }
 
         this.$session.destroy()

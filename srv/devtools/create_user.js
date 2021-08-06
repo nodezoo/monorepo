@@ -16,7 +16,11 @@ module.exports = function make_create_user() {
 
     return {
       ok: true,
-      message: 'I sure hope you are in the __development__ environment! ;)'
+      message: 'I sure hope you are in the __development__ environment! ;)',
+      data: {
+        email,
+        pass
+      }
     }
   }
 }
