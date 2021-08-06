@@ -37,11 +37,35 @@
 
       this.chartData = {
         labels: this.history.map(record => record.day),
-        datasets: [{
-          label: 'Downloads by day',
-          data: this.history.map(record => record.npm_downloads),
-          fill: false
-        }]
+        datasets: [
+          {
+            label: 'Downloads',
+            data: this.history.map(record => record.npm_downloads),
+            fill: false,
+            borderColor: 'rgb(255, 0, 0)'
+          },
+
+          {
+            label: 'Forks',
+            data: this.history.map(record => record.gh_forks),
+            fill: false,
+            borderColor: 'rgb(0, 255, 0)'
+          },
+
+          {
+            label: 'Stars',
+            data: this.history.map(record => record.gh_stars),
+            fill: false,
+            borderColor: 'rgb(0, 0, 255)'
+          },
+
+          {
+            label: 'Open issues',
+            data: this.history.map(record => record.gh_issues),
+            fill: false,
+            borderColor: 'rgb(0, 255, 255)'
+          },
+        ]
       }
     },
 
