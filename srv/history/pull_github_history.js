@@ -1,7 +1,9 @@
 const Assert = require('assert')
+const Moment = require('moment')
 const OctokitLib = require('../../lib/github/octokit_lib')
 const { owner_and_repo_from_giturl } = require('../../lib/github/shared')
 const { startOfDayUTC } = require('../../lib/shared')
+const { make_timestamp } = require('./lib/shared')
 
 
 module.exports = function make_pull_github_history() {
@@ -62,7 +64,7 @@ module.exports = function make_pull_github_history() {
         gh_stars:  pkg.data.stargazers_count,
         gh_forks:  pkg.data.forks_count,
         gh_issues: pkg.data.open_issues_count, 
-        day:       today.toISOString()
+        day:       make_timestamp(today)
       })
       .save$({ upsert$: ['name', 'day'] })
 

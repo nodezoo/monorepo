@@ -1,5 +1,7 @@
 const Assert = require('assert')
+const Moment = require('moment')
 const NpmDownloadStats = require('download-stats')
+const { make_timestamp } = require('./lib/shared')
 const Shared = require('../../lib/shared')
 const { today, tomorrow } = Shared
 
@@ -42,7 +44,7 @@ module.exports = function make_pull_npm_history() {
             .data$({
               npm_downloads: downloads,
               name: pkg_name,
-              day: day.toISOString()
+              day: make_timestamp(day)
             })
             .save$({ upsert$: ['name', 'day'] })
         } catch (err) {

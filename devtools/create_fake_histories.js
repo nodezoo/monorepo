@@ -1,4 +1,5 @@
 const Faker = require('faker')
+const Moment = require('moment')
 
 
 async function run(args) {
@@ -14,7 +15,7 @@ async function run(args) {
       seneca.make('nodezoo', 'history')
         .data$({
           name: pkg_name,
-          day,
+          day: Moment(day).format('YYYY-MM-DD'),
           npm_downloads: randomInt(100, 200),
           gh_stars: randomInt(10, 50),
           gh_forks: randomInt(30, 40),
