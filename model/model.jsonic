@@ -142,6 +142,7 @@ main: srv: update: {
   }
 }
 
+
 main: srv: user: {
   msg: {
     'role:user,scope:auth,login:user': {}
@@ -152,11 +153,27 @@ main: srv: user: {
 }
 
 
+main: srv: devtools: {
+  #
+  # WARNING: This service is intended for development purposes,
+  # with the idea that the following actions will be invoked ONLY
+  # in the dev env via Seneca REPL.
+  #
+  # Please do __not__ ever expose any of these actions to the
+  # outside world.
+  #
+  msg: {
+    'role:devtools,fake:true,create:pkg_history': {}
+    'role:devtools,fake:true,create:npm_pkg': {}
+  }
+}
+
 
 main: srv: @"srv.jsonic"
 
 
-
+# QUESTION: Do we need this config?
+#
 main: api: http: {
   prefix: '/api'
   route: {

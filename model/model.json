@@ -77,6 +77,12 @@
           "role:user,scope:pkg,list:bookmarks": {},
           "role:user,scope:pkg,load:bookmark": {}
         }
+      },
+      "devtools": {
+        "msg": {
+          "role:devtools,fake:true,create:pkg_history": {},
+          "role:devtools,fake:true,create:npm_pkg": {}
+        }
       }
     },
     "ent": {
