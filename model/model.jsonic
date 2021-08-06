@@ -110,7 +110,6 @@ main: srv: github: {
 
 main: srv: history: {
   msg: {
-    'role:history,add:history': {}
     'role:history,pull:npm_history': {}
     'role:history,pull:github_history': {}
   }
