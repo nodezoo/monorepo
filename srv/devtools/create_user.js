@@ -11,8 +11,14 @@ module.exports = function make_create_user() {
     } = msg
 
     const regmsg = { email, pass }
+    const { user } = await seneca.post('sys:user,register:user', regmsg)
 
-    await seneca.post('sys:user,register:user', regmsg)
+    if (null != msg.group_id) {
+      const { group_id } = msg
+      const { id: user_id } = user
+
+      await seneca.post('add:user,role:group', { user_id, group_id })
+    }
 
     return {
       ok: true,
