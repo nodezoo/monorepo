@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 // TODO: Do not hardcode this.
 //
-const api = Axios.create({ baseURL: 'http://localhost:8080/seneca/' })
+const api = Axios.create({ baseURL: 'http://localhost:9000/seneca/' })
 
 
 class Api {

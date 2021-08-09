@@ -1,6 +1,7 @@
 const Express = require('express')
 const Path = require('path')
 const Morgan = require('morgan')
+const Cors = require('cors')
 const Shared = require('../../lib/shared')
 const { pick } = Shared
 
@@ -9,12 +10,28 @@ function web(options) {
   const seneca = this
 
 
-  /* TODO: Implement the hybrid approach to allow hot-reloading. See the
-   * following links for more information:
-   *
-   *   https://stackoverflow.com/questions/33385288/do-i-need-webpack-dev-server-if-i-am-using-a-node-server-like-express
-   *   https://stackoverflow.com/questions/26203725/how-to-allow-for-webpack-dev-server-to-allow-entry-points-from-react-router
-   */
+
+  const vue_app = Express()
+
+
+  const ASSETS_PATH = Path.join(__dirname, 'www', 'src', 'assets')
+  vue_app.use('/assets', Express.static(ASSETS_PATH))
+
+
+  const VIEWS_PATH = Path.join(__dirname, 'www', 'dist')
+  vue_app.use(Express.static(VIEWS_PATH))
+
+
+  vue_app.get('/*', (req, res) => {
+    const index = Path.join(VIEWS_PATH, 'index.html')
+    return res.sendFile(index)
+  })
+
+
+  vue_app.listen(8080)
+
+
+
 
   const app = Express()
 
@@ -22,17 +39,13 @@ function web(options) {
   app.use(Express.json())
 
 
+  app.use(Cors({
+    origin: 'http://localhost:8080',
+    optionsSuccessStatus: 200
+  }))
+
+
   app.use(Morgan('combined'))
-
-
-  const VIEWS_PATH = Path.join(__dirname, 'www', 'dist')
-  app.use(Express.static(VIEWS_PATH))
-
-
-  app.get('/*', (req, res) => {
-    const index = Path.join(VIEWS_PATH, 'index.html')
-    return res.sendFile(index)
-  })
 
 
   app.post('/seneca/loginUser', (req, res, next) => {
@@ -230,7 +243,7 @@ function web(options) {
   })
 
 
-  app.listen(8080)
+  app.listen(9000)
 }
 
 
