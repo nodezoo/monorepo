@@ -30,6 +30,7 @@
     "jasmine": "3.8.0",
     "jsonic": "jsonicjs/jsonic#4edd639987b75ef62a74e3904fb890f59d21379c",
     "nock": "13.1.1",
+    "nodemon": "2.0.12",
     "seneca-msg-test": "^3.2.0",
     "seneca-repl": "^1.2.0"
   },

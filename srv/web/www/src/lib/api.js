@@ -116,7 +116,17 @@ class Api {
 
   static async showPkg(args) {
     const { name } = args
-    return api.post('/seneca/showPkg', { name })
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        show: 'pkg',
+        name
+      }
+    }
+
+    return api.post('/api/public', reqparams)
   }
 }
 

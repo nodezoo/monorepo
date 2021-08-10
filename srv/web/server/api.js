@@ -16,6 +16,7 @@ function makeApi({ seneca }) {
   const public_actions = Patrun()
     .add({ role: 'web', scope: 'public', login: 'user' }, true)
     .add({ role: 'web', scope: 'public', search: 'pkgs' }, true)
+    .add({ role: 'web', scope: 'public', show: 'pkg' }, true)
   
 
   api.post('/public', (req, res, next) => {
