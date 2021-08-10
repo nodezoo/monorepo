@@ -3,7 +3,7 @@ import Axios from 'axios'
 
 // TODO: Do not hardcode this.
 //
-const api = Axios.create({ baseURL: 'http://localhost:9000/seneca/' })
+const api = Axios.create({ baseURL: 'http://localhost:9000/' })
 
 
 class Api {
@@ -15,13 +15,24 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
-    return api.post('/listPkgHistory', { name, since }, { headers })
+    return api.post('/seneca/listPkgHistory', { name, since }, { headers })
   }
 
 
   static async loginUser(args) {
     const { email, pass } = args
-    return api.post('/loginUser', { email, pass })
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        login: 'user',
+        email,
+        pass
+      }
+    }
+
+    return api.post('/api/public', reqparams)
   }
 
 
@@ -33,7 +44,15 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
-    return api.post('/logoutUser', {}, { headers })
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        logout: 'user'
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
   }
 
 
@@ -45,13 +64,13 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
-    return api.post('/isPkgBookmarkedByMe', { name }, { headers })
+    return api.post('/seneca/isPkgBookmarkedByMe', { name }, { headers })
   }
 
 
   static async listPkgsWithNamePrefix(args) {
     const { prefix } = args
-    return api.post('/listPkgsWithNamePrefix', { prefix })
+    return api.post('/seneca/listPkgsWithNamePrefix', { prefix })
   }
 
 
@@ -64,7 +83,7 @@ class Api {
     }
 
 
-    return api.post('/listMyBookmarkedPkgs',
+    return api.post('/seneca/listMyBookmarkedPkgs',
       {},
       { headers })
   }
@@ -81,13 +100,13 @@ class Api {
 
     const { name } = args
 
-    return api.post('/doBookmarkPkg', { name }, { headers })
+    return api.post('/seneca/doBookmarkPkg', { name }, { headers })
   }
 
 
   static async showPkg(args) {
     const { name } = args
-    return api.post('/showPkg', { name })
+    return api.post('/seneca/showPkg', { name })
   }
 }
 

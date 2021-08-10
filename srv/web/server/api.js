@@ -1,5 +1,8 @@
 const Express = require('express')
 const { authenticate } = require('./middlewares/authenticate')
+const Shared = require('../../../lib/shared')
+const { pick } = Shared
+const Patrun = require('patrun')
 
 
 function makeApi({ seneca }) {
@@ -9,16 +12,75 @@ function makeApi({ seneca }) {
   api.use(Express.json())
 
 
-  api.post('/public', (req, res) => {
-    return res.sendStatus(501)
+
+  const public_actions = Patrun()
+    .add({ role: 'web', scope: 'public', login: 'user' }, true)
+  
+
+  api.post('/public', (req, res, next) => {
+    const { msg = null } = req.body
+
+    if (null == msg) {
+      return res.sendStatus(422)
+    }
+
+    const is_supported = public_actions.find(msg)
+
+    if (!is_supported) {
+      return res.sendStatus(404)
+    }
+
+    return seneca.act(msg, (err, out) => {
+      if (err) {
+        return next(err)
+      }
+
+      if (!out) {
+        return res.sendStatus(204)
+      }
+
+      return res.json(out)
+    })
   })
 
 
+
+  const account_actions = Patrun()
+    .add({ role: 'web', scope: 'account', logout: 'user' }, true)
+
+
   api.post('/account', authenticate({ seneca }), (req, res) => {
-    return res.sendStatus(501)
+    const { msg = null } = req.body
+
+    if (null == msg) {
+      return res.sendStatus(422)
+    }
+
+    const is_supported = account_actions.find(msg)
+
+    if (!is_supported) {
+      return res.sendStatus(404)
+    }
+
+
+    const { user: { id: user_id } } = req.auth$
+
+     return seneca.act(msg, { user_id }, (err, out) => {
+        if (err) {
+          return next(err)
+        }
+
+        if (!out) {
+          return res.sendStatus(204)
+        }
+
+        return res.json(out)
+      })
   })
 
 
   return api
 }
 
+
+module.exports = makeApi

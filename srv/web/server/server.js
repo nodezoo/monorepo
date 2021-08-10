@@ -1,10 +1,11 @@
 const Express = require('express')
 const Morgan = require('morgan')
 const Cors = require('cors')
+const MakeApi = require('./api')
 const Shared = require('../../../lib/shared')
+const { pick } = Shared
 const { authenticate } = require('./middlewares/authenticate')
 const { premiumUsersOnly } = require('./middlewares/premium_users_only')
-const { pick } = Shared
 
 
 
@@ -211,6 +212,9 @@ function makeServer({ seneca }) {
       return res.json({ pkgs: pkgs_names })
     })
   })
+
+
+  app.use('/api', MakeApi({ seneca }))
 
 
   app.use((err, req, res, next) => {

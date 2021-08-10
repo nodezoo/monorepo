@@ -1,3 +1,5 @@
+const Shared = require('../../../../lib/shared')
+const { pick } = Shared
 
 
 function authenticate({ seneca }) {

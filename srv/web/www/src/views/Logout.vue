@@ -13,18 +13,17 @@
 
     methods: {
       async logoutUser() {
-        if (!this.$session?.exists()) {
-          return
+        if (this.$session?.exists()) {
+          const auth_token = this.$session.get('AUTH_TOKEN')
+
+          if ('string' === typeof auth_token) {
+            await Api.logoutUser({ auth_token })
+              .catch(console.error)
+          }
+
+          this.$session.destroy()
         }
 
-        const auth_token = this.$session.get('AUTH_TOKEN')
-
-        if ('string' === typeof auth_token) {
-          await Api.logoutUser({ auth_token })
-            .catch(console.error)
-        }
-
-        this.$session.destroy()
         this.$router.push('/')
       }
     }
