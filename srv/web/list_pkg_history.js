@@ -1,3 +1,4 @@
+const { isPremiumUser } = require('./lib/shared')
 
 
 module.exports = function make_list_pkg_history() {
@@ -5,10 +6,19 @@ module.exports = function make_list_pkg_history() {
     const seneca = this
 
 
-    // TODO: Respond with ok:false if the user is not a premium user.
-    //
+    if (null == typeof msg.user_id) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['user_id'],
+          why_exactly: 'required'
+        }
+      }
+    }
 
-    console.dir(msg) // dbg
+    const { user_id } = msg
+
 
     if ('string' !== typeof msg.name) {
       return {
@@ -49,6 +59,13 @@ module.exports = function make_list_pkg_history() {
     }
 
     const { since } = msg
+
+
+    const is_premium = await isPremiumUser({ user_id }, { seneca })
+
+    if (!is_premium) {
+      return { ok: false, why: 'payment-required' }
+    }
 
 
     const out = await seneca.post('role:history,list:history', {
