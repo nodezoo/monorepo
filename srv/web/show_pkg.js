@@ -13,7 +13,7 @@ module.exports = function make_show_pkg() {
         why: 'invalid-field',
         details: {
           path: ['name'],
-          why_exactly: 'name'
+          why_exactly: 'required'
         }
       }
     }

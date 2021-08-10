@@ -17,7 +17,8 @@
           "role:web,scope:public,login:user": {},
           "role:web,scope:public,search:pkgs": {},
           "role:web,scope:public,show:pkg": {},
-          "role:web,scope:account,logout:user": {}
+          "role:web,scope:account,logout:user": {},
+          "role:web,scope:account,list:pkg_history": {}
         }
       },
       "info": {

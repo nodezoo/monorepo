@@ -39,12 +39,17 @@
       const auth_token = this.$session?.get('AUTH_TOKEN')
 
 
-      const { data: { history } } = await Api.listPkgHistory({
+      const history_res = await Api.listPkgHistory({
         auth_token,
         name: this.pkg_name,
         since: this.daysAgo(7)
       })
 
+      if (200 !== history_res.status || !history_res.data.ok) {
+        return
+      }
+
+      const { data: { history } } = history_res.data
       this.history = history
 
       this.chartData = {

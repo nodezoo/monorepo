@@ -3,7 +3,7 @@
     <h1>{{ pkg_name }}</h1>
     <h2>{{ pkg_version }}</h2>
     <p>{{ pkg_desc }}</p>
-    <div>
+    <div v-if="pkg_name">
       <PkgHistoryChart :pkg_name="pkg_name" />
     </div>
   </div>
@@ -26,6 +26,8 @@
 
     async mounted() {
       const { params: { name: pkg_name } } = this.$route
+
+
       const pkg_res = await Api.showPkg({ name: pkg_name })
 
       if (200 !== pkg_res.status || !pkg_res.data.ok) {
@@ -37,7 +39,7 @@
 
       const { data: { pkg } } = pkg_res.data
 
-      this.pkg_name = pkg.name
+      this.pkg_name = pkg_name
       this.pkg_version = pkg.npm.version
       this.pkg_desc = pkg.npm.desc
     },

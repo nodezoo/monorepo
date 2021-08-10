@@ -51,6 +51,7 @@ function makeApi({ seneca }) {
 
   const account_actions = Patrun()
     .add({ role: 'web', scope: 'account', logout: 'user' }, true)
+    .add({ role: 'web', scope: 'account', list: 'pkg_history' }, true)
 
 
   api.post('/account', authenticate({ seneca }), (req, res) => {

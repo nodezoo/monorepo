@@ -2,6 +2,7 @@ aws sns create-topic --name nodezoo_login_user_role_web_scope_public
 aws sns create-topic --name nodezoo_role_web_scope_public_search_pkgs
 aws sns create-topic --name nodezoo_role_web_scope_public_show_pkg
 aws sns create-topic --name nodezoo_logout_user_role_web_scope_account
+aws sns create-topic --name nodezoo_list_pkg_history_role_web_scope_account
 aws sns create-topic --name nodezoo_collect_part_role_info
 aws sns create-topic --name nodezoo_get_info_role_info
 aws sns create-topic --name nodezoo_role_info_test_true

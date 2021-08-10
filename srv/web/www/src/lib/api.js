@@ -15,7 +15,17 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
-    return api.post('/seneca/listPkgHistory', { name, since }, { headers })
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        list: 'pkg_history',
+        name,
+        since
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
   }
 
 
