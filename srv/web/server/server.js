@@ -2,7 +2,10 @@ const Express = require('express')
 const Morgan = require('morgan')
 const Cors = require('cors')
 const Shared = require('../../../lib/shared')
+const { authenticate } = require('./middlewares/authenticate')
+const { premiumUsersOnly } = require('./middlewares/premium_users_only')
 const { pick } = Shared
+
 
 
 function makeServer({ seneca }) {
@@ -214,83 +217,6 @@ function makeServer({ seneca }) {
     console.error(err)
     return res.sendStatus(500)
   })
-
-
-
-  // TODO: Move under middlewares/
-  //
-  function premiumUsersOnly({ seneca }) {
-    return (req, res, next) => {
-      if (null == req.auth$?.user?.id) {
-        return res.sendStatus(401)
-      }
-
-      const { user: { id: user_id } } = req.auth$
-      const msg = { user_id }
-
-      seneca.act('role:user,is:premium', msg, (err, out) => {
-        if (err) {
-          return next(err)
-        }
-
-        if (!out.ok) {
-          return res.sendStatus(500)
-        }
-
-        const { data: { is_premium } } = out
-
-        if (!is_premium) {
-          return res.sendStatus(402)
-        }
-
-        return next()
-      })
-    }
-  }
-
-
-  // TODO: Move under middlewares/
-  //
-  function authenticate({ seneca }) {
-    return (req, res, next) => {
-      const authorization = req.get('authorization')
-
-
-      if ('string' !== typeof authorization) {
-        return res.sendStatus(401)
-      }
-
-
-      if (!authorization.match(/^Bearer \S+/)) {
-        return res.sendStatus(401)
-      }
-
-
-      const token = authorization.replace('Bearer ', '')
-      const msg = { token }
-
-
-      // TODO: Do not call @seneca/user directly !!!
-      //
-      seneca.act('auth:user,sys:user', msg, function (err, out) {
-        if (err) {
-          return next(err)
-        }
-
-        if (!out.ok) {
-          console.error(out)
-          return res.sendStatus(401)
-        }
-
-
-        const { user } = out
-        req.auth$ = { user: pick(user, ['id']) }
-
-
-        return next()
-      })
-    }
-  }
 
 
   return app
