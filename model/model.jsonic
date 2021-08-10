@@ -84,8 +84,9 @@ main: srv: web: {
 
     'role:web,scope:account,logout:user': {}
     'role:web,scope:account,list:pkg_history': {}
+    'role:web,scope:account,list:bookmarks': {}
+
     #'role:web,scope:account,bookmark:pkg': {}
-    #'role:web,scope:account,list:bookmarks': {}
   }
 }
 
