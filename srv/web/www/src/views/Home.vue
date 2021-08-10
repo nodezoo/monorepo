@@ -68,10 +68,12 @@
 
       async searchForPkgs(args) {
         const { search } = args
+        const pkgs_res = await Api.listPkgsWithNamePrefix({ prefix: search })
 
-        this.pkgs = await Api
-          .listPkgsWithNamePrefix({ prefix: search })
-          .then(res => res.data.pkgs)
+        if (pkgs_res.data.ok) {
+          const { data: { pkgs } } = pkgs_res.data
+          this.pkgs = pkgs
+        }
 
 
         if (this.$session.exists()) {

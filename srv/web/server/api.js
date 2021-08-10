@@ -15,6 +15,7 @@ function makeApi({ seneca }) {
 
   const public_actions = Patrun()
     .add({ role: 'web', scope: 'public', login: 'user' }, true)
+    .add({ role: 'web', scope: 'public', search: 'pkgs' }, true)
   
 
   api.post('/public', (req, res, next) => {
@@ -30,7 +31,7 @@ function makeApi({ seneca }) {
       return res.sendStatus(404)
     }
 
-    return seneca.act(msg, (err, out) => {
+    seneca.act(msg, (err, out) => {
       if (err) {
         return next(err)
       }
@@ -41,6 +42,8 @@ function makeApi({ seneca }) {
 
       return res.json(out)
     })
+
+    return
   })
 
 
@@ -65,17 +68,19 @@ function makeApi({ seneca }) {
 
     const { user: { id: user_id } } = req.auth$
 
-     return seneca.act(msg, { user_id }, (err, out) => {
-        if (err) {
-          return next(err)
-        }
+    seneca.act(msg, { user_id }, (err, out) => {
+      if (err) {
+        return next(err)
+      }
 
-        if (!out) {
-          return res.sendStatus(204)
-        }
+      if (!out) {
+        return res.sendStatus(204)
+      }
 
-        return res.json(out)
-      })
+      return res.json(out)
+    })
+
+    return
   })
 
 

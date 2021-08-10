@@ -35,6 +35,7 @@
         })
 
         const is_successful = 200 === auth.status &&
+          auth.data.ok &&
           'auth_token' in auth.data.data
 
         if (!is_successful) {

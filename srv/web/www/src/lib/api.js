@@ -70,7 +70,17 @@ class Api {
 
   static async listPkgsWithNamePrefix(args) {
     const { prefix } = args
-    return api.post('/seneca/listPkgsWithNamePrefix', { prefix })
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        search: 'pkgs',
+        prefix
+      }
+    }
+
+    return api.post('/api/public', reqparams)
   }
 
 
