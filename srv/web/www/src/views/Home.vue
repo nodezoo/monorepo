@@ -62,7 +62,11 @@
       isBookmarkedPkg(args) {
         const { name } = args
 
-        return this.bookmarks.find(b => b.name === name)
+        if (null == this.bookmarks) {
+          return false
+        }
+
+        return Boolean(this.bookmarks.find(b => b.name === name))
       },
 
 

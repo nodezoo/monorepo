@@ -102,10 +102,15 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        list: 'bookmarks'
+      }
+    }
 
-    return api.post('/seneca/listMyBookmarkedPkgs',
-      {},
-      { headers })
+    return api.post('/api/account', reqparams, { headers })
   }
 
 
@@ -120,7 +125,16 @@ class Api {
 
     const { name } = args
 
-    return api.post('/seneca/doBookmarkPkg', { name }, { headers })
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        bookmark: 'pkg',
+        name
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
   }
 
 

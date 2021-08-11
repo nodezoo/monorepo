@@ -53,9 +53,10 @@ function makeApi({ seneca }) {
     .add({ role: 'web', scope: 'account', logout: 'user' }, true)
     .add({ role: 'web', scope: 'account', list: 'pkg_history' }, true)
     .add({ role: 'web', scope: 'account', list: 'bookmarks' }, true)
+    .add({ role: 'web', scope: 'account', bookmark: 'pkg' }, true)
 
 
-  api.post('/account', authenticate({ seneca }), (req, res) => {
+  api.post('/account', authenticate({ seneca }), (req, res, next) => {
     const { msg = null } = req.body
 
     if (null == msg) {

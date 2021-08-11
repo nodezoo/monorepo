@@ -21,9 +21,13 @@ module.exports = function make_list_bookmarks() {
     const { user_id } = msg
 
 
-    const out = await seneca.act('role:user,scope:pkg,list:bookmarks', { user_id })
+    const out = await seneca.post('role:user,scope:pkg,list:bookmarks', {
+      user_id
+    })
+
 
     if (!out.ok) {
+      console.dir(out) // dbg
       //
       // TODO: Indicate the `why` to the client. Probably, do not just pass
       // out.why to the response. Instead, map internal why-codes
