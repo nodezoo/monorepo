@@ -18,6 +18,7 @@
           "role:web,scope:public,search:pkgs": {},
           "role:web,scope:public,show:pkg": {},
           "role:web,scope:account,logout:user": {},
+          "role:web,scope:account,load:profile": {},
           "role:web,scope:account,list:pkg_history": {},
           "role:web,scope:account,bookmark:pkg": {},
           "role:web,scope:account,list:bookmarks": {}
@@ -84,7 +85,8 @@
           "role:user,scope:pkg,add:bookmark": {},
           "role:user,scope:pkg,list:bookmarks": {},
           "role:user,scope:pkg,load:bookmark": {},
-          "role:user,is:premium": {}
+          "role:user,is:premium": {},
+          "role:user,load:profile": {}
         }
       },
       "devtools": {

@@ -83,6 +83,7 @@ main: srv: web: {
     'role:web,scope:public,show:pkg': {}
 
     'role:web,scope:account,logout:user': {}
+    'role:web,scope:account,load:profile': {}
     'role:web,scope:account,list:pkg_history': {}
     'role:web,scope:account,bookmark:pkg': {}
     'role:web,scope:account,list:bookmarks': {}
@@ -159,7 +160,14 @@ main: srv: user: {
     'role:user,scope:pkg,add:bookmark': {}
     'role:user,scope:pkg,list:bookmarks': {}
     'role:user,scope:pkg,load:bookmark': {}
+
+     # TODO: change the pattern to: 'role:user,scope:account,is:premium'
+     #
     'role:user,is:premium': {}
+
+     # TODO: change the pattern to: 'role:user,scope:account,load:profile'
+     #
+    'role:user,load:profile': {}
   }
 }
 

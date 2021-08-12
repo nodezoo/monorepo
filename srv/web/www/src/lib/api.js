@@ -66,6 +66,26 @@ class Api {
   }
 
 
+  static async loadUserProfile(args) {
+    const { auth_token } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        load: 'profile'
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
+  }
+
+
   static async listPkgsWithNamePrefix(args) {
     const { prefix } = args
 

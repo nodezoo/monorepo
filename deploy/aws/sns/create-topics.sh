@@ -2,6 +2,7 @@ aws sns create-topic --name nodezoo_login_user_role_web_scope_public
 aws sns create-topic --name nodezoo_role_web_scope_public_search_pkgs
 aws sns create-topic --name nodezoo_role_web_scope_public_show_pkg
 aws sns create-topic --name nodezoo_logout_user_role_web_scope_account
+aws sns create-topic --name nodezoo_load_profile_role_web_scope_account
 aws sns create-topic --name nodezoo_list_pkg_history_role_web_scope_account
 aws sns create-topic --name nodezoo_bookmark_pkg_role_web_scope_account
 aws sns create-topic --name nodezoo_list_bookmarks_role_web_scope_account
@@ -33,3 +34,4 @@ aws sns create-topic --name nodezoo_add_bookmark_role_user_scope_pkg
 aws sns create-topic --name nodezoo_list_bookmarks_role_user_scope_pkg
 aws sns create-topic --name nodezoo_load_bookmark_role_user_scope_pkg
 aws sns create-topic --name nodezoo_is_premium_role_user
+aws sns create-topic --name nodezoo_load_profile_role_user
