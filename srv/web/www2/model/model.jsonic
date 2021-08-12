@@ -1,0 +1,49 @@
+
+sys: @'../node_modules/@voxgig/model/model/sys.jsonic'
+
+main: app: web: /sys/app/web/basic
+
+
+
+
+main: app: web: parts: {
+  head: {
+    tool: {
+      expandSide: { active: false }
+      add: { active: false }
+      search: { active: false }
+      avatar: { active: true }
+    }
+  }
+
+  side: {
+    menu: {
+      order: 'package,report'
+      items: /main/app/web/view
+    }
+  }
+}
+
+
+
+main: app: web: defaults: {
+  view: 'package'
+}
+
+main: app: web: view: {
+  package: {
+    title: 'Packages'
+    icon: 'clipboard-list-outline'
+    cmp: 'basic-package-view'
+  }
+  report: {
+    title: 'Reports'
+    icon: 'clipboard-list-outline'
+    cmp: 'basic-report-view'
+  }
+  profile: {
+    title: 'Profile'
+    icon: 'clipboard-list-outline'
+    cmp: 'basic-profile-view'
+  }
+}

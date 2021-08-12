@@ -1,0 +1,110 @@
+{
+  "sys": {
+    "shape": {
+      "app": {
+        "parts": {}
+      },
+      "part": {
+        "img": {}
+      }
+    },
+    "app": {
+      "web": {
+        "basic": {
+          "name": "basic",
+          "layout": "BasicAdmin",
+          "parts": {
+            "head": {
+              "part": "BasicHead"
+            },
+            "side": {
+              "part": "BasicSide"
+            },
+            "main": {
+              "part": "BasicMain"
+            },
+            "foot": {
+              "part": "BasicFoot"
+            }
+          }
+        }
+      }
+    }
+  },
+  "main": {
+    "app": {
+      "web": {
+        "name": "basic",
+        "layout": "BasicAdmin",
+        "parts": {
+          "head": {
+            "part": "BasicHead",
+            "tool": {
+              "expandSide": {
+                "active": false
+              },
+              "add": {
+                "active": false
+              },
+              "search": {
+                "active": false
+              },
+              "avatar": {
+                "active": true
+              }
+            }
+          },
+          "side": {
+            "part": "BasicSide",
+            "menu": {
+              "order": "package,report",
+              "items": {
+                "package": {
+                  "title": "Packages",
+                  "icon": "clipboard-list-outline",
+                  "cmp": "basic-package-view"
+                },
+                "report": {
+                  "title": "Reports",
+                  "icon": "clipboard-list-outline",
+                  "cmp": "basic-report-view"
+                },
+                "profile": {
+                  "title": "Profile",
+                  "icon": "clipboard-list-outline",
+                  "cmp": "basic-profile-view"
+                }
+              }
+            }
+          },
+          "main": {
+            "part": "BasicMain"
+          },
+          "foot": {
+            "part": "BasicFoot"
+          }
+        },
+        "defaults": {
+          "view": "package"
+        },
+        "view": {
+          "package": {
+            "title": "Packages",
+            "icon": "clipboard-list-outline",
+            "cmp": "basic-package-view"
+          },
+          "report": {
+            "title": "Reports",
+            "icon": "clipboard-list-outline",
+            "cmp": "basic-report-view"
+          },
+          "profile": {
+            "title": "Profile",
+            "icon": "clipboard-list-outline",
+            "cmp": "basic-profile-view"
+          }
+        }
+      }
+    }
+  }
+}
