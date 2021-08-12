@@ -2,8 +2,9 @@
   <v-container>
     <v-row v-if="$session && $session.exists()">
       <v-col>
-        <router-link to="/logout">Sign out</router-link>
+        <router-link to="/me/profile">Profile</router-link>
         <router-link to="/me/favorites">Favorites</router-link>
+        <router-link to="/logout">Sign out</router-link>
       </v-col>
     </v-row>
 

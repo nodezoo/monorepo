@@ -5,6 +5,7 @@ import ShowPkg from '../views/ShowPkg.vue'
 import MyFavorites from '../views/MyFavorites.vue'
 import NotFound from '../views/NotFound.vue'
 import Logout from '../views/Logout.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 
 Vue.use(VueRouter)
@@ -25,6 +26,14 @@ const routes = [
     component: ShowPkg,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: '/me/profile',
+    name: 'ProfileView',
+    component: ProfileView,
+    meta: {
+      requiresAuth: true
     }
   },
   {
