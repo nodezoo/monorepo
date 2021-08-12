@@ -27,7 +27,6 @@ module.exports = function make_list_bookmarks() {
 
 
     if (!out.ok) {
-      console.dir(out) // dbg
       //
       // TODO: Indicate the `why` to the client. Probably, do not just pass
       // out.why to the response. Instead, map internal why-codes
