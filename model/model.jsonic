@@ -87,6 +87,13 @@ main: srv: web: {
     'role:web,scope:account,list:pkg_history': {}
     'role:web,scope:account,bookmark:pkg': {}
     'role:web,scope:account,list:bookmarks': {}
+    'role:web,scope:account,is:premium': {}
+
+    # WARNING: This is a temporary action, and will
+    # removed as soon as Stripe integration has been
+    # implemented.
+    #
+    'role:web,scope:account,join:premium': {}
   }
 }
 
@@ -168,6 +175,10 @@ main: srv: user: {
      # TODO: change the pattern to: 'role:user,scope:account,load:profile'
      #
     'role:user,load:profile': {}
+
+     # TODO: change the pattern to: 'role:user,scope:account,join:premium'
+     #
+    'role:user,join:premium': {}
   }
 }
 

@@ -86,6 +86,46 @@ class Api {
   }
 
 
+  static async makeUserPremium(args) {
+    const { auth_token } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        join: 'premium'
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
+  }
+
+
+  static async isPremiumUser(args) {
+    const { auth_token } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        is: 'premium'
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
+  }
+
+
   static async listPkgsWithNamePrefix(args) {
     const { prefix } = args
 
