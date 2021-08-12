@@ -1,5 +1,5 @@
 const Axios = require('axios')
-const OctokitLib = require('./lib/octokit_lib')
+const OctokitLib = require('../../lib/github/octokit_lib')
 
 
 module.exports = function make_get_rate_limit() {

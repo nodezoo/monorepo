@@ -13,7 +13,15 @@
         }
       },
       "web": {
-        "msg": {}
+        "msg": {
+          "role:web,scope:public,login:user": {},
+          "role:web,scope:public,search:pkgs": {},
+          "role:web,scope:public,show:pkg": {},
+          "role:web,scope:account,logout:user": {},
+          "role:web,scope:account,list:pkg_history": {},
+          "role:web,scope:account,bookmark:pkg": {},
+          "role:web,scope:account,list:bookmarks": {}
+        }
       },
       "info": {
         "msg": {
@@ -45,6 +53,13 @@
           "role:source,source:github,get:rate_limit": {}
         }
       },
+      "history": {
+        "msg": {
+          "role:history,pull:npm_history": {},
+          "role:history,pull:github_history": {},
+          "role:history,list:history": {}
+        }
+      },
       "search": {
         "msg": {
           "role:search,search:query": {},
@@ -68,7 +83,16 @@
           "role:user,scope:auth,login:user": {},
           "role:user,scope:pkg,add:bookmark": {},
           "role:user,scope:pkg,list:bookmarks": {},
-          "role:user,scope:pkg,load:bookmark": {}
+          "role:user,scope:pkg,load:bookmark": {},
+          "role:user,is:premium": {}
+        }
+      },
+      "devtools": {
+        "sns_topic": false,
+        "msg": {
+          "role:devtools,fake:true,create:pkg_history": {},
+          "role:devtools,fake:true,create:npm_pkg": {},
+          "role:devtools,create:user": {}
         }
       }
     },
@@ -133,6 +157,26 @@
           },
           "owner_id": {
             "type": "S"
+          }
+        },
+        "history": {
+          "name": {
+            "type": "S"
+          },
+          "day": {
+            "type": "S"
+          },
+          "npm_downloads": {
+            "type": "N"
+          },
+          "gh_stars": {
+            "type": "N"
+          },
+          "gh_forks": {
+            "type": "N"
+          },
+          "gh_issues": {
+            "type": "N"
           }
         }
       }

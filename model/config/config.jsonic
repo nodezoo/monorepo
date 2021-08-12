@@ -2,7 +2,4 @@ sys: model: builders: {
   create_sns_topics: {
     load: 'build/create_sns_topics'
   }
-  foo: {
-    load: 'build/foo'
-  }
 }

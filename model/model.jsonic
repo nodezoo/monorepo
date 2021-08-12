@@ -56,6 +56,15 @@ main: ent: nodezoo: bookmark: {
   owner_id: type: S
 }
 
+main: ent: nodezoo: history: {
+  name: type: S
+  day: type: S
+  npm_downloads: type: N
+  gh_stars: type: N
+  gh_forks: type: N
+  gh_issues: type: N
+}
+
 
 
 
@@ -68,6 +77,16 @@ main: srv: monitor: {
 
 
 main: srv: web: {
+  msg: {
+    'role:web,scope:public,login:user': {}
+    'role:web,scope:public,search:pkgs': {}
+    'role:web,scope:public,show:pkg': {}
+
+    'role:web,scope:account,logout:user': {}
+    'role:web,scope:account,list:pkg_history': {}
+    'role:web,scope:account,bookmark:pkg': {}
+    'role:web,scope:account,list:bookmarks': {}
+  }
 }
 
 
@@ -99,6 +118,15 @@ main: srv: github: {
 }
 
 
+main: srv: history: {
+  msg: {
+    'role:history,pull:npm_history': {}
+    'role:history,pull:github_history': {}
+    'role:history,list:history': {}
+  }
+}
+
+
 main: srv: search: {
   msg: {
     'role:search,search:query': {}
@@ -124,21 +152,43 @@ main: srv: update: {
   }
 }
 
+
 main: srv: user: {
   msg: {
     'role:user,scope:auth,login:user': {}
     'role:user,scope:pkg,add:bookmark': {}
     'role:user,scope:pkg,list:bookmarks': {}
     'role:user,scope:pkg,load:bookmark': {}
+    'role:user,is:premium': {}
   }
 }
 
+
+main: srv: devtools: {
+  #
+  # WARNING: This service is intended for development purposes,
+  # with the idea that the following actions will be invoked ONLY
+  # in the dev env via Seneca REPL.
+  #
+  # Please do __not__ ever expose any of these actions to the
+  # outside world.
+  #
+
+  sns_topic: false,
+
+  msg: {
+    'role:devtools,fake:true,create:pkg_history': {}
+    'role:devtools,fake:true,create:npm_pkg': {}
+    'role:devtools,create:user': {}
+  }
+}
 
 
 main: srv: @"srv.jsonic"
 
 
-
+# QUESTION: Do we need this config?
+#
 main: api: http: {
   prefix: '/api'
   route: {

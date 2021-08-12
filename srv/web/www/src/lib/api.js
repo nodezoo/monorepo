@@ -3,13 +3,46 @@ import Axios from 'axios'
 
 // TODO: Do not hardcode this.
 //
-const api = Axios.create({ baseURL: 'http://localhost:8080/seneca/' })
+const api = Axios.create({ baseURL: 'http://localhost:9000/' })
 
 
 class Api {
+  static async listPkgHistory(args) {
+    const { auth_token, name, since } = args
+    const headers = {}
+
+    if ('string' === typeof auth_token) {
+      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    }
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        list: 'pkg_history',
+        name,
+        since
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
+  }
+
+
   static async loginUser(args) {
     const { email, pass } = args
-    return api.post('/loginUser', { email, pass })
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        login: 'user',
+        email,
+        pass
+      }
+    }
+
+    return api.post('/api/public', reqparams)
   }
 
 
@@ -21,25 +54,31 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
-    return api.post('/logoutUser', {}, { headers })
-  }
-
-
-  static async isPkgBookmarkedByMe(args) {
-    const { auth_token, name } = args
-    const headers = {}
-
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        logout: 'user'
+      }
     }
 
-    return api.post('/isPkgBookmarkedByMe', { name }, { headers })
+    return api.post('/api/account', reqparams, { headers })
   }
 
 
   static async listPkgsWithNamePrefix(args) {
     const { prefix } = args
-    return api.post('/listPkgsWithNamePrefix', { prefix })
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        search: 'pkgs',
+        prefix
+      }
+    }
+
+    return api.post('/api/public', reqparams)
   }
 
 
@@ -51,10 +90,15 @@ class Api {
       headers['authorization'] = `Bearer ${auth_token.trim()}`
     }
 
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        list: 'bookmarks'
+      }
+    }
 
-    return api.post('/listMyBookmarkedPkgs',
-      {},
-      { headers })
+    return api.post('/api/account', reqparams, { headers })
   }
 
 
@@ -69,13 +113,32 @@ class Api {
 
     const { name } = args
 
-    return api.post('/doBookmarkPkg', { name }, { headers })
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        bookmark: 'pkg',
+        name
+      }
+    }
+
+    return api.post('/api/account', reqparams, { headers })
   }
 
 
   static async showPkg(args) {
     const { name } = args
-    return api.post('/showPkg', { name })
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        show: 'pkg',
+        name
+      }
+    }
+
+    return api.post('/api/public', reqparams)
   }
 }
 

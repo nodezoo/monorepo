@@ -14,6 +14,8 @@ seneca
   .use('repl')
   .use('reload')
   .use('user')
+  .use('member')
+  .use('group')
 
 
 /**
@@ -21,14 +23,16 @@ seneca
  * This is for testing purposes ONLY.
  * Please remove this once the frontend has been implemented.
  */
-const SqliteStore = require('seneca-sqlite-store')
+if (process.env.DEV_SQLITE_DB) {
+  const SqliteStore = require('seneca-sqlite-store')
 
-seneca.use(SqliteStore, {
-  database: './local/my_precious.db'
-})
-
+  seneca.use(SqliteStore, {
+    database: process.env.DEV_SQLITE_DB
+  })
+}
 /*
  **/
+
 
 const options = {
   npm_registry_url: 'https://replicate.npmjs.com',
@@ -46,3 +50,18 @@ const options = {
 for(const [name, srv] of Object.entries(Model.main.srv)) {
   seneca.use('../srv/'+name+'/'+name+'-srv.js', options)
 }
+
+
+seneca.ready(() => {
+  seneca.act('make:group,role:group', {
+    owner_id: null,
+    group: { name: 'Premium Users', mark: 'pu', code: 'PremiumUsers' },
+    unique: true
+  }, err => {
+    if (err) {
+      console.error(err)
+      process.exit(1)
+    }
+  })
+})
+

@@ -34,13 +34,15 @@
           pass: this.pass
         })
 
-        const is_successful = 200 === auth.status && 'auth_token' in auth.data
+        const is_successful = 200 === auth.status &&
+          auth.data.ok &&
+          'auth_token' in auth.data.data
 
         if (!is_successful) {
           return
         }
 
-        const { data: { auth_token } } = auth
+        const { data: { auth_token } } = auth.data
 
         this.$session.start()
         this.$session.set('AUTH_TOKEN', auth_token)

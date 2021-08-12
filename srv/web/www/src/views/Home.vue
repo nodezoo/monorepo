@@ -62,16 +62,22 @@
       isBookmarkedPkg(args) {
         const { name } = args
 
-        return this.bookmarks.find(b => b.name === name)
+        if (null == this.bookmarks) {
+          return false
+        }
+
+        return Boolean(this.bookmarks.find(b => b.name === name))
       },
 
 
       async searchForPkgs(args) {
         const { search } = args
+        const pkgs_res = await Api.listPkgsWithNamePrefix({ prefix: search })
 
-        this.pkgs = await Api
-          .listPkgsWithNamePrefix({ prefix: search })
-          .then(res => res.data.pkgs)
+        if (200 === pkgs_res.status && pkgs_res.data.ok) {
+          const { data: { pkgs } } = pkgs_res.data
+          this.pkgs = pkgs
+        }
 
 
         if (this.$session.exists()) {
