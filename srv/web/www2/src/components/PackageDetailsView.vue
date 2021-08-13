@@ -3,12 +3,17 @@
     <h1>{{ pkg_name }}</h1>
     <h2>{{ pkg_version }}</h2>
     <p>{{ pkg_desc }}</p>
+
+    <div v-if="pkg_name">
+      <PackageHistoryChart :pkg_name="pkg_name" />
+    </div>
   </div>
 </template>
 
 
 <script>
 import Api from '@/lib/api'
+import PackageHistoryChart from '@/components/PackageHistoryChart.vue'
 
 
 export default {
@@ -34,6 +39,11 @@ export default {
       this.pkg_version = pkg.npm.version
       this.pkg_desc = pkg.npm.desc
     }
+  },
+
+  components: {
+    PackageHistoryChart
   }
 }
 </script>
+

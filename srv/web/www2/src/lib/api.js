@@ -7,15 +7,8 @@ const api = Axios.create({ baseURL: 'http://localhost:9000/' })
 
 
 class Api {
-  // TODO:
-  //
   static async listPkgHistory(args) {
-    const { auth_token, name, since } = args
-    const headers = {}
-
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
+    const { name, since } = args
 
     const reqparams = {
       msg: {
@@ -27,7 +20,9 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
 
 

@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "0.21.1",
     "chart.js": "2.9.4",
+    "moment": "2.29.1",
     "vue-chartjs": "3.5.1",
     "vue-cli-plugin-vuetify": "^2.4.2",
     "vue-session": "1.0.0"
