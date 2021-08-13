@@ -46,19 +46,24 @@
               "add": {
                 "active": false
               },
-              "search": {
-                "active": false
-              },
               "avatar": {
                 "active": true
+              },
+              "search": {
+                "active": false
               }
             }
           },
           "side": {
             "part": "BasicSide",
             "menu": {
-              "order": "package,report",
+              "order": "search,package,report",
               "items": {
+                "search": {
+                  "title": "Search",
+                  "icon": "magnify",
+                  "cmp": "search-view"
+                },
                 "package": {
                   "title": "Packages",
                   "icon": "clipboard-list-outline",
@@ -88,6 +93,11 @@
           "view": "package"
         },
         "view": {
+          "search": {
+            "title": "Search",
+            "icon": "magnify",
+            "cmp": "search-view"
+          },
           "package": {
             "title": "Packages",
             "icon": "clipboard-list-outline",

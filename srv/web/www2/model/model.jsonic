@@ -11,14 +11,18 @@ main: app: web: parts: {
     tool: {
       expandSide: { active: false }
       add: { active: false }
-      search: { active: false }
       avatar: { active: true }
+
+      # TODO: Set active to true and migrate the search logic after
+      # the Search Page is done, behavior verified, and the page removed.
+      #
+      search: { active: false }
     }
   }
 
   side: {
     menu: {
-      order: 'package,report'
+      order: 'search,package,report'
       items: /main/app/web/view
     }
   }
@@ -31,6 +35,11 @@ main: app: web: defaults: {
 }
 
 main: app: web: view: {
+  search: {
+    title: 'Search'
+    icon: 'magnify'
+    cmp: 'search-view'
+  }
   package: {
     title: 'Packages'
     icon: 'clipboard-list-outline'

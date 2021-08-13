@@ -13,7 +13,7 @@ function makeRouter(Vue, {cmp}) {
     }
   }))
 
-  let dvn = model.main.app.web.defaults.view
+  const dvn = model.main.app.web.defaults.view
   
   routes.push({
     path: '/',
