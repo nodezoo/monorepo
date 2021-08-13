@@ -43,6 +43,7 @@
     "@seneca/user": "5.8.0",
     "axios": "0.21.1",
     "changes-stream": "2.2.0",
+    "cookie-parser": "1.4.5",
     "cors": "2.8.5",
     "download-stats": "0.3.4",
     "express": "4.17.1",

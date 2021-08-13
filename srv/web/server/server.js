@@ -1,5 +1,6 @@
 const Express = require('express')
 const Morgan = require('morgan')
+const CookieParser = require('cookie-parser')
 const Cors = require('cors')
 const MakeApi = require('./api')
 const Shared = require('../../../lib/shared')
@@ -15,11 +16,15 @@ function makeServer({ seneca }) {
 
   app.use(Cors({
     origin: 'http://localhost:8080', // TODO: Do not hardcode this.
+    credentials: true,
     optionsSuccessStatus: 200
   }))
 
 
   app.use(Morgan('combined'))
+
+
+  app.use(CookieParser())
 
 
   app.use('/api', MakeApi({ seneca }))

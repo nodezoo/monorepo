@@ -1,12 +1,36 @@
 <template>
   <div id="app">
-    <h1>Index Page</h1>
-    <p>Some Content.</p>
-    <p>
-      <a href="/account">Sign In</a>
-    </p>
+    <form @submit.prevent="onLoginAttempt">
+      <input v-model="email" type="email" placeholder="Email" />
+      <input v-model="pass" type="password" placeholder="Password" />
+      <input type="submit" value="Sign in" />
+    </form>
   </div>
 </template>
+
+<script>
+import Api from '@/lib/api'
+
+export default {
+  data: () => ({
+    email: '',
+    pass: ''
+  }),
+
+  methods: {
+    async onLoginAttempt() {
+      const { email, pass } = this
+      const loginResponse = await Api.loginUser({ email, pass })
+
+      console.dir(loginResponse.data) // dbg
+
+      if (loginResponse.data.ok) {
+        location.href = '/account'
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 </style>

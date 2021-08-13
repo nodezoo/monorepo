@@ -31,18 +31,11 @@ class Api {
 
   static async loginUser(args) {
     const { email, pass } = args
+    const reqparams = { email, pass }
 
-    const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        login: 'user',
-        email,
-        pass
-      }
-    }
-
-    return api.post('/api/public', reqparams)
+    return api.post('/api/login', reqparams, {
+      withCredentials: true
+    })
   }
 
 
@@ -142,14 +135,7 @@ class Api {
   }
 
 
-  static async listMyBookmarkedPkgs(args = {}) {
-    const { auth_token } = args
-    const headers = {}
-
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
-
+  static async listMyBookmarkedPkgs() {
     const reqparams = {
       msg: {
         role: 'web',
@@ -158,7 +144,9 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
 
 
