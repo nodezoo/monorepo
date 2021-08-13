@@ -9,6 +9,7 @@
     "reset": "rm -rf node_modules yarn.lock package-lock.json && yarn install && yarn run test"
   },
   "dependencies": {
+    "axios": "0.21.1",
     "chart.js": "2.9.4",
     "vue-chartjs": "3.5.1",
     "vue-cli-plugin-vuetify": "^2.4.2",

@@ -25,6 +25,7 @@
 
 
 <script>
+import Api from '@/lib/api'
 import PackageSummaryCard from '@/components/PackageSummaryCard.vue'
 import PackageSearchForm from '@/components/PackageSearchForm.vue'
 
@@ -53,7 +54,13 @@ export default {
 
 
     async searchForPkgs(args) {
-      // TODO
+      const { search } = args
+      const searchResponse = await Api.listPkgsWithNamePrefix({ prefix: search })
+
+      if (searchResponse.data.ok) {
+        const { data: { pkgs } } = searchResponse.data
+        this.pkgs = pkgs
+      }
     }
   },
 
