@@ -22,8 +22,6 @@ export default {
       const { email, pass } = this
       const loginResponse = await Api.loginUser({ email, pass })
 
-      console.dir(loginResponse.data) // dbg
-
       if (loginResponse.data.ok) {
         location.href = '/account'
       }

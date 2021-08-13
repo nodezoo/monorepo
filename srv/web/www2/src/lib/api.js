@@ -7,6 +7,8 @@ const api = Axios.create({ baseURL: 'http://localhost:9000/' })
 
 
 class Api {
+  // TODO:
+  //
   static async listPkgHistory(args) {
     const { auth_token, name, since } = args
     const headers = {}
@@ -38,7 +40,8 @@ class Api {
     })
   }
 
-
+  // TODO:
+  //
   static async logoutUser(args) {
     const { auth_token } = args
     const headers = {}
@@ -58,7 +61,8 @@ class Api {
     return api.post('/api/account', reqparams, { headers })
   }
 
-
+  // TODO:
+  //
   static async loadUserProfile(args) {
     const { auth_token } = args
     const headers = {}
@@ -78,7 +82,8 @@ class Api {
     return api.post('/api/account', reqparams, { headers })
   }
 
-
+  // TODO:
+  //
   static async makeUserPremium(args) {
     const { auth_token } = args
     const headers = {}
@@ -98,7 +103,8 @@ class Api {
     return api.post('/api/account', reqparams, { headers })
   }
 
-
+  // TODO:
+  //
   static async isPremiumUser(args) {
     const { auth_token } = args
     const headers = {}
@@ -150,6 +156,26 @@ class Api {
   }
 
 
+  static async showPkg(args) {
+    const { name } = args
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        show: 'pkg',
+        name
+      }
+    }
+
+    return api.post('/api/public', reqparams, {
+      withCredentials: true
+    })
+  }
+
+
+  // TODO:
+  //
   static async doBookmarkPkg(args) {
     const { auth_token } = args
     const headers = {}
@@ -171,22 +197,6 @@ class Api {
     }
 
     return api.post('/api/account', reqparams, { headers })
-  }
-
-
-  static async showPkg(args) {
-    const { name } = args
-
-    const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        show: 'pkg',
-        name
-      }
-    }
-
-    return api.post('/api/public', reqparams)
   }
 }
 

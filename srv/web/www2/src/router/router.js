@@ -1,9 +1,12 @@
 import VueRouter from 'vue-router'
-
 import model from '../../model/model.json'
 
-function makeRouter(Vue, {cmp}) {
+// TODO: This is hardcoded for now. See how this can be
+// implemented via the Model.
+//
+import PackageDetailsView from '../components/PackageDetailsView.vue'
 
+function makeRouter(Vue, {cmp}) {
   const routes = Object.entries(model.main.app.web.view).map(([n,v])=>({
     name: n,
     path: '/'+n,
@@ -21,6 +24,14 @@ function makeRouter(Vue, {cmp}) {
     meta: {
       view: dvn
     }
+  })
+
+  // TODO: This is hardcoded for now. See how this can be
+  // implemented via the Model.
+  //
+  routes.push({
+    path: '/package/:packageName',
+    component: PackageDetailsView
   })
 
   console.log('ROUTES', routes)
