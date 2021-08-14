@@ -51,16 +51,7 @@ class Api {
   }
 
 
-  // TODO:
-  //
-  static async loadUserProfile(args) {
-    const { auth_token } = args
-    const headers = {}
-
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
-
+  static async loadUserProfile(_args) {
     const reqparams = {
       msg: {
         role: 'web',
@@ -69,19 +60,13 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
 
-  // TODO:
-  //
-  static async makeUserPremium(args) {
-    const { auth_token } = args
-    const headers = {}
 
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
-
+  static async makeUserPremium(_args) {
     const reqparams = {
       msg: {
         role: 'web',
@@ -90,19 +75,13 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
 
-  // TODO:
-  //
-  static async isPremiumUser(args) {
-    const { auth_token } = args
-    const headers = {}
 
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
-
+  static async isPremiumUser(_args) {
     const reqparams = {
       msg: {
         role: 'web',
@@ -111,7 +90,9 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
 
 
