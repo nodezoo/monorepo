@@ -27,6 +27,7 @@ import BasicPackageView from './components/PackageView.vue'
 import BasicReportView from './components/ReportView.vue'
 import BasicProfileView from './components/ProfileView.vue'
 import SearchView from './components/SearchView.vue'
+import TestbedView from './components/TestbedView.vue'
 
 
 const router = makeRouter(Vue, {
@@ -34,7 +35,8 @@ const router = makeRouter(Vue, {
     'basic-package-view': BasicPackageView,
     'basic-report-view': BasicReportView,
     'basic-profile-view': BasicProfileView,
-    'search-view': SearchView
+    'search-view': SearchView,
+    'testbed-view': TestbedView
   }
 })
 

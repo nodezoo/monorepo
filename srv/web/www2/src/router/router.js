@@ -6,6 +6,7 @@ import model from '../../model/model.json'
 //
 import PackageDetailsView from '../components/PackageDetailsView.vue'
 
+
 function makeRouter(Vue, {cmp}) {
   const routes = Object.entries(model.main.app.web.view).map(([n,v])=>({
     name: n,
@@ -33,6 +34,7 @@ function makeRouter(Vue, {cmp}) {
     path: '/package/:packageName',
     component: PackageDetailsView
   })
+
 
   console.log('ROUTES', routes)
 
