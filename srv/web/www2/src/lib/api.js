@@ -35,16 +35,8 @@ class Api {
     })
   }
 
-  // TODO:
-  //
-  static async logoutUser(args) {
-    const { auth_token } = args
-    const headers = {}
 
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
-
+  static async logoutUser(_args) {
     const reqparams = {
       msg: {
         role: 'web',
@@ -53,8 +45,11 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
+
 
   // TODO:
   //
@@ -169,17 +164,7 @@ class Api {
   }
 
 
-  // TODO:
-  //
   static async doBookmarkPkg(args) {
-    const { auth_token } = args
-    const headers = {}
-
-    if ('string' === typeof auth_token) {
-      headers['authorization'] = `Bearer ${auth_token.trim()}`
-    }
-
-
     const { name } = args
 
     const reqparams = {
@@ -191,7 +176,9 @@ class Api {
       }
     }
 
-    return api.post('/api/account', reqparams, { headers })
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
   }
 }
 

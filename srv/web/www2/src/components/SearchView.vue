@@ -40,16 +40,31 @@ export default {
   }),
 
 
+  async mounted() {
+    await this.fetchBookmarks()
+  },
+
+
   methods: {
+    async fetchBookmarks() {
+      const bookmarksResponse = await Api.listMyBookmarkedPkgs()
+
+      if (bookmarksResponse.data.ok) {
+        this.bookmarks = bookmarksResponse.data.pkgs
+      }
+    },
+
     async doBookmarkPkg(args) {
-      // TODO
+      const { name } = args
+      await Api.doBookmarkPkg({ name })
+
+      await this.fetchBookmarks()
     },
 
 
     isBookmarkedPkg(args) {
-      // TODO
-
-      return false
+      const { name } = args
+      return Boolean(this.bookmarks.find(b => b.name === name))
     },
 
 
