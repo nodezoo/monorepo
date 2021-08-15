@@ -31,11 +31,9 @@ export default {
 
   methods: {
     async becomePremium() {
-      const response = await Api.makeUserPremium()
-
-      if (response.data.ok) {
-        this.is_premium = true
-      }
+      // TODO: QUESTION: Use router-link instead?
+      //
+      this.$router.push('/checkout')
     }
   },
 

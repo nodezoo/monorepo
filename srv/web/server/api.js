@@ -95,7 +95,6 @@ function makeApi({ seneca }) {
     .add({ role: 'web', scope: 'account', bookmark: 'pkg' }, true)
     .add({ role: 'web', scope: 'account', load: 'profile' }, true)
     .add({ role: 'web', scope: 'account', is: 'premium' }, true)
-    .add({ role: 'web', scope: 'account', join: 'premium' }, true)
     .add({
       role: 'web',
       scope: 'account',
