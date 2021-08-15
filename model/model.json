@@ -12,6 +12,11 @@
           "repl": {}
         }
       },
+      "payment": {
+        "msg": {
+          "role:payment,process:payment": {}
+        }
+      },
       "web": {
         "msg": {
           "role:web,scope:public,login:user": {},
@@ -23,6 +28,7 @@
           "role:web,scope:account,bookmark:pkg": {},
           "role:web,scope:account,list:bookmarks": {},
           "role:web,scope:account,is:premium": {},
+          "role:web,scope:account,checkout_for:premium,submit:checkout": {},
           "role:web,scope:account,join:premium": {}
         }
       },

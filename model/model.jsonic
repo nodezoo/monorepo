@@ -76,6 +76,13 @@ main: srv: monitor: {
 }
 
 
+main: srv: payment: {
+  msg: {
+    'role:payment,process:payment': {}
+  }
+}
+
+
 main: srv: web: {
   msg: {
     'role:web,scope:public,login:user': {}
@@ -88,6 +95,7 @@ main: srv: web: {
     'role:web,scope:account,bookmark:pkg': {}
     'role:web,scope:account,list:bookmarks': {}
     'role:web,scope:account,is:premium': {}
+    'role:web,scope:account,checkout_for:premium,submit:checkout': {}
 
     # WARNING: This is a temporary action, and will
     # removed as soon as Stripe integration has been
