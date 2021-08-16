@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+
 const Seneca = require('seneca')
 const Model = require('../model/model.json')
 

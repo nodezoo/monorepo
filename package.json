@@ -45,6 +45,7 @@
     "changes-stream": "2.2.0",
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
+    "dotenv": "10.0.0",
     "download-stats": "0.3.4",
     "express": "4.17.1",
     "JSONStream": "1.3.5",
