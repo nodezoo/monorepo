@@ -66,13 +66,15 @@ async function sendWelcomingEmail(args, ctx) {
 
     subject: 'Thank you for choosing Nodezoo Premium',
 
-    text: 'Thank you for choosing Nodezoo Premium!',
+    text: 'Thank you for choosing Nodezoo Premium!' +
+      " We understand it's a big decision who you premium with," +
+      ' and we are priviliged to have been chosen!',
 
     html: `
       <html>
         <head>
           <p>
-            Thank you for choosing Nodezoo Premium!
+            Thank you for choosing Nodezoo Premium! We understand it's a big decision who you premium with, and we are priviliged to have been chosen!
           </p>
         </head>
       </html>
