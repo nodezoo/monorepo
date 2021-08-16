@@ -7,6 +7,44 @@ const api = Axios.create({ baseURL: 'http://localhost:9000/' })
 
 
 class Api {
+  static async requestPassReset(args) {
+    const { email } = args
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        request: 'pass_reset',
+        email
+      }
+    }
+
+    return api.post('/api/public', reqparams)
+  }
+
+
+  static async resetPass(args) {
+    const {
+      reset_token,
+      new_pass,
+      new_pass_confirmation
+    } = args
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        reset: 'pass',
+        reset_token,
+        new_pass,
+        new_pass_confirmation
+      }
+    }
+
+    return api.post('/api/public', reqparams)
+  }
+
+
   static async submitPremiumMembershipCheckout(args) {
     const reqparams = {
       msg: {

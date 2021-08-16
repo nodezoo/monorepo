@@ -46,6 +46,16 @@ main: ent: nodezoo: npm: {
   readme: type: S
 }
 
+main: ent: nodezoo: pass_reset_token: {
+  value: type: S
+  was_used: type: B
+  user_id: type: S
+
+  #
+  # TODO: Implement expiry.
+  #
+}
+
 main: ent: nodezoo: orig: {
   name: type: S
   ingested_at: type: S
@@ -88,6 +98,8 @@ main: srv: web: {
     'role:web,scope:public,login:user': {}
     'role:web,scope:public,search:pkgs': {}
     'role:web,scope:public,show:pkg': {}
+    'role:web,scope:public,request:pass_reset': {}
+    'role:web,scope:public,reset:pass': {}
 
     'role:web,scope:account,logout:user': {}
     'role:web,scope:account,load:profile': {}

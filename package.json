@@ -59,6 +59,7 @@
     "seneca-member": "1.1.0",
     "seneca-promisify": "^2.0.0",
     "seneca-simple-mail": "file:../../seneca-simple-mail",
-    "seneca-sqlite-store": "0.0.3"
+    "seneca-sqlite-store": "0.0.3",
+    "uuid": "8.3.2"
   }
 }
