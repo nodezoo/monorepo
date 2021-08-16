@@ -22,7 +22,7 @@ main: app: web: parts: {
 
   side: {
     menu: {
-      order: '_testbed,search,package,report'
+      order: 'search,package,report'
       items: /main/app/web/view
     }
   }
@@ -35,11 +35,11 @@ main: app: web: defaults: {
 }
 
 main: app: web: view: {
-  _testbed: {
-    title: '_test_bed'
-    icon: 'clipboard-list-outline'
-    cmp: 'testbed-view'
-  },
+  # _testbed: {
+  #   title: '_test_bed'
+  #   icon: 'clipboard-list-outline'
+  #   cmp: 'testbed-view'
+  #},
   search: {
     title: 'Search'
     icon: 'magnify'

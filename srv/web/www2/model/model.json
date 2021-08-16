@@ -57,13 +57,8 @@
           "side": {
             "part": "BasicSide",
             "menu": {
-              "order": "_testbed,search,package,report",
+              "order": "search,package,report",
               "items": {
-                "_testbed": {
-                  "title": "_test_bed",
-                  "icon": "clipboard-list-outline",
-                  "cmp": "testbed-view"
-                },
                 "search": {
                   "title": "Search",
                   "icon": "magnify",
@@ -98,11 +93,6 @@
           "view": "package"
         },
         "view": {
-          "_testbed": {
-            "title": "_test_bed",
-            "icon": "clipboard-list-outline",
-            "cmp": "testbed-view"
-          },
           "search": {
             "title": "Search",
             "icon": "magnify",
