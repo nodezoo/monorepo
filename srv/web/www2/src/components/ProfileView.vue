@@ -8,7 +8,7 @@
       </div>
       <div v-else>
         <v-form @submit.prevent="becomePremium">
-          <v-btn type="submit">Become Premium</v-btn>
+          <v-btn type="submit">Upgrade to Premium</v-btn>
         </v-form>
       </div>
     </div>
