@@ -35,7 +35,48 @@ module.exports = function make_submit_checkout() {
     }
 
 
+    try {
+      const user = await seneca.make('sys', 'user')
+        .load$(user_id)
+
+      const { email } = user
+
+      await sendWelcomingEmail({ email }, { seneca })
+    } catch (err) {
+      console.error(err)
+      /* ignore errors by the mailer */
+    }
+
+
     return { ok: true }
   }
+}
+
+
+// TODO: Tidy up.
+//
+async function sendWelcomingEmail(args, ctx) {
+  const { email } = args
+  const { seneca } = ctx
+
+  await seneca.post('sys:mail,send:mail', {
+    to: email,
+
+    from: 'noreply@voxgig.com',
+
+    subject: 'Thank you for choosing Nodezoo Premium',
+
+    text: 'Thank you for choosing Nodezoo Premium!',
+
+    html: `
+      <html>
+        <head>
+          <p>
+            Thank you for choosing Nodezoo Premium!
+          </p>
+        </head>
+      </html>
+    `
+  })
 }
 
