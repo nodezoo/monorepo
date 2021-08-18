@@ -43,7 +43,9 @@
     "@seneca/user": "5.8.0",
     "axios": "0.21.1",
     "changes-stream": "2.2.0",
+    "cookie-parser": "1.4.5",
     "cors": "2.8.5",
+    "dotenv": "10.0.0",
     "download-stats": "0.3.4",
     "express": "4.17.1",
     "JSONStream": "1.3.5",
@@ -56,6 +58,8 @@
     "seneca-mem-store": "6.0.3",
     "seneca-member": "1.1.0",
     "seneca-promisify": "^2.0.0",
-    "seneca-sqlite-store": "0.0.3"
+    "seneca-simple-mail": "1.0.0",
+    "seneca-sqlite-store": "0.0.3",
+    "uuid": "8.3.2"
   }
 }

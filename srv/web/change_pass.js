@@ -1,9 +1,6 @@
-const Shared = require('../../lib/shared')
-const { pick } = Shared
 
-
-module.exports = function make_list_bookmarks() {
-  return async function list_bookmarks(msg) {
+module.exports = function make_logout_user() {
+  return async function logout_user(msg) {
     const seneca = this
 
 
@@ -21,10 +18,7 @@ module.exports = function make_list_bookmarks() {
     const { user_id } = msg
 
 
-    const out = await seneca.post('role:user,scope:pkg,list:bookmarks', {
-      user_id
-    })
-
+    const out = await seneca.post('logout:user,sys:user', { user_id })
 
     if (!out.ok) {
       //
@@ -36,14 +30,8 @@ module.exports = function make_list_bookmarks() {
       return { ok: false }
     }
 
-    const { bookmarks } = out.data
 
-    // TODO: Fetch packages' data.
-    //
-
-    const pkgs_names = bookmarks.map(b => pick(b, ['name']))
-
-    return { ok: true, pkgs: pkgs_names }
+    return { ok: true }
   }
 }
 

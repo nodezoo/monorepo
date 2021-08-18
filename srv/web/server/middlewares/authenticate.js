@@ -4,24 +4,12 @@ const { pick } = Shared
 
 function authenticate({ seneca }) {
   return (req, res, next) => {
-    const authorization = req.get('authorization')
-
-
-    if ('string' !== typeof authorization) {
-      return res.sendStatus(401)
-    }
-
-
-    if (!authorization.match(/^Bearer \S+/)) {
-      return res.sendStatus(401)
-    }
-
-
-    const token = authorization.replace('Bearer ', '')
+    const token = req.cookies.AUTH_TOKEN
     const msg = { token }
 
 
-    // TODO: Do not call @seneca/user directly !!!
+    // TODO: QUESTION: Perhaps, we shouldn't call the @seneca/user
+    // plugin's API directly?
     //
     seneca.act('auth:user,sys:user', msg, function (err, out) {
       if (err) {

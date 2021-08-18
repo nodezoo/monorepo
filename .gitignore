@@ -111,3 +111,5 @@ local/setup.sh
 *.zip
 
 
+# Files useful for development
+devassets

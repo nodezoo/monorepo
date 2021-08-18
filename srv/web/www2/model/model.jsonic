@@ -1,0 +1,63 @@
+
+sys: @'../node_modules/@voxgig/model/model/sys.jsonic'
+
+main: app: web: /sys/app/web/basic
+
+
+
+
+main: app: web: parts: {
+  head: {
+    tool: {
+      expandSide: { active: false }
+      add: { active: false }
+      avatar: { active: true }
+
+      # TODO: Set active to true and migrate the search logic after
+      # the Search Page is done, behavior verified, and the page removed.
+      #
+      search: { active: false }
+    }
+  }
+
+  side: {
+    menu: {
+      order: 'search,package,report'
+      items: /main/app/web/view
+    }
+  }
+}
+
+
+
+main: app: web: defaults: {
+  view: 'package'
+}
+
+main: app: web: view: {
+  # _testbed: {
+  #   title: '_test_bed'
+  #   icon: 'clipboard-list-outline'
+  #   cmp: 'testbed-view'
+  #},
+  search: {
+    title: 'Search'
+    icon: 'magnify'
+    cmp: 'search-view'
+  }
+  package: {
+    title: 'Packages'
+    icon: 'clipboard-list-outline'
+    cmp: 'basic-package-view'
+  }
+  report: {
+    title: 'Reports'
+    icon: 'clipboard-list-outline'
+    cmp: 'basic-report-view'
+  }
+  profile: {
+    title: 'Profile'
+    icon: 'clipboard-list-outline'
+    cmp: 'basic-profile-view'
+  }
+}

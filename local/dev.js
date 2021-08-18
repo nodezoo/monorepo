@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+
 const Seneca = require('seneca')
 const Model = require('../model/model.json')
 
@@ -16,6 +19,52 @@ seneca
   .use('user')
   .use('member')
   .use('group')
+
+
+const host = process.env.SMTP_HOST
+
+if (null == host) {
+  console.error('missing SMTP_HOST env var')
+  return process.exit(1)
+}
+
+
+const port = process.env.SMTP_PORT
+
+if (null == port) {
+  console.error('missing SMTP_PORT env var')
+  return process.exit(1)
+}
+
+
+const user = process.env.SMTP_USER
+
+if (null == user) {
+  console.error('missing SMTP_USER env var')
+  return process.exit(1)
+}
+
+
+const pass = process.env.SMTP_PASS
+
+if (null == pass) {
+  console.error('missing SMTP_PASS env var')
+  return process.exit(1)
+}
+
+
+seneca.use('simple-mail', {
+  transport: {
+    pool: true,
+    secure: false, // <-- You might want to change that.
+    host,
+    port,
+    auth: {
+      user,
+      pass
+    }
+  }
+})
 
 
 /**

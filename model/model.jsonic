@@ -46,6 +46,16 @@ main: ent: nodezoo: npm: {
   readme: type: S
 }
 
+main: ent: nodezoo: pass_reset_token: {
+  value: type: S
+  was_used: type: B
+  user_id: type: S
+
+  #
+  # TODO: Implement expiry.
+  #
+}
+
 main: ent: nodezoo: orig: {
   name: type: S
   ingested_at: type: S
@@ -76,16 +86,28 @@ main: srv: monitor: {
 }
 
 
+main: srv: payment: {
+  msg: {
+    'role:payment,process:payment': {}
+  }
+}
+
+
 main: srv: web: {
   msg: {
     'role:web,scope:public,login:user': {}
     'role:web,scope:public,search:pkgs': {}
     'role:web,scope:public,show:pkg': {}
+    'role:web,scope:public,request:pass_reset': {}
+    'role:web,scope:public,reset:pass': {}
 
     'role:web,scope:account,logout:user': {}
+    'role:web,scope:account,load:profile': {}
     'role:web,scope:account,list:pkg_history': {}
     'role:web,scope:account,bookmark:pkg': {}
     'role:web,scope:account,list:bookmarks': {}
+    'role:web,scope:account,is:premium': {}
+    'role:web,scope:account,checkout_for:premium,submit:checkout': {}
   }
 }
 
@@ -159,7 +181,18 @@ main: srv: user: {
     'role:user,scope:pkg,add:bookmark': {}
     'role:user,scope:pkg,list:bookmarks': {}
     'role:user,scope:pkg,load:bookmark': {}
+
+     # TODO: change the pattern to: 'role:user,scope:account,is:premium'
+     #
     'role:user,is:premium': {}
+
+     # TODO: change the pattern to: 'role:user,scope:account,load:profile'
+     #
+    'role:user,load:profile': {}
+
+     # TODO: change the pattern to: 'role:user,scope:account,join:premium'
+     #
+    'role:user,join:premium': {}
   }
 }
 
