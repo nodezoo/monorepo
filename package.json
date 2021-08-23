@@ -6,6 +6,8 @@
   "scripts": {
     "local": "node ./env/local/start.js",
     "local-watch": "./node_modules/nodemon/bin/nodemon.js ./env/local/start.js",
+    "sim": "node ./env/sim/start.js",
+    "sim-watch": "./node_modules/nodemon/bin/nodemon.js ./env/sim/start.js",
     "test": "echo -n 'Please use `npm run test-fast` instead.\n\n'",
     "test-fast": "./node_modules/jasmine/bin/jasmine.js --config=test/support/jasmine.json",
     "model": "voxgig-model model/model.jsonic",
@@ -58,6 +60,7 @@
     "seneca-mem-store": "6.0.3",
     "seneca-member": "1.1.0",
     "seneca-promisify": "^2.0.0",
+    "seneca-search-aws-cloudsearch": "file:../search-plugins/seneca-search-aws-cloudsearch",
     "seneca-search-mem": "file:../search-plugins/seneca-search-mem",
     "seneca-simple-mail": "1.0.0",
     "seneca-sqlite-store": "0.0.3",

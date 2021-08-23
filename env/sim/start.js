@@ -22,6 +22,28 @@ seneca
   })
 
 
+const aws_cloudsearch_endpoint = process.env.AWS_CLOUDSEARCH_ENDPOINT
+
+if (null == aws_cloudsearch_endpoint) {
+  throw new Error('missing AWS_CLOUDSEARCH_ENDPOINT env var')
+}
+
+
+const aws_region = process.env.AWS_REGION
+
+if (null == aws_region) {
+  throw new Error('missing AWS_REGION env var')
+}
+
+seneca
+  .use('search-aws-cloudsearch', {
+    csd: {
+      endpoint: aws_cloudsearch_endpoint,
+      region: aws_region
+    }
+  })
+
+
 seneca
   .use('repl')
   .use('reload')
