@@ -82,9 +82,10 @@ module.exports = function make_login_with_github() {
     })
 
     if (!reg.ok) {
-      const email_already_exists = 'email-exists' === reg.why
+      const already_exists = 'string' === typeof reg.why
+        && reg.why.endsWith('-exists')
 
-      if (!email_already_exists) {
+      if (!already_exists) {
         console.error(reg)
         return { ok: false, why: 'unauthorized' }
       } else {
