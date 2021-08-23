@@ -102,6 +102,16 @@ class Api {
   }
 
 
+  static async loginUserWithGitHub(args) {
+    const { code } = args
+    const reqparams = { code }
+
+    return api.post('/api/login-with-gh', reqparams, {
+      withCredentials: true
+    })
+  }
+
+
   static async logoutUser(_args) {
     const reqparams = {
       msg: {
