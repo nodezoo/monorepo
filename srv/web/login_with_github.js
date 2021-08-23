@@ -49,6 +49,9 @@ module.exports = function make_login_with_github() {
       */
     } = login_response.data
 
+    console.dir('gh_access_token') // dbg
+    console.dir(gh_access_token) // dbg
+
 
     const gh_emails_url = 'https://api.github.com/user/emails'
 
@@ -79,9 +82,9 @@ module.exports = function make_login_with_github() {
     })
 
     if (!reg.ok) {
-      const user_already_exists = 'handle-exists' === reg.why
+      const email_already_exists = 'email-exists' === reg.why
 
-      if (!user_already_exists) {
+      if (!email_already_exists) {
         console.error(reg)
         return { ok: false, why: 'unauthorized' }
       } else {
