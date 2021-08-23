@@ -50,41 +50,50 @@ module.exports = function make_login_with_github() {
     } = login_response.data
 
 
-    const gh_user_url = 'https://api.github.com/user'
+    const gh_emails_url = 'https://api.github.com/user/emails'
 
-    const gh_user_response = await Axios.get(gh_user_url, {
+    const gh_emails_response = await Axios.get(gh_emails_url, {
       headers: {
         'accept': 'application/json',
         'authorization': `Bearer ${gh_access_token}`
       }
     })
 
-    const {
-      login: gh_login,
-      id: gh_user_id
-    } = gh_user_response.data
+    const gh_emails_infos = gh_emails_response.data
+
+    const gh_primary_email_info = gh_emails_infos
+      .find(gh_email => gh_email.primary)
+
+    if (null == gh_primary_email_info) {
+      /* NOTE: WARNING: This should not normally happen. Every
+       * GitHub account should have a primary email.
+       */
+      return { ok: false, why: 'unauthorized' }
+    }
+
+    const { email: gh_email } = gh_primary_email_info
 
 
-    const user_handle = `${gh_user_id}`
-
-    /* @seneca/user truncates the user's handle to 15 characters,
-     * which means we cannot use the user's GitHub "login" name,
-     * and must rely on other means of identification instead,
-     * such as the GitHub user id.
-     */
     const reg = await seneca.post('sys:user,register:user', {
-      handle: user_handle,
-      name: gh_login
+      email: gh_email
     })
 
-    if (!reg.ok && 'handle-exists' !== reg.why) {
-      console.error(reg)
-      return { ok: false, why: 'unauthorized' }
+    if (!reg.ok) {
+      const user_already_exists = 'handle-exists' === reg.why
+
+      if (!user_already_exists) {
+        console.error(reg)
+        return { ok: false, why: 'unauthorized' }
+      } else {
+        /* NOTE: If the user with the given email already exists,
+         * - sign in as usual.
+         */
+      }
     }
 
 
     const auth = await seneca.post('sys:user,login:user', {
-      handle: user_handle,
+      email: gh_email,
       auto: true
     })
 
