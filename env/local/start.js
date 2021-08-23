@@ -14,6 +14,15 @@ seneca
   .use('promisify')
   .use('entity')
   .use('mem-store')
+  .use('search-mem', {
+    search: {
+      fields: ['name'],
+      storeFields: ['name', 'version', 'giturl', 'desc', 'readme'],
+      searchOptions: {
+        fuzzy: true
+      }
+    }
+  })
   .use('repl')
   .use('reload')
   .use('user')

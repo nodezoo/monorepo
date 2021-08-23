@@ -6,56 +6,42 @@ module.exports = function make_fake_search_query() {
     const seneca = this
 
 
-    const q = msg.q || {}
+    const { query = null } = msg
 
-    const is_prefix_search = q.name &&
-      'string' === typeof q.name.starts_with$
-
-
-    if (is_prefix_search) {
-      const prefix = q.name.starts_with$
-      const is_empty_prefix = '' === prefix.trim()
-
-
-      if (is_empty_prefix) {
-        return {
-          ok: true,
-          data: { pkgs: [] }
-        }
-      }
-
-
-      const ents = await seneca.make('nodezoo', 'npm')
-        .list$({
-          limit$: 10,
-          name: {
-            startswith$: prefix
-          }
-        })
-
-
-      const pkgs = ents.map(ent => pick(ent, [
-        'name',
-        'version',
-        'giturl',
-        'desc',
-        'readme'
-      ]))
-      
-
+    if ('string' !== typeof query) {
       return {
-        ok: true,
-        data: { pkgs }
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['query'],
+          why_exactly: 'required'
+        }
       }
     }
 
+
+    const search = await seneca
+      .post('sys:search,cmd:search', { query })
+
+
+    if (!search.ok) {
+      return search
+    }
+
+    const { hits } = search.data
+
+    const pkgs = hits.map(hit => pick(hit.doc, [
+      'name',
+      'version',
+      'giturl',
+      'desc',
+      'readme'
+    ]))
+
+
     return {
-      ok: false,
-      why: 'not-impl',
-      details: {
-        message: 'Sorry, only searching by the prefix of a package' +
-          ' name is currently supported'
-      }
+      ok: true,
+      data: { pkgs }
     }
   }
 }
