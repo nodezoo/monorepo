@@ -26,7 +26,7 @@
   "homepage": "https://github.com/nodezoo/monorepo#readme",
   "devDependencies": {
     "@voxgig/model": "voxgig/model",
-    "aws-sdk": "^2.943.0",
+    "aws-sdk": "2.973.0",
     "faker": "5.5.3",
     "jasmine": "3.8.0",
     "jsonic": "jsonicjs/jsonic#4edd639987b75ef62a74e3904fb890f59d21379c",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.6.7",
-    "@seneca/dynamo-store": "^0.6.0",
+    "@seneca/dynamo-store": "0.6.0",
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
     "@seneca/user": "5.8.0",

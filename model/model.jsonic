@@ -48,7 +48,7 @@ main: ent: nodezoo: npm: {
 
 main: ent: nodezoo: pass_reset_token: {
   value: type: S
-  was_used: type: B
+  was_used: type: N
   user_id: type: S
 
   #

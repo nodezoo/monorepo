@@ -161,7 +161,7 @@
             "type": "S"
           },
           "was_used": {
-            "type": "B"
+            "type": "N"
           },
           "user_id": {
             "type": "S"

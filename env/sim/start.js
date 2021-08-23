@@ -1,7 +1,8 @@
-require('dotenv').config({ path: './env/local/.env' })
+require('dotenv').config({ path: './env/sim/.env' })
 
 
 const Seneca = require('seneca')
+const DynamoDbLib = require('./lib/dynamo_db_lib')
 const Model = require('../../model/model.json')
 
 
@@ -13,7 +14,15 @@ seneca
   .error(console.log)
   .use('promisify')
   .use('entity')
-  .use('mem-store')
+
+seneca
+  .ignore_plugin('mem-store')
+  .use('dynamo-store', {
+    aws: DynamoDbLib.get_config() 
+  })
+
+
+seneca
   .use('repl')
   .use('reload')
   .use('user')
@@ -24,32 +33,28 @@ seneca
 const host = process.env.SMTP_HOST
 
 if (null == host) {
-  console.error('missing SMTP_HOST env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_HOST env var')
 }
 
 
 const port = process.env.SMTP_PORT
 
 if (null == port) {
-  console.error('missing SMTP_PORT env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_PORT env var')
 }
 
 
 const user = process.env.SMTP_USER
 
 if (null == user) {
-  console.error('missing SMTP_USER env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_USER env var')
 }
 
 
 const pass = process.env.SMTP_PASS
 
 if (null == pass) {
-  console.error('missing SMTP_PASS env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_PASS env var')
 }
 
 
