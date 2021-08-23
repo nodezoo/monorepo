@@ -19,6 +19,7 @@
       },
       "web": {
         "msg": {
+          "role:web,scope:public,login:with_github": {},
           "role:web,scope:public,login:user": {},
           "role:web,scope:public,search:pkgs": {},
           "role:web,scope:public,show:pkg": {},
