@@ -2,7 +2,7 @@ require('dotenv').config()
 
 
 const Seneca = require('seneca')
-const Model = require('../model/model.json')
+const Model = require('../../model/model.json')
 
 
 const seneca = Seneca({ log: 'flat' })
@@ -67,22 +67,6 @@ seneca.use('simple-mail', {
 })
 
 
-/**
- * WARNING: TODO:
- * This is for testing purposes ONLY.
- * Please remove this once the frontend has been implemented.
- */
-if (process.env.DEV_SQLITE_DB) {
-  const SqliteStore = require('seneca-sqlite-store')
-
-  seneca.use(SqliteStore, {
-    database: process.env.DEV_SQLITE_DB
-  })
-}
-/*
- **/
-
-
 const options = {
   npm_registry_url: 'https://replicate.npmjs.com',
 
@@ -97,7 +81,7 @@ const options = {
 }
 
 for(const [name, srv] of Object.entries(Model.main.srv)) {
-  seneca.use('../srv/'+name+'/'+name+'-srv.js', options)
+  seneca.use('../../srv/'+name+'/'+name+'-srv.js', options)
 }
 
 
