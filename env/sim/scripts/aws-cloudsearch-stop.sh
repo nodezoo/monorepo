@@ -6,5 +6,4 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-docker-compose -f ./devassets/nozama-cloudsearch/nozama-cloudsearch.yaml down
-
+docker-compose -f ./env/sim/devassets/nozama-cloudsearch/nozama-cloudsearch.yaml down

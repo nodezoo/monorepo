@@ -9,7 +9,7 @@ IFS=$'\n\t'
 # DESCRIPTION: This script will download and install the mock
 # environment for AWS CloudSearch. 
 
-SUPPORTED_OPTS=':dDw'
+SUPPORTED_OPTS=':dD'
 
 detached=0
 show_desc=1
@@ -43,22 +43,14 @@ if [[ 1 = "${show_desc}" ]]; then
 fi
 
 
-test -d devassets || mkdir devassets
-cd devassets
-
-
-if ! test -d nozama-cloudsearch; then
-  git clone git@github.com:oisinmulvihill/nozama-cloudsearch.git
+if ! test -d ./env/sim/devassets/nozama-cloudsearch; then
+  git clone git@github.com:oisinmulvihill/nozama-cloudsearch.git ./env/sim/devassets
 fi
 
-cd nozama-cloudsearch
-
-if ! test -f nozama-cloudsearch.yaml; then
-  curl -O https://raw.githubusercontent.com/oisinmulvihill/nozama-cloudsearch/master/nozama-cloudsearch.yaml
+if ! test -f ./env/sim/devassets/nozama-cloudsearch/nozama-cloudsearch.yaml; then
+  wget -P ./env/sim/devassets/nozama-cloudsearch \
+    https://raw.githubusercontent.com/oisinmulvihill/nozama-cloudsearch/master/nozama-cloudsearch.yaml
 fi
 
 spin_up
-
-
-cd ../..
 

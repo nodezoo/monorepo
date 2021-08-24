@@ -10,8 +10,8 @@ IFS=$'\n\t'
 # Setting up DynamoDb
 #
 if ! curl "${LOCALHOST}:18000" -s >& /dev/null; then
-  ./env/sim/scripts/dynamo-start.sh
-  node './env/sim/scripts/dynamo-create-tables.js'
+  ./env/sim/scripts/aws-dynamo-start.sh -d
+  node './env/sim/scripts/aws-dynamo-create-tables.js'
 fi
 
 

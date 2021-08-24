@@ -7,22 +7,28 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-AWS_DYNAMO_PORT=18000
-AWS_PROFILE_NAME='localtest'
+SUPPORTED_OPTS=':dD'
 
 
-docker run -d -p "${AWS_DYNAMO_PORT}":8000 amazon/dynamodb-local
+detached=0
+
+while getopts $SUPPORTED_OPTS option
+do
+    case $option in
+        d  )    detached=1;;
+        \? )    echo 'Unknown option.'; exit 1;;
+        *  )    echo 'Missing option argument.'; exit 1;;
+    esac
+done
 
 
-# Configuring a profile for local testing.
-#
-echo -e 'none\nnone\nregion\n' | \
-  aws configure --profile "${AWS_PROFILE_NAME}" >& /dev/null
+spin_up() {
+  if [[ 1 = "${detached}" ]]; then
+    docker-compose -f ./env/sim/scripts/aws-dynamodb.yaml up -d
+  else
+    docker-compose -f ./env/sim/scripts/aws-dynamodb.yaml up
+  fi
+}
 
 
-# Making sure the database is reachable.
-#
-aws dynamodb list-tables \
-  --endpoint-url http://localhost:"${AWS_DYNAMO_PORT}" \
-  --profile "${AWS_PROFILE_NAME}"
-
+spin_up
