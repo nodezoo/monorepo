@@ -6,8 +6,7 @@
   "scripts": {
     "local": "node ./env/local/start.js",
     "local-watch": "./node_modules/nodemon/bin/nodemon.js ./env/local/start.js",
-    "sim": "node ./env/sim/start.js",
-    "sim-watch": "./node_modules/nodemon/bin/nodemon.js ./env/sim/start.js",
+    "sim": "./env/sim/scripts/start.sh",
     "test": "echo -n 'Please use `npm run test-fast` instead.\n\n'",
     "test-fast": "./node_modules/jasmine/bin/jasmine.js --config=test/support/jasmine.json",
     "model": "voxgig-model model/model.jsonic",
