@@ -11,6 +11,13 @@ IFS=$'\n\t'
 #
 if ! curl "${LOCALHOST}:18000" -s >& /dev/null; then
   ./env/sim/scripts/aws-dynamo-start.sh -d
+
+
+  until curl -s "${LOCALHOST}:18000/ping" >& /dev/null; do
+    echo 'INFO: Waiting for the AWS DynamoDb instance to spin up...'
+    sleep 2
+  done
+
   node './env/sim/scripts/aws-dynamo-create-tables.js'
 fi
 
