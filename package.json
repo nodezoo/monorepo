@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.6.7",
-    "@seneca/dynamo-store": "0.6.0",
+    "@seneca/dynamo-store": "github:lilsweetcaligula/seneca-dynamo-store#make-the-store-comply-with-the-shared-store-basic-tests",
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
     "@seneca/user": "5.8.0",
