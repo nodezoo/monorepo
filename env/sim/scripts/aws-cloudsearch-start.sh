@@ -27,9 +27,11 @@ done
 
 spin_up() {
   if [[ 1 = "${detached}" ]]; then
-    docker-compose -f nozama-cloudsearch.yaml up -d
+    docker-compose \
+      -f './env/sim/devassets/nozama-cloudsearch/nozama-cloudsearch.yaml' up -d
   else
-    docker-compose -f nozama-cloudsearch.yaml up
+    docker-compose \
+      -f './env/sim/devassets/nozama-cloudsearch/nozama-cloudsearch.yaml' up
   fi
 }
 
@@ -44,7 +46,8 @@ fi
 
 
 if ! test -d ./env/sim/devassets/nozama-cloudsearch; then
-  git clone git@github.com:oisinmulvihill/nozama-cloudsearch.git ./env/sim/devassets
+  git clone git@github.com:oisinmulvihill/nozama-cloudsearch.git \
+    ./env/sim/devassets/nozama-cloudsearch
 fi
 
 if ! test -f ./env/sim/devassets/nozama-cloudsearch/nozama-cloudsearch.yaml; then

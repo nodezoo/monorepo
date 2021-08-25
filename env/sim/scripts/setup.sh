@@ -33,3 +33,8 @@ if ! curl "${LOCALHOST}:15808" -s >& /dev/null; then
   done
 fi
 
+
+# Setting up frontend
+#
+./env/sim/scripts/frontend-start.sh
+

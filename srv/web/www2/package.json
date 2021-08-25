@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "local-serve": "npm run serve",
+    "sim-serve": "node ./src/server.js",
     "build": "vue-cli-service build",
     "model": "voxgig-model model/model.jsonic",
     "reset": "rm -rf node_modules yarn.lock package-lock.json && yarn install && yarn run test"

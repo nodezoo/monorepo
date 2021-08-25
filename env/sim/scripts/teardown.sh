@@ -16,3 +16,9 @@ IFS=$'\n\t'
 #
 ./env/sim/scripts/aws-cloudsearch-stop.sh
 
+
+# Tearing down frontend
+#
+./env/sim/scripts/frontend-stop.sh
+
+
