@@ -113,6 +113,8 @@ for(const [name, srv] of Object.entries(Model.main.srv)) {
 
 
 seneca.ready(() => {
+  // NOTE: Creating the Premium Users group.
+  //
   seneca.act('make:group,role:group', {
     owner_id: null,
     group: { name: 'Premium Users', mark: 'pu', code: 'PremiumUsers' },
@@ -123,5 +125,13 @@ seneca.ready(() => {
       process.exit(1)
     }
   })
+
+  // NOTE: Pulling the list of packages.
+  //
+  seneca.act('role:update,start:download')
+
+  // NOTE: Pulling packages' data.
+  //
+  seneca.act('role:update,start:ingest')
 })
 

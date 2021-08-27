@@ -3,6 +3,16 @@ require('dotenv').config({ path: './env/local/.env' })
 
 const Seneca = require('seneca')
 const Model = require('../../model/model.json')
+const TasksCollection = require('./tasks')
+
+
+const Nock = require('nock')
+//
+// We only want our locally-mounted system to be able
+// to make local connections, and not external ones.
+//
+Nock.disableNetConnect()
+Nock.enableNetConnect('localhost')
 
 
 const seneca = Seneca({ log: 'flat' })
@@ -76,8 +86,25 @@ seneca.use('simple-mail', {
 })
 
 
+const npm_registry_url = process.env.NPM_REGISTRY_URL
+
+if (null == npm_registry_url) {
+  console.error('missing NPM_REGISTRY_URL env var')
+  return process.exit(1)
+}
+
+
+const github_registry_url = process.env.GITHUB_REGISTRY_URL
+
+if (null == github_registry_url) {
+  console.error('missing GITHUB_REGISTRY_URL env var')
+  return process.exit(1)
+}
+
+
 const options = {
-  npm_registry_url: 'https://replicate.npmjs.com',
+  npm_registry_url,
+  github_registry_url,
 
   ingester: {
     sleep_ms_between_iterations: 5e3,
@@ -95,6 +122,8 @@ for(const [name, srv] of Object.entries(Model.main.srv)) {
 
 
 seneca.ready(() => {
+  // NOTE: Creating the Premium Users group.
+  //
   seneca.act('make:group,role:group', {
     owner_id: null,
     group: { name: 'Premium Users', mark: 'pu', code: 'PremiumUsers' },
@@ -102,8 +131,12 @@ seneca.ready(() => {
   }, err => {
     if (err) {
       console.error(err)
-      process.exit(1)
+      return process.exit(1)
     }
   })
+
+  // NOTE: Running tasks.
+  //
+  TasksCollection.run({ seneca })
 })
 
