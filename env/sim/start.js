@@ -94,8 +94,24 @@ seneca.use('simple-mail', {
 })
 
 
+const npm_registry_url = process.env.NPM_REGISTRY_URL
+
+if (null == npm_registry_url) {
+  console.error('missing NPM_REGISTRY_URL env var')
+  return process.exit(1)
+}
+
+
+const github_registry_url = process.env.GITHUB_REGISTRY_URL
+
+if (null == github_registry_url) {
+  console.error('missing GITHUB_REGISTRY_URL env var')
+  return process.exit(1)
+}
+
 const options = {
-  npm_registry_url: 'https://replicate.npmjs.com',
+  npm_registry_url,
+  github_registry_url,
 
   ingester: {
     sleep_ms_between_iterations: 5e3,

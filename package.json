@@ -4,8 +4,8 @@
   "description": "Nodezoo system monorepo.",
   "main": "index.js",
   "scripts": {
-    "local": "node ./env/local/start.js",
-    "local-watch": "./node_modules/nodemon/bin/nodemon.js ./env/local/start.js",
+    "local": "./env/local/scripts/setup.sh && ./node_modules/nodemon/bin/nodemon.js ./env/local/start.js",
+    "local-watch": "./env/local/scripts/setup.sh && ./node_modules/nodemon/bin/nodemon.js ./env/local/start.js",
     "sim": "./env/sim/scripts/setup.sh && node ./env/sim/start.js",
     "sim-watch": "./env/sim/scripts/setup.sh && ./node_modules/nodemon/bin/nodemon.js ./env/sim/start.js",
     "sim-stop": "./env/sim/scripts/teardown.sh",

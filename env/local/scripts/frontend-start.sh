@@ -9,9 +9,6 @@ IFS=$'\n\t'
 source ./env/sim/scripts/common.sh
 
 
-npm run build --prefix ./srv/web/www2
-
-
 test -d "${FRONTEND_PID_DIRPATH}" || mkdir "${FRONTEND_PID_DIRPATH}"
 
 
@@ -28,7 +25,7 @@ tmppidpath=$(mktemp)
 # then the frontend server failed to start.
 #
 
-nohup npm run sim-serve --prefix ./srv/web/www2 > \
+nohup npm run local-serve --prefix ./srv/web/www2 > \
   "${FRONTEND_LOG_FILEPATH}" 2>&1 &
 
 echo $! > "${tmppidpath}"
