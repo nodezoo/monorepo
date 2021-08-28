@@ -56,13 +56,13 @@ module.exports = function make_login_with_github() {
     } = login_response.data
 
 
-    const gh_registry_url = process.env.GITHUB_REGISTRY_URL
+    const gh_api_url = process.env.GITHUB_API_URL
 
-    if (null == gh_registry_url) {
-      throw new Error('missing GITHUB_REGISTRY_URL env var')
+    if (null == gh_api_url) {
+      throw new Error('missing GITHUB_API_URL env var')
     }
 
-    const gh_emails_url = gh_registry_url + '/user/emails'
+    const gh_emails_url = gh_api_url + '/user/emails'
 
     // TODO: Use Octokit here?
     //

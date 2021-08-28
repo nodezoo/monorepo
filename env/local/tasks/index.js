@@ -1,10 +1,14 @@
 const Cron = require('node-cron')
+const { sleep } = require('../../../lib/shared')
+const { make_timestamp } = require('../../../srv/history/lib/shared')
 
 
 function run({ seneca }) {
   const tasks = [
     download_pkgs_names,
-    fulfill_pkgs_downloads
+    fulfill_pkgs_downloads,
+    pull_npm_history,
+    pull_github_history
   ].map(t => t({ seneca }))
 
   for (const task of tasks) {
@@ -26,6 +30,51 @@ function fulfill_pkgs_downloads({ seneca }) {
       resume: true,
       once: true
     })
+  })
+}
+
+
+function pull_npm_history({ seneca }) {
+  // NOTE: should be daily in the non-local environments.
+  //
+  schedule_every_thirty_seconds(async () => {
+    const pkgs = await seneca.make('nodezoo', 'npm')
+      .list$({ all$: true, fields$: ['name'] })
+
+    for (const pkg of pkgs) {
+      const { name: pkg_name } = pkg
+
+      seneca.act('role:history,pull:npm_history', {
+        pkg_name,
+        date: make_timestamp(new Date())
+      }, (err) => {
+        if (err) console.error(err)
+      })
+
+      sleep(500)
+    }
+  })
+}
+
+
+function pull_github_history({ seneca }) {
+  // NOTE: should be daily in the non-local environments.
+  //
+  return schedule_every_thirty_seconds(async () => {
+    const pkgs = await seneca.make('nodezoo', 'npm')
+      .list$({ all$: true, fields$: ['name'] })
+
+    for (const pkg of pkgs) {
+      const { name: pkg_name } = pkg
+
+      seneca.act('role:history,pull:github_history', {
+        pkg_name
+      }, (err) => {
+        if (err) console.error(err)
+      })
+
+      sleep(1e3)
+    }
   })
 }
 

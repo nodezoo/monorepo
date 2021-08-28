@@ -36,6 +36,9 @@
       },
       "info": {
         "msg": {
+          "role:info,need:part": {
+            "async": true
+          },
           "role:info,collect:part": {
             "async": true
           },
@@ -47,18 +50,12 @@
       },
       "npm": {
         "msg": {
-          "role:info,need:part": {
-            "async": true
-          },
           "role:source,source:npm,get:package": {},
           "role:source,source:npm,pull:package": {}
         }
       },
       "github": {
         "msg": {
-          "role:info,need:part": {
-            "async": true
-          },
           "role:source,source:github,get:package": {},
           "role:source,source:github,pull:package": {},
           "role:source,source:github,get:rate_limit": {}

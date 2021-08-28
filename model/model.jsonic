@@ -115,6 +115,7 @@ main: srv: web: {
 
 main: srv: info: {
   msg: {
+    'role:info,need:part': { async: true }
     'role:info,collect:part': { async: true }
     'role:info,get:info': {}
     'role:info,test:true': {}
@@ -124,7 +125,6 @@ main: srv: info: {
 
 main: srv: npm: {
   msg: {
-    'role:info,need:part': { async: true }
     'role:source,source:npm,get:package': {}
     'role:source,source:npm,pull:package': {}
   }
@@ -133,7 +133,6 @@ main: srv: npm: {
 
 main: srv: github: {
   msg: {
-    'role:info,need:part': { async: true }
     'role:source,source:github,get:package': {}
     'role:source,source:github,pull:package': {}
     'role:source,source:github,get:rate_limit': {}
