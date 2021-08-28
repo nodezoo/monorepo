@@ -94,17 +94,17 @@ if (null == npm_registry_url) {
 }
 
 
-const github_registry_url = process.env.GITHUB_REGISTRY_URL
+const github_api_url = process.env.GITHUB_API_URL
 
-if (null == github_registry_url) {
-  console.error('missing GITHUB_REGISTRY_URL env var')
+if (null == github_api_url) {
+  console.error('missing process env var')
   return process.exit(1)
 }
 
 
 const options = {
   npm_registry_url,
-  github_registry_url,
+  github_api_url,
 
   ingester: {
     sleep_ms_between_iterations: 5e3,
