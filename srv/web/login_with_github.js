@@ -28,7 +28,13 @@ module.exports = function make_login_with_github() {
     } = process.env
 
 
-    const login_url = 'https://github.com/login/oauth/access_token'
+    const gh_url = process.env.GITHUB_URL
+
+    if (null == gh_url) {
+      throw new Error('missing GITHUB_URL env var')
+    }
+
+    const login_url = gh_url + '/login/oauth/access_token'
 
     const login_response = await Axios.post(login_url, {
       client_id,
@@ -49,12 +55,17 @@ module.exports = function make_login_with_github() {
       */
     } = login_response.data
 
-    console.dir('gh_access_token') // dbg
-    console.dir(gh_access_token) // dbg
 
+    const gh_registry_url = process.env.GITHUB_REGISTRY_URL
 
-    const gh_emails_url = 'https://api.github.com/user/emails'
+    if (null == gh_registry_url) {
+      throw new Error('missing GITHUB_REGISTRY_URL env var')
+    }
 
+    const gh_emails_url = gh_registry_url + '/user/emails'
+
+    // TODO: Use Octokit here?
+    //
     const gh_emails_response = await Axios.get(gh_emails_url, {
       headers: {
         'accept': 'application/json',
