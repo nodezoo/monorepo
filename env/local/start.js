@@ -43,32 +43,28 @@ seneca
 const host = process.env.SMTP_HOST
 
 if (null == host) {
-  console.error('missing SMTP_HOST env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_HOST env var')
 }
 
 
 const port = process.env.SMTP_PORT
 
 if (null == port) {
-  console.error('missing SMTP_PORT env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_PORT env var')
 }
 
 
 const user = process.env.SMTP_USER
 
 if (null == user) {
-  console.error('missing SMTP_USER env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_USER env var')
 }
 
 
 const pass = process.env.SMTP_PASS
 
 if (null == pass) {
-  console.error('missing SMTP_PASS env var')
-  return process.exit(1)
+  throw new Error('missing SMTP_PASS env var')
 }
 
 
@@ -89,16 +85,14 @@ seneca.use('simple-mail', {
 const npm_registry_url = process.env.NPM_REGISTRY_URL
 
 if (null == npm_registry_url) {
-  console.error('missing NPM_REGISTRY_URL env var')
-  return process.exit(1)
+  throw new Error('missing NPM_REGISTRY_URL env var')
 }
 
 
 const github_api_url = process.env.GITHUB_API_URL
 
 if (null == github_api_url) {
-  console.error('missing process env var')
-  return process.exit(1)
+  throw new Error('missing process env var')
 }
 
 
@@ -130,12 +124,11 @@ seneca.ready(() => {
     unique: true
   }, err => {
     if (err) {
-      console.error(err)
-      return process.exit(1)
+      throw err
     }
   })
 
-  // NOTE: Running tasks.
+  // NOTE: Scheduling the tasks.
   //
   TasksCollection.run({ seneca })
 })

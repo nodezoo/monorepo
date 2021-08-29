@@ -37,7 +37,7 @@ function fulfill_pkgs_downloads({ seneca }) {
 function pull_npm_history({ seneca }) {
   // NOTE: should be daily in the non-local environments.
   //
-  schedule_every_thirty_seconds(async () => {
+  return schedule_every_thirty_seconds(async () => {
     const pkgs = await seneca.make('nodezoo', 'npm')
       .list$({ all$: true, fields$: ['name'] })
 
@@ -51,7 +51,7 @@ function pull_npm_history({ seneca }) {
         if (err) console.error(err)
       })
 
-      sleep(500)
+      await sleep(500)
     }
   })
 }
@@ -73,7 +73,7 @@ function pull_github_history({ seneca }) {
         if (err) console.error(err)
       })
 
-      sleep(1e3)
+      await sleep(1e3)
     }
   })
 }

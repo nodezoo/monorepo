@@ -14,7 +14,7 @@ module.exports = function make_pull_package(options_wrapper) {
   return async function pull_package(msg) {
     const seneca = this
 
-    seneca.root.context.octokit = OctokitLib.get_instance(seneca, options)
+    seneca.root.context.octokit = await OctokitLib.get_instance(seneca, options)
     const { octokit } = seneca.root.context
 
 

@@ -8,7 +8,7 @@ module.exports = function make_get_rate_limit(options_wrapper) {
   return async function get_rate_limit(msg) {
     const seneca = this
 
-    seneca.root.context.octokit = OctokitLib.get_instance(seneca, options)
+    seneca.root.context.octokit = await OctokitLib.get_instance(seneca, options)
 
     const { octokit } = seneca.root.context
     const { data } = await octokit.rest.rateLimit.get()
