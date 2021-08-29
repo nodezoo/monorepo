@@ -20,6 +20,7 @@ function run({ seneca }) {
 
 function download_pkgs_names({ seneca }) {
   return schedule_once(() => {
+    console.dir(`download_pkgs_names, triggered at ${new Date()}`)
     seneca.act('role:update,start:download,all:true')
   })
 }
@@ -36,10 +37,12 @@ function fulfill_pkgs_downloads({ seneca }) {
 
 
 function pull_npm_history({ seneca }) {
-  const started_at = new Date()
+  const now = new Date()
 
+  const started_at = Moment(now).add(2, 'minutes').toDate()
   const started_at_hrs = started_at.getHours()
-  const started_at_mins = 1 + started_at.getMinutes()
+  const started_at_mins = started_at.getMinutes()
+
   const scheduled_daily = `${started_at_mins} ${started_at_hrs} * * *`
 
   return Cron.schedule(scheduled_daily, async () => {
@@ -50,6 +53,8 @@ function pull_npm_history({ seneca }) {
 
     const pkgs = await seneca.make('nodezoo', 'npm')
       .list$({ all$: true, fields$: ['name'] })
+
+    console.dir(`pull_npm_history, located ${pkgs.length} packages`)
 
 
     for (let i = 0; i < pkgs.length; i++) {
@@ -75,8 +80,7 @@ function pull_npm_history({ seneca }) {
       }
     }
   }, {
-    scheduled: true,
-    timezone: 'UTC'
+    scheduled: true
   })
 }
 
@@ -91,10 +95,12 @@ function pull_github_history({ seneca }) {
   const iter_sleep_ms = Math.ceil(MS_IN_HOUR / GITHUB_HOURLY_RATE_LIMIT)
 
 
-  const started_at = new Date()
+  const now = new Date()
 
+  const started_at = Moment(now).add(2, 'minutes').toDate()
   const started_at_hrs = started_at.getHours()
-  const started_at_mins = 1 + started_at.getMinutes()
+  const started_at_mins = started_at.getMinutes()
+
   const scheduled_daily = `${started_at_mins} ${started_at_hrs} * * *`
 
   return Cron.schedule(scheduled_daily, async () => {
@@ -103,6 +109,9 @@ function pull_github_history({ seneca }) {
 
     const pkgs = await seneca.make('nodezoo', 'npm')
       .list$({ all$: true, fields$: ['name'] })
+
+    console.dir(`pull_npm_history, located ${pkgs.length} packages`)
+
 
     for (let i = 0; i < pkgs.length; i++) {
       if (GITHUB_HOURLY_RATE_LIMIT <= i) {

@@ -203,6 +203,6 @@ seneca.ready(() => {
 
   // NOTE: Scheduling the tasks.
   //
-  //TasksCollection.run({ seneca })
+  TasksCollection.run({ seneca })
 })
 

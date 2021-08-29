@@ -36,5 +36,7 @@ fi
 
 # Setting up frontend
 #
-./env/sim/scripts/frontend-start.sh
+if ! curl "${LOCALHOST}:8080" -s >& /dev/null; then
+  ./env/sim/scripts/frontend-start.sh
+fi
 
