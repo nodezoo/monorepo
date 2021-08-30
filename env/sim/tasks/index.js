@@ -107,7 +107,7 @@ async function pull_github_history({ seneca }) {
 
 
     const init_gh_rate_limit = await fetch_rate_limit({ seneca })
-    let gh_remaining_limit = dbginit_gh_rate_limit.data.resources.core.remaining
+    let gh_remaining_limit = init_gh_rate_limit.data.resources.core.remaining
     let iter_sleep_ms = calculate_sleep_ms_between_api_requests(gh_remaining_limit)
 
 
