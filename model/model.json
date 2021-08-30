@@ -19,6 +19,7 @@
       },
       "web": {
         "msg": {
+          "role:web,scope:public,login:with_github": {},
           "role:web,scope:public,login:user": {},
           "role:web,scope:public,search:pkgs": {},
           "role:web,scope:public,show:pkg": {},
@@ -35,6 +36,9 @@
       },
       "info": {
         "msg": {
+          "role:info,need:part": {
+            "async": true
+          },
           "role:info,collect:part": {
             "async": true
           },
@@ -46,18 +50,12 @@
       },
       "npm": {
         "msg": {
-          "role:info,need:part": {
-            "async": true
-          },
           "role:source,source:npm,get:package": {},
           "role:source,source:npm,pull:package": {}
         }
       },
       "github": {
         "msg": {
-          "role:info,need:part": {
-            "async": true
-          },
           "role:source,source:github,get:package": {},
           "role:source,source:github,pull:package": {},
           "role:source,source:github,get:rate_limit": {}
@@ -104,7 +102,8 @@
         "msg": {
           "role:devtools,fake:true,create:pkg_history": {},
           "role:devtools,fake:true,create:npm_pkg": {},
-          "role:devtools,create:user": {}
+          "role:devtools,create:user": {},
+          "role:devtools,ping:pong": {}
         }
       }
     },
@@ -160,7 +159,7 @@
             "type": "S"
           },
           "was_used": {
-            "type": "B"
+            "type": "N"
           },
           "user_id": {
             "type": "S"

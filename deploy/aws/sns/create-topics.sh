@@ -1,4 +1,5 @@
 aws sns create-topic --name nodezoo_process_payment_role_payment
+aws sns create-topic --name nodezoo_login_with_github_role_web_scope_public
 aws sns create-topic --name nodezoo_login_user_role_web_scope_public
 aws sns create-topic --name nodezoo_role_web_scope_public_search_pkgs
 aws sns create-topic --name nodezoo_role_web_scope_public_show_pkg
@@ -11,13 +12,12 @@ aws sns create-topic --name nodezoo_bookmark_pkg_role_web_scope_account
 aws sns create-topic --name nodezoo_list_bookmarks_role_web_scope_account
 aws sns create-topic --name nodezoo_is_premium_role_web_scope_account
 aws sns create-topic --name nodezoo_checkout_for_premium_role_web_scope_account_submit_checkout
+aws sns create-topic --name nodezoo_need_part_role_info
 aws sns create-topic --name nodezoo_collect_part_role_info
 aws sns create-topic --name nodezoo_get_info_role_info
 aws sns create-topic --name nodezoo_role_info_test_true
-aws sns create-topic --name nodezoo_need_part_role_info
 aws sns create-topic --name nodezoo_get_package_role_source_source_npm
 aws sns create-topic --name nodezoo_pull_package_role_source_source_npm
-aws sns create-topic --name nodezoo_need_part_role_info
 aws sns create-topic --name nodezoo_get_package_role_source_source_github
 aws sns create-topic --name nodezoo_pull_package_role_source_source_github
 aws sns create-topic --name nodezoo_get_rate_limit_role_source_source_github

@@ -20,11 +20,7 @@ module.exports = function make_search_pkgs() {
     const { prefix } = msg
 
 
-    const searchmsg = {
-      q: {
-        name: { starts_with$: prefix }
-      }
-    }
+    const searchmsg = { query: prefix }
 
     const out = await seneca
       .post('role:search,fake_search:query', searchmsg)

@@ -48,85 +48,89 @@ class Ingester {
     self.stats_instance.start = new Date()
 
 
-    setImmediate(async () => {
-      Assert(null != self.options, 'options')
-      Assert(null != self.options.ingester, 'options.ingester')
+    Assert(null != self.options, 'options')
+    Assert(null != self.options.ingester, 'options.ingester')
 
 
-      const default_sleep_ms_between_iterations = self.options
-        .ingester.sleep_ms_between_iterations
+    const default_sleep_ms_between_iterations = self.options
+      .ingester.sleep_ms_between_iterations
 
-      Assert(null != default_sleep_ms_between_iterations,
-        'options.sleep_ms_between_iterations')
-
-
-      const default_sleep_ms_between_fetches = self.options
-        .ingester.sleep_ms_between_fetches
-
-      Assert(null != default_sleep_ms_between_fetches,
-        'options.sleep_ms_between_fetches')
+    Assert(null != default_sleep_ms_between_iterations,
+      'options.sleep_ms_between_iterations')
 
 
-      const {
-        sleep_ms_between_iterations = default_sleep_ms_between_iterations,
-        sleep_ms_between_fetches = default_sleep_ms_between_fetches
-      } = msg 
+    const default_sleep_ms_between_fetches = self.options
+      .ingester.sleep_ms_between_fetches
+
+    Assert(null != default_sleep_ms_between_fetches,
+      'options.sleep_ms_between_fetches')
 
 
-      let is_first_iteration = true
-
-      while (self.is_ingesting) {
-        self.stats_instance.npkgs_iteration = 0
-
-
-        const pkgs_q = { fields$: ['name'] }
-
-        if (msg.resume || !is_first_iteration) {
-          /* NOTE: If the client wants to resume the ingestion action, then
-           * we only want to care for packages that have not been ingested.
-           *
-           * On the successive iterations of the ingestion loop, we always care
-           * solely for packages that have not been ingested.
-           */
-
-          pkgs_q.ingested_at = null
-        }
-
-        is_first_iteration = false
+    const {
+      sleep_ms_between_iterations = default_sleep_ms_between_iterations,
+      sleep_ms_between_fetches = default_sleep_ms_between_fetches
+    } = msg 
 
 
-        const pkgs = await seneca.make('nodezoo', 'orig')
-          .list$(pkgs_q)
+    let is_first_iteration = true
+
+    while (self.is_ingesting) {
+      self.stats_instance.npkgs_iteration = 0
 
 
-        /* NOTE: An astute reader would notice that in case of error, some
-         * packages will not be ingested, yet still be marked as ingested.
-         * For now, that's okay.
+      const pkgs_q = { fields$: ['name'] }
+
+      if (msg.resume || !is_first_iteration) {
+        /* NOTE: If the client wants to resume the ingestion action, then
+         * we only want to care for packages that have not been ingested.
+         *
+         * On the successive iterations of the ingestion loop, we always care
+         * solely for packages that have not been ingested.
          */
-        const marking = pkgs.map(pkg => 
-          pkg
-            .data$({
-              ingested_at: new Date().toISOString()
-            })
-            .save$()
-        )
 
-        await Promise.all(marking)
-
-
-        for (const pkg of pkgs) {
-          seneca.act('role:info,need:part', { name: pkg.name })
-
-          self.stats_instance.npkgs_lifetime++
-          self.stats_instance.npkgs_iteration++
-
-          await sleep(sleep_ms_between_fetches)
-        }
-
-
-        await sleep(sleep_ms_between_iterations)
+        pkgs_q.ingested_at = null
       }
-    })
+
+      is_first_iteration = false
+
+
+      const pkgs = await seneca.make('nodezoo', 'orig')
+        .list$(pkgs_q)
+
+
+      /* NOTE: An astute reader would notice that in case of error, some
+       * packages will not be ingested, yet still be marked as ingested.
+       * For now, that's okay.
+       */
+      const marking = pkgs.map(pkg => 
+        pkg
+          .data$({
+            ingested_at: new Date().toISOString()
+          })
+          .save$()
+      )
+
+      await Promise.all(marking)
+
+
+      for (const pkg of pkgs) {
+        seneca.act('role:info,need:part', { name: pkg.name })
+
+        self.stats_instance.npkgs_lifetime++
+        self.stats_instance.npkgs_iteration++
+
+        await sleep(sleep_ms_between_fetches)
+      }
+
+
+      await sleep(sleep_ms_between_iterations)
+
+
+      if (msg.once) {
+        self.stop()
+        break
+      }
+    }
 
     return true
   }

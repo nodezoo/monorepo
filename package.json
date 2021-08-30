@@ -4,8 +4,12 @@
   "description": "Nodezoo system monorepo.",
   "main": "index.js",
   "scripts": {
-    "local": "node local/dev.js",
-    "local-watch": "./node_modules/nodemon/bin/nodemon.js ./local/dev.js",
+    "local": "./env/local/scripts/setup.sh && node ./env/local/start.js",
+    "local-watch": "./env/local/scripts/setup.sh && ./node_modules/nodemon/bin/nodemon.js ./env/local/start.js",
+    "local-stop": "./env/local/scripts/teardown.sh",
+    "sim": "./env/sim/scripts/setup.sh && node ./env/sim/start.js",
+    "sim-watch": "./env/sim/scripts/setup.sh && ./node_modules/nodemon/bin/nodemon.js ./env/sim/start.js",
+    "sim-stop": "./env/sim/scripts/teardown.sh",
     "test": "echo -n 'Please use `npm run test-fast` instead.\n\n'",
     "test-fast": "./node_modules/jasmine/bin/jasmine.js --config=test/support/jasmine.json",
     "model": "voxgig-model model/model.jsonic",
@@ -26,7 +30,7 @@
   "homepage": "https://github.com/nodezoo/monorepo#readme",
   "devDependencies": {
     "@voxgig/model": "voxgig/model",
-    "aws-sdk": "^2.943.0",
+    "aws-sdk": "2.973.0",
     "faker": "5.5.3",
     "jasmine": "3.8.0",
     "jsonic": "jsonicjs/jsonic#4edd639987b75ef62a74e3904fb890f59d21379c",
@@ -36,8 +40,9 @@
     "seneca-repl": "^1.2.0"
   },
   "dependencies": {
+    "@octokit/auth-app": "3.6.0",
     "@octokit/rest": "^18.6.7",
-    "@seneca/dynamo-store": "^0.6.0",
+    "@seneca/dynamo-store": "github:lilsweetcaligula/seneca-dynamo-store#make-the-store-comply-with-the-shared-store-basic-tests",
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
     "@seneca/user": "5.8.0",
@@ -51,6 +56,7 @@
     "JSONStream": "1.3.5",
     "moment": "2.29.1",
     "morgan": "1.10.0",
+    "node-cron": "2.0.3",
     "patrun": "7.1.0",
     "seneca": "^3.23.3",
     "seneca-entity": "^14.0.0",
@@ -58,6 +64,8 @@
     "seneca-mem-store": "6.0.3",
     "seneca-member": "1.1.0",
     "seneca-promisify": "^2.0.0",
+    "seneca-search-aws-cloudsearch": "github:lilsweetcaligula/seneca-search-aws-cloudsearch",
+    "seneca-search-mem": "github:lilsweetcaligula/seneca-search-mem",
     "seneca-simple-mail": "1.0.0",
     "seneca-sqlite-store": "0.0.3",
     "uuid": "8.3.2"

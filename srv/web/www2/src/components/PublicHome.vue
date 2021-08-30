@@ -6,6 +6,7 @@
       <input type="submit" value="Sign in" />
     </form>
     <router-link to="/forgot">Forgot password?</router-link>
+    <a :href="githubSignInLink">Sign in with GitHub</a>
   </div>
 </template>
 
@@ -15,6 +16,15 @@ import Api from '@/lib/api'
 
 export default {
   name: 'PublicHome',
+
+  computed: {
+    githubSignInLink() {
+      const client_id = '1172dca59945c160eef9'
+
+      return 'https://github.com/login/oauth/authorize' +
+        `?scope=user:email&client_id=${client_id}`
+    }
+  },
 
   data: () => ({
     email: '',

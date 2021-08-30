@@ -48,7 +48,7 @@ main: ent: nodezoo: npm: {
 
 main: ent: nodezoo: pass_reset_token: {
   value: type: S
-  was_used: type: B
+  was_used: type: N
   user_id: type: S
 
   #
@@ -95,6 +95,7 @@ main: srv: payment: {
 
 main: srv: web: {
   msg: {
+    'role:web,scope:public,login:with_github': {}
     'role:web,scope:public,login:user': {}
     'role:web,scope:public,search:pkgs': {}
     'role:web,scope:public,show:pkg': {}
@@ -114,6 +115,7 @@ main: srv: web: {
 
 main: srv: info: {
   msg: {
+    'role:info,need:part': { async: true }
     'role:info,collect:part': { async: true }
     'role:info,get:info': {}
     'role:info,test:true': {}
@@ -123,7 +125,6 @@ main: srv: info: {
 
 main: srv: npm: {
   msg: {
-    'role:info,need:part': { async: true }
     'role:source,source:npm,get:package': {}
     'role:source,source:npm,pull:package': {}
   }
@@ -132,7 +133,6 @@ main: srv: npm: {
 
 main: srv: github: {
   msg: {
-    'role:info,need:part': { async: true }
     'role:source,source:github,get:package': {}
     'role:source,source:github,pull:package': {}
     'role:source,source:github,get:rate_limit': {}
@@ -213,6 +213,7 @@ main: srv: devtools: {
     'role:devtools,fake:true,create:pkg_history': {}
     'role:devtools,fake:true,create:npm_pkg': {}
     'role:devtools,create:user': {}
+    'role:devtools,ping:pong': {}
   }
 }
 

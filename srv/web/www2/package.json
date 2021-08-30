@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "local-serve": "npm run serve",
+    "sim-serve": "node ./src/server.js",
     "build": "vue-cli-service build",
     "model": "voxgig-model model/model.jsonic",
     "reset": "rm -rf node_modules yarn.lock package-lock.json && yarn install && yarn run test"
@@ -11,6 +13,7 @@
   "dependencies": {
     "axios": "0.21.1",
     "chart.js": "2.9.4",
+    "express": "4.17.1",
     "moment": "2.29.1",
     "vue-chartjs": "3.5.1",
     "vue-cli-plugin-vuetify": "^2.4.2",

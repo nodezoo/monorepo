@@ -12,6 +12,43 @@ function makeApi({ seneca }) {
   api.use(Express.json())
 
 
+  api.post('/login-with-gh', (req, res, next) => {
+    const { code } = req.body
+
+    if (null == code) {
+      return res.json({ ok: false, why: 'unauthorized' })
+    }
+
+    const loginmsg = { code }
+
+    seneca.act('role:web,scope:public,login:with_github', loginmsg,
+      function (err, out) {
+        if (err) {
+          return next(err)
+        }
+
+        if (!out.ok) {
+          return res.json({ ok: false, why: 'unauthorized' })
+        }
+
+        const { data: { auth_token } } = out
+
+
+        // NOTE: WARNING: The httpOnly:true is very important to security.
+        // If httpOnly:false, then the cookie will be accessible from the
+        // frontend via `document.cookie`. This would allow for all sorts
+        // of security issues. The httpOnly:true option prevents access
+        // from the frontend code.
+        //
+        res.cookie('AUTH_TOKEN', auth_token, {
+          httpOnly: true
+        })
+
+        return res.json({ ok: true })
+      })
+  })
+
+
   api.post('/login', (req, res, next) => {
     const { email = null, pass = null } = req.body
 

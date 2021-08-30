@@ -1,6 +1,6 @@
 const Assert = require('assert')
 const Moment = require('moment')
-const NpmDownloadStats = require('download-stats')
+const Axios = require('axios')
 
 const {
   make_timestamp,
@@ -30,9 +30,9 @@ module.exports = function make_pull_npm_history() {
     const { pkg_name } = msg
 
 
-    const { date = null } = msg
+    const { date: timestamp = null } = msg
 
-    if (!is_valid_timestamp(msg.date)) {
+    if (!is_valid_timestamp(timestamp)) {
       return {
         ok: false,
         why: 'invalid-field',
@@ -44,18 +44,34 @@ module.exports = function make_pull_npm_history() {
     }
 
 
-    return new Promise((resolve, _reject) => {
-      const day = today(date)
-      const stats_pull = NpmDownloadStats.get(day, tomorrow(day), pkg_name)
+    const npm_api_url = process.env.NPM_API_URL
+
+    if (null == npm_api_url) {
+      throw new Error('missing NPM_API_URL env var')
+    }
 
 
-      stats_pull.once('error', err => {
-        console.error(err)
-        return resolve({ ok: false, why: 'internal' })
-      })
+    const date = new Date(timestamp)
+    const start_date = today(date)
+    const end_date = tomorrow(date)
+
+    const start = make_timestamp(start_date)
+    const end = make_timestamp(end_date)
 
 
-      stats_pull.once('data', async (stats) => {
+    const history_url = `${npm_api_url}/downloads/range/` +
+      `${start}:${end}/${pkg_name}`
+
+    const stats_pull = await Axios.get(history_url, {
+      responseType: 'stream'
+    })
+
+
+    return new Promise(async (resolve, reject) => {
+      stats_pull.data.once('error', reject)
+
+
+      stats_pull.data.once('data', async (stats) => {
         try {
           const { downloads } = stats
 
@@ -63,17 +79,16 @@ module.exports = function make_pull_npm_history() {
             .data$({
               npm_downloads: downloads,
               name: pkg_name,
-              day: make_timestamp(day)
+              day: make_timestamp(date)
             })
             .save$({ upsert$: ['name', 'day'] })
         } catch (err) {
-          console.error(err)
-          return resolve({ ok: false, why: 'internal' })
+          return reject(err)
         }
       })
 
 
-      stats_pull.once('end', () => {
+      stats_pull.data.once('end', () => {
         return resolve({ ok: true })
       })
     })
