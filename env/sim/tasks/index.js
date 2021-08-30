@@ -85,16 +85,7 @@ function pull_npm_history({ seneca }) {
 }
 
 
-function pull_github_history({ seneca }) {
-  // TODO: Make this an env var:
-  //
-  const GITHUB_HOURLY_RATE_LIMIT = 5000
-
-
-  const MS_IN_HOUR = 60 * 60 * 1e3
-  const iter_sleep_ms = Math.ceil(MS_IN_HOUR / GITHUB_HOURLY_RATE_LIMIT)
-
-
+async function pull_github_history({ seneca }) {
   const now = new Date()
 
   const started_at = Moment(now).add(2, 'minutes').toDate()
@@ -102,6 +93,8 @@ function pull_github_history({ seneca }) {
   const started_at_mins = started_at.getMinutes()
 
   const scheduled_daily = `${started_at_mins} ${started_at_hrs} * * *`
+
+
 
   return Cron.schedule(scheduled_daily, async () => {
     console.dir(`pull_github_history, triggered at: ${new Date()}`)
@@ -113,19 +106,45 @@ function pull_github_history({ seneca }) {
     console.dir(`pull_npm_history, located ${pkgs.length} packages`)
 
 
+    const init_gh_rate_limit = await fetch_rate_limit({ seneca })
+    let gh_remaining_limit = dbginit_gh_rate_limit.data.resources.core.remaining
+    let iter_sleep_ms = calculate_sleep_ms_between_api_requests(gh_remaining_limit)
+
+
+    console.dir(`pull_github_history, the current rate limit is: ${gh_remaining_limit}`)
+
+    console.dir('pull_github_history, to keep it under the limit,' +
+      ` I will sleep for ${iter_sleep_ms} ms between requests`)
+
+
     for (let i = 0; i < pkgs.length; i++) {
-      if (GITHUB_HOURLY_RATE_LIMIT <= i) {
+      while (0 >= gh_remaining_limit) {
+        const old_gh_rate_limit = await fetch_rate_limit({ seneca })
+        const limit_reset_ms = old_gh_rate_limit.data.resources.core.reset * 1e3
+        const limit_reset_at = new Date(limit_reset_ms)
+
         const now = new Date()
-        const next_hour = Moment(now).startOf('hour').add(1, 'hour').toDate()
-        const ms_till_next_hour = Moment(next_hour).diff(now)
+        const ms_till_limit_reset = Math.max(Moment(limit_reset_at).diff(now), 0)
 
         console.dir('pull_github_history, reached an estimated rate limit...')
-        console.dir(`pull_github_history, sleeping until ${next_hour}`)
-        console.dir(`pull_github_history, will sleep for ${ms_till_next_hour} ms`)
+        console.dir(`pull_github_history, reset at ${limit_reset_at}...`)
+        console.log()
+        console.dir(`pull_github_history, sleeping until ${limit_reset_at}`)
+        console.dir(`pull_github_history, will sleep for ${ms_till_limit_reset} ms`)
 
-        await sleep(ms_till_next_hour)
+        await sleep(ms_till_limit_reset)
 
         console.dir('pull_github_history, woke up')
+
+        const new_gh_rate_limit = await fetch_rate_limit({ seneca })
+        gh_remaining_limit = new_gh_rate_limit.data.resources.core.remaining
+        iter_sleep_ms = calculate_sleep_ms_between_api_requests(gh_remaining_limit)
+
+
+        console.dir(`pull_github_history, the new rate limit is: ${gh_remaining_limit}`)
+
+        console.dir('pull_github_history, to keep it under the limit,' +
+          ` I will sleep for ${iter_sleep_ms} ms between requests`)
       }
 
       const pkg = pkgs[i]
@@ -138,8 +157,34 @@ function pull_github_history({ seneca }) {
       })
 
       await sleep(iter_sleep_ms)
+
+      gh_remaining_limit--
     }
   })
+
+
+  async function fetch_rate_limit({ seneca }) {
+    const rate_limit_res = await seneca
+      .post('role:source,source:github,get:rate_limit')
+
+    if (!rate_limit_res.ok) {
+      throw new Error(rate_limit_res.why ||
+        'failed to fetch the github rate limit')
+    }
+
+    return rate_limit_res
+  }
+
+
+  function calculate_sleep_ms_between_api_requests(gh_remaining_limit) {
+    if (0 === gh_remaining_limit) {
+      return +Infinity
+    }
+
+    const MS_IN_HOUR = 60 * 60 * 1e3
+
+    return Math.ceil(MS_IN_HOUR / gh_remaining_limit)
+  }
 }
 
 
