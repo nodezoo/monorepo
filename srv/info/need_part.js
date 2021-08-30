@@ -54,10 +54,15 @@ module.exports = function make_need_part() {
 
 
     // TODO: The package may already be in the search pool.
-    // In that case we must delete it and add again.
+    // In that case we must delete it and add again. For now,
+    // we work around it by logging the error message and
+    // continuing on.
 
     /* do not await */ seneca.post('sys:search,cmd:add', {
       doc: { ...gh_res.pkg, ...npm_res.pkg }
+    }).catch(err => {
+      console.error(err.message)
+      return
     })
 
 

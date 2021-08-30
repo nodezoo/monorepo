@@ -19,6 +19,17 @@ module.exports = function make_fake_search_query() {
       }
     }
 
+    if ('' === query.trim()) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['query'],
+          why_exactly: 'blank'
+        }
+      }
+    }
+
 
     const search = await seneca
       .post('sys:search,cmd:search', { query })
