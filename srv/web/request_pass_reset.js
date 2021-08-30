@@ -61,6 +61,8 @@ async function sendRecoveryLinkEmail(args, ctx) {
   const { email, reset_token } = args
   const { seneca } = ctx
 
+  // TODO: Do not hardcode this.
+  //
   const reset_link = `http://localhost:8080/resetpass?token=${reset_token}`
 
   await seneca.post('sys:mail,send:mail', {

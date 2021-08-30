@@ -14,11 +14,13 @@
       },
       "payment": {
         "msg": {
+          "role:payment,ping:pong": {},
           "role:payment,process:payment": {}
         }
       },
       "web": {
         "msg": {
+          "role:web,ping:pong": {},
           "role:web,scope:public,login:with_github": {},
           "role:web,scope:public,login:user": {},
           "role:web,scope:public,search:pkgs": {},
@@ -36,6 +38,7 @@
       },
       "info": {
         "msg": {
+          "role:info,ping:pong": {},
           "role:info,need:part": {
             "async": true
           },
@@ -44,18 +47,19 @@
           },
           "role:info,get:info": {
             "params": {}
-          },
-          "role:info,test:true": {}
+          }
         }
       },
       "npm": {
         "msg": {
+          "role:npm,ping:pong": {},
           "role:source,source:npm,get:package": {},
           "role:source,source:npm,pull:package": {}
         }
       },
       "github": {
         "msg": {
+          "role:github,ping:pong": {},
           "role:source,source:github,get:package": {},
           "role:source,source:github,pull:package": {},
           "role:source,source:github,get:rate_limit": {}
@@ -63,6 +67,7 @@
       },
       "history": {
         "msg": {
+          "role:history,ping:pong": {},
           "role:history,pull:npm_history": {},
           "role:history,pull:github_history": {},
           "role:history,list:history": {}
@@ -70,13 +75,16 @@
       },
       "search": {
         "msg": {
+          "role:search,ping:pong": {},
           "role:search,search:query": {},
           "role:search,fake_search:query": {}
         }
       },
       "update": {
         "msg": {
+          "role:update,ping:pong": {},
           "role:update,start:download": {},
+          "role:update,scope:pkg,prepare:ingest": {},
           "role:update,start:follow": {},
           "role:update,start:ingest": {},
           "role:update,stop:download": {},
@@ -88,6 +96,7 @@
       },
       "user": {
         "msg": {
+          "role:user,ping:pong": {},
           "role:user,scope:auth,login:user": {},
           "role:user,scope:pkg,add:bookmark": {},
           "role:user,scope:pkg,list:bookmarks": {},
@@ -100,10 +109,10 @@
       "devtools": {
         "sns_topic": false,
         "msg": {
+          "role:devtools,ping:pong": {},
           "role:devtools,fake:true,create:pkg_history": {},
           "role:devtools,fake:true,create:npm_pkg": {},
-          "role:devtools,create:user": {},
-          "role:devtools,ping:pong": {}
+          "role:devtools,create:user": {}
         }
       }
     },

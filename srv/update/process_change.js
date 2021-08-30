@@ -33,7 +33,9 @@ module.exports = function make_process_change() {
      */
     const { id: pkg_name } = change
 
-    seneca.act('role:info,need:part', { name: pkg_name })
+    await seneca.post('role:update,scope:pkg,prepare:ingest', {
+      pkg_name
+    })
 
     return { ok: true }
   }

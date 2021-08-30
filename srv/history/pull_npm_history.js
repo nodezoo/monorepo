@@ -11,7 +11,10 @@ const Shared = require('../../lib/shared')
 const { today, tomorrow } = Shared
 
 
-module.exports = function make_pull_npm_history() {
+module.exports = function make_pull_npm_history(options_wrapper) {
+  const { options } = options_wrapper
+
+
   return async function pull_npm_history(msg) {
     const seneca = this
 
@@ -44,10 +47,10 @@ module.exports = function make_pull_npm_history() {
     }
 
 
-    const npm_api_url = process.env.NPM_API_URL
+    const { npm_api_url = null } = options
 
     if (null == npm_api_url) {
-      throw new Error('missing NPM_API_URL env var')
+      throw new Error('missing npm_api_url option')
     }
 
 
