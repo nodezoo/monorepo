@@ -7,11 +7,6 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-# Setting up frontend
-#
-./env/local/scripts/frontend-start.sh
-
-
 test -d ./env/local/devassets || mkdir ./env/local/devassets
 
 
