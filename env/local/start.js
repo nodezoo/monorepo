@@ -3,16 +3,7 @@ require('dotenv').config({ path: './env/local/.env' })
 
 const Seneca = require('seneca')
 const Model = require('../../model/model.json')
-const TasksCollection = require('./tasks')
-
-
-const Nock = require('nock')
-//
-// We only want our locally-mounted system to be able
-// to make local connections, and not external ones.
-//
-Nock.disableNetConnect()
-Nock.enableNetConnect('localhost')
+const { env_var_required } = require('../../lib/shared')
 
 
 const seneca = Seneca({ log: 'flat' })
@@ -82,23 +73,13 @@ seneca.use('simple-mail', {
 })
 
 
-const npm_registry_url = process.env.NPM_REGISTRY_URL
-
-if (null == npm_registry_url) {
-  throw new Error('missing NPM_REGISTRY_URL env var')
-}
-
-
-const github_api_url = process.env.GITHUB_API_URL
-
-if (null == github_api_url) {
-  throw new Error('missing process env var')
-}
-
-
 const options = {
-  npm_registry_url,
-  github_api_url,
+  npm_registry_url: env_var_required('NPM_REGISTRY_URL'),
+  github_url: env_var_required('GITHUB_URL'),
+  github_api_url: env_var_required('GITHUB_API_URL'),
+
+  github_client_id: env_var_required('GITHUB_CLIENT_ID'),
+  github_client_secret: env_var_required('GITHUB_CLIENT_SECRET'),
 
   ingester: {
     sleep_ms_between_iterations: 5e3,
@@ -120,16 +101,18 @@ seneca.ready(() => {
   //
   seneca.act('make:group,role:group', {
     owner_id: null,
-    group: { name: 'Premium Users', mark: 'pu', code: 'PremiumUsers' },
+
+    group: {
+      name: 'Premium Users',
+      mark: 'pu',
+      code: 'PremiumUsers'
+    },
+
     unique: true
   }, err => {
     if (err) {
       throw err
     }
   })
-
-  // NOTE: Scheduling the tasks.
-  //
-  TasksCollection.run({ seneca })
 })
 
