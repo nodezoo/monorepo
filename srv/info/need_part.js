@@ -1,3 +1,5 @@
+const Assert = require('assert')
+
 
 module.exports = function make_need_part() {
   return async function need_part(msg) {
@@ -26,13 +28,6 @@ module.exports = function make_need_part() {
     }
 
 
-    /* do not await */ seneca.post('role:info,collect:part', {
-      name: pkg_name,
-      part: 'npm',
-      data: npm_res.pkg
-    })
-
-
     const gh_res = await seneca.post(
       'role:source,source:github,get:package',
 
@@ -42,31 +37,43 @@ module.exports = function make_need_part() {
     )
 
     if (!gh_res.ok) {
-      return { ok: false }
+      /* NOTE: Whatever - if we are here, then the package has no giturl.
+       * In that case we may simply continue
+       *
+       * TODO: Be more explicit with regard to error codes.
+       */
     }
 
 
-    /* do not await */ seneca.post('role:info,collect:part', {
-      name: pkg_name,
-      part: 'github',
-      data: gh_res.pkg
-    })
+    // NOTE: Because the package may already be in the search pool,
+    // we should then overwrite it in the search pool.
+    //
+    // sys:search,cmd:remove is required to not crash by its
+    // contract, so it should be perfectly fine to try to
+    // remove a document from the search pool that does not
+    // exist.
+
+    Assert(null != npm_res.pkg, 'npm_res.pkg')
+
+    const doc = {
+      ...(gh_res.pkg || {}),
+      ...npm_res.pkg,
+      id: pkg_name
+    }
+
+    const added = await seneca.post('sys:search,cmd:add', { doc })
+      .catch(async (err) => {
+        console.error(err.message)
+
+        await seneca.post('sys:search,cmd:remove', {
+          id: pkg_name
+        })
+
+        return seneca.post('sys:search,cmd:add', { doc })
+      })
 
 
-    // TODO: The package may already be in the search pool.
-    // In that case we must delete it and add again. For now,
-    // we work around it by logging the error message and
-    // continuing on.
-
-    /* do not await */ seneca.post('sys:search,cmd:add', {
-      doc: { ...gh_res.pkg, ...npm_res.pkg }
-    }).catch(err => {
-      console.error(err.message)
-      return
-    })
-
-
-    return { ok: true }
+    return { ok: added.ok }
   }
 }
 

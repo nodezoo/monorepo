@@ -11,8 +11,18 @@ module.exports = function make_pull_package(options_wrapper) {
     const seneca = this
 
 
-    Assert(null != msg.name, 'msg.name')
-    const { name } = msg
+    const { name = null } = msg
+
+    if (null == name) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['name'],
+          why_exactly: 'required'
+        }
+      }
+    }
 
 
     Assert(null != options.npm_registry_url,
@@ -21,7 +31,14 @@ module.exports = function make_pull_package(options_wrapper) {
     const pkgurl = options.npm_registry_url + '/' + encodeURIComponent(name)
 
 
-    const response = await Axios.get(pkgurl)
+    const response = await Axios.get(pkgurl, {
+      validateStatus(status) {
+        // NOTE: Preventing crashes on non-HTTP 500 responses.
+        //
+        return status < 500
+      }
+    })
+
     const out = { ok: false }
 
 
@@ -41,10 +58,12 @@ module.exports = function make_pull_package(options_wrapper) {
         giturl:  repository.url,
         desc:    pkg.description || '',
         readme:  pkg.readme || ''
-      }).save$()
+      }).save$({
+        upsert$: ['name']
+      })
 
       out.ok = true
-      out.pkg = ent
+      out.pkg = ent.data$(false)
       delete out.pkg.readme
     }
     

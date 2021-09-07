@@ -51,7 +51,7 @@ function pull_npm_history({ seneca }) {
     console.dir(`pull_npm_history, triggered at: ${now}`)
 
 
-    const pkgs = await seneca.make('nodezoo', 'npm')
+    const pkgs = await seneca.make('nodezoo', 'bookmark')
       .list$({ all$: true, fields$: ['name'] })
 
     console.dir(`pull_npm_history, located ${pkgs.length} packages`)
@@ -100,7 +100,7 @@ async function pull_github_history({ seneca }) {
     console.dir(`pull_github_history, triggered at: ${new Date()}`)
 
 
-    const pkgs = await seneca.make('nodezoo', 'npm')
+    const pkgs = await seneca.make('nodezoo', 'bookmark')
       .list$({ all$: true, fields$: ['name'] })
 
     console.dir(`pull_npm_history, located ${pkgs.length} packages`)

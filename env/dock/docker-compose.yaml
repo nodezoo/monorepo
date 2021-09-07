@@ -1,0 +1,263 @@
+version: '3.5'
+
+
+networks:
+  nodezoo-network:
+    name: nodezoo-network
+
+
+services:
+  nodezoo-env:
+    image: nodezoo-env:latest
+    build: .
+    container_name: nodezoo-env
+
+
+  aws-cloudsearch:
+    depends_on:
+      - mongo
+      - elasticsearch
+    image: oisinmulvihill/nozama-cloudsearch
+    networks:
+      - nodezoo-network
+    hostname: aws-cloudsearch
+    ports:
+      - "15808:15808"
+    environment:
+      - MONGO_HOST=mongo
+      - ELASTICSEARCH_HOST=elasticsearch
+    restart: on-failure
+
+  mongo:
+    image: mongo:3.4
+    networks:
+      - nodezoo-network
+    restart: on-failure
+
+  elasticsearch:
+    image: elasticsearch:7.1.0
+    environment:
+      - "discovery.type=single-node"
+    networks:
+      - nodezoo-network
+    restart: on-failure
+
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    hostname: dynamodb
+    container_name: dynamodb-local
+    ports:
+      - "18000:8000"
+    networks:
+      - nodezoo-network
+    restart: on-failure
+
+  
+  dynamodb-migrations:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/dynamodb-migrations
+    networks:
+      - nodezoo-network
+    command: ["./wait-for-it/wait-for-it.sh", "dynamodb:8000", "--", "node", "migrate.js"]
+    env_file:
+      - ./srv/dynamodb-migrations/.env
+    restart: on-failure
+
+
+  github:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/github
+    ports:
+      - "4600:4600"
+      - "4601:4601"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/github/.env
+    restart: on-failure
+
+
+  history:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/history
+    ports:
+      - "4620:4620"
+      - "4621:4621"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/history/.env
+    restart: on-failure
+
+
+  info:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/info
+    ports:
+      - "4630:4630"
+      - "4631:4631"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/info/.env
+    restart: on-failure
+
+
+  npm:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/npm
+    ports:
+      - "4610:4610"
+      - "4611:4611"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/npm/.env
+    restart: on-failure
+
+
+  payment:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/payment
+    ports:
+      - "4640:4640"
+      - "4641:4641"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/payment/.env
+    restart: on-failure
+
+
+  search:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/search
+    ports:
+      - "4650:4650"
+      - "4651:4651"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/search/.env
+    restart: on-failure
+
+
+  update:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/update
+    ports:
+      - "4660:4660"
+      - "4661:4661"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/update/.env
+    restart: on-failure
+
+
+  user:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/user
+    ports:
+      - "4670:4670"
+      - "4671:4671"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/update/.env
+    restart: on-failure
+
+
+  db-monitor:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/db-monitor
+    ports:
+      - "4771:4771"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/db-monitor/.env
+    restart: on-failure
+
+
+  web:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+    build: ./srv/web
+    ports:
+      - "9000:9000"
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/web/.env
+    restart: on-failure
+
+
+  www:
+    build: ../../www
+    ports:
+      - "8080:8080"
+    networks:
+      - nodezoo-network
+    env_file:
+      - ../../www/.env
+    restart: on-failure
+
+
+  history-manager:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+      - history
+    build: ./srv/history-manager
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    env_file:
+      - ./srv/history-manager/.env
+    restart: on-failure
+
+
+  update-manager:
+    depends_on:
+      - nodezoo-env
+      - dynamodb
+      - update
+    build: ./srv/update-manager
+    command: node ./start.js
+    networks:
+      - nodezoo-network
+    restart: on-failure
+

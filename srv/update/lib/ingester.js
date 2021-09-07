@@ -69,68 +69,74 @@ class Ingester {
     const {
       sleep_ms_between_iterations = default_sleep_ms_between_iterations,
       sleep_ms_between_fetches = default_sleep_ms_between_fetches
-    } = msg 
+    } = msg
+
+    console.dir(`ingester: sleep_ms_between_iterations = ${sleep_ms_between_iterations}`)
+    console.dir(`ingester: sleep_ms_between_fetches = ${sleep_ms_between_fetches}`)
 
 
-    let is_first_iteration = true
+    setImmediate(async () => {
+      let is_first_iteration = true
 
-    while (self.is_ingesting) {
-      self.stats_instance.npkgs_iteration = 0
+      while (self.is_ingesting) {
+        self.stats_instance.npkgs_iteration = 0
 
 
-      const pkgs_q = { fields$: ['name'] }
+        const pkgs_q = { fields$: ['name'] }
 
-      if (msg.resume || !is_first_iteration) {
-        /* NOTE: If the client wants to resume the ingestion action, then
-         * we only want to care for packages that have not been ingested.
-         *
-         * On the successive iterations of the ingestion loop, we always care
-         * solely for packages that have not been ingested.
+        if (msg.resume || !is_first_iteration) {
+          /* NOTE: If the client wants to resume the ingestion action, then
+           * we only want to care for packages that have not been ingested.
+           *
+           * On the successive iterations of the ingestion loop, we always care
+           * solely for packages that have not been ingested.
+           */
+
+          pkgs_q.ingested_at = null
+        }
+
+        is_first_iteration = false
+
+
+        const pkgs = await seneca.make('nodezoo', 'orig')
+          .list$(pkgs_q)
+
+
+        /* NOTE: An astute reader would notice that in case of error, some
+         * packages will not be ingested, yet still be marked as ingested.
+         * For now, that's okay.
          */
+        const marking = pkgs.map(pkg => 
+          pkg
+            .data$({
+              ingested_at: new Date().toISOString()
+            })
+            .save$()
+        )
 
-        pkgs_q.ingested_at = null
+        await Promise.all(marking)
+
+
+        for (const pkg of pkgs) {
+          console.dir(`ingester: ingesting: ${pkg.name}`)
+          seneca.act('role:info,need:part', { name: pkg.name })
+
+          self.stats_instance.npkgs_lifetime++
+          self.stats_instance.npkgs_iteration++
+
+          await sleep(sleep_ms_between_fetches)
+        }
+
+
+        await sleep(sleep_ms_between_iterations)
+
+
+        if (msg.once) {
+          self.stop()
+          break
+        }
       }
-
-      is_first_iteration = false
-
-
-      const pkgs = await seneca.make('nodezoo', 'orig')
-        .list$(pkgs_q)
-
-
-      /* NOTE: An astute reader would notice that in case of error, some
-       * packages will not be ingested, yet still be marked as ingested.
-       * For now, that's okay.
-       */
-      const marking = pkgs.map(pkg => 
-        pkg
-          .data$({
-            ingested_at: new Date().toISOString()
-          })
-          .save$()
-      )
-
-      await Promise.all(marking)
-
-
-      for (const pkg of pkgs) {
-        seneca.act('role:info,need:part', { name: pkg.name })
-
-        self.stats_instance.npkgs_lifetime++
-        self.stats_instance.npkgs_iteration++
-
-        await sleep(sleep_ms_between_fetches)
-      }
-
-
-      await sleep(sleep_ms_between_iterations)
-
-
-      if (msg.once) {
-        self.stop()
-        break
-      }
-    }
+    })
 
     return true
   }

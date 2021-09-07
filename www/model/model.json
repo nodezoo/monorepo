@@ -57,7 +57,7 @@
           "side": {
             "part": "BasicSide",
             "menu": {
-              "order": "search,package,report",
+              "order": "profile,search,package,report",
               "items": {
                 "search": {
                   "title": "Search",

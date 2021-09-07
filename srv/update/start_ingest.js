@@ -16,7 +16,7 @@ module.exports = function make_start_ingest(options_wrapper) {
       seneca.root.context.pkg_ingestion || new Ingester(seneca, options)
 
 
-    const started = await seneca.root.context
+    const started = seneca.root.context
       .pkg_ingestion.start(msg)
 
 

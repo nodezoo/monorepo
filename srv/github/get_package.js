@@ -7,7 +7,10 @@ module.exports = function make_get_package() {
       ok: true,
     }
     
-    out.pkg = await seneca.entity('nodezoo/github').load$(msg.name)
+    out.pkg = await seneca.entity('nodezoo/github')
+      .load$(msg.name)
+      .then(ent => ent ? ent.data$(false) : null)
+
     out.ok = null != out.pkg
     
     if (!out.pkg || msg.update) {

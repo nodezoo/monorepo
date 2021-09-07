@@ -3,7 +3,34 @@ const Shared = require('../../lib/shared')
 const { pick } = Shared
 
 
-module.exports = function make_login_with_github() {
+module.exports = function make_login_with_github(options_wrapper) {
+  const { options } = options_wrapper
+
+  const {
+    github_client_id,
+    github_client_secret,
+    github_url,
+    github_api_url
+  } = options
+
+
+  if (null == github_client_id) {
+    throw new Error('missing github_client_id option')
+  }
+
+  if (null == github_client_secret) {
+    throw new Error('missing github_client_secret option')
+  }
+
+  if (null == github_url) {
+    throw new Error('missing github_url option')
+  }
+
+  if (null == github_api_url) {
+    throw new Error('missing github_api_url option')
+  }
+
+
   return async function login_with_github(msg) {
     const seneca = this
 
@@ -22,23 +49,11 @@ module.exports = function make_login_with_github() {
     }
 
 
-    const {
-      GITHUB_CLIENT_ID: client_id,
-      GITHUB_CLIENT_SECRET: client_secret
-    } = process.env
-
-
-    const gh_url = process.env.GITHUB_URL
-
-    if (null == gh_url) {
-      throw new Error('missing GITHUB_URL env var')
-    }
-
-    const login_url = gh_url + '/login/oauth/access_token'
+    const login_url = github_url + '/login/oauth/access_token'
 
     const login_response = await Axios.post(login_url, {
-      client_id,
-      client_secret,
+      client_id: github_client_id,
+      client_secret: github_client_secret,
       code
     }, {
       headers: {
@@ -56,13 +71,7 @@ module.exports = function make_login_with_github() {
     } = login_response.data
 
 
-    const gh_api_url = process.env.GITHUB_API_URL
-
-    if (null == gh_api_url) {
-      throw new Error('missing GITHUB_API_URL env var')
-    }
-
-    const gh_emails_url = gh_api_url + '/user/emails'
+    const gh_emails_url = github_api_url + '/user/emails'
 
     // TODO: Use Octokit here?
     //

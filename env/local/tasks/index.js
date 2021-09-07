@@ -38,7 +38,7 @@ function pull_npm_history({ seneca }) {
   // NOTE: should be daily in the non-local environments.
   //
   return schedule_every_thirty_seconds(async () => {
-    const pkgs = await seneca.make('nodezoo', 'npm')
+    const pkgs = await seneca.make('nodezoo', 'bookmark')
       .list$({ all$: true, fields$: ['name'] })
 
     for (const pkg of pkgs) {
@@ -61,7 +61,7 @@ function pull_github_history({ seneca }) {
   // NOTE: should be daily in the non-local environments.
   //
   return schedule_every_thirty_seconds(async () => {
-    const pkgs = await seneca.make('nodezoo', 'npm')
+    const pkgs = await seneca.make('nodezoo', 'bookmark')
       .list$({ all$: true, fields$: ['name'] })
 
     for (const pkg of pkgs) {

@@ -28,6 +28,9 @@ class Follower {
     })
 
     this.feed.on('data', change => {
+      console.dir('follower:')
+      console.dir(change, { depth: 4 })
+
       return seneca.act(
         'role:update,process:change',
 

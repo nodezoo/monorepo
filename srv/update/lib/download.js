@@ -40,16 +40,13 @@ class NpmDownload {
           return
         }
 
+
         const { id: pkg_name } = pkg_data
 
-        /* NOTE: Setting ingested_at to null, coupled with the upsert on the
-         * `name` field, will cause the package to be re-ingested when the
-         * ingestion action is requested after the download process is done.
-         */
-        await self.seneca.make('nodezoo', 'orig')
-          .data$({ name: pkg_name, ingested_at: null })
-          .save$({ upsert$: ['name'] })
-          .catch(err => self.seneca.log.error(err.message))
+        await self.seneca.post('role:update,scope:pkg,prepare:ingest', {
+          pkg_name
+        })
+
 
         return
       })
@@ -62,7 +59,7 @@ class NpmDownload {
          * up to the handler of the 'close' event to reset the download's state.
          */
 
-        self.seneca.log.error(err.message)
+        console.error(err.message)
 
         return
       })

@@ -22,7 +22,7 @@ main: app: web: parts: {
 
   side: {
     menu: {
-      order: 'search,package,report'
+      order: 'profile,search,package,report'
       items: /main/app/web/view
     }
   }
