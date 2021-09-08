@@ -46,29 +46,10 @@ class Api {
   }
 
 
-  static async submitPremiumMembershipCheckout(args) {
-    const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        checkout_for: 'premium',
-        submit: 'checkout',
-        payment_method: args.payment_method,
-        card_number: args.card_number,
-        sec_code: args.sec_code,
-        exp_month: args.exp_month,
-        exp_year: args.exp_year,
-        first_name: args.first_name,
-        last_name: args.last_name,
-        city: args.city,
-        billing_address: args.billing_address,
-        zip: args.zip,
-        country: args.country,
-        phone_number: args.phone_number
-      }
-    }
+  static async submitPremiumMembershipCheckout(_args) {
+    const reqparams = {}
 
-    return api.post('/api/account', reqparams, {
+    return api.post('/api/stripe/create-premium-membership-checkout-session', reqparams, {
       withCredentials: true
     })
   }

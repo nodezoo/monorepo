@@ -111,7 +111,6 @@ main: srv: web: {
     'role:web,scope:account,bookmark:pkg': {}
     'role:web,scope:account,list:bookmarks': {}
     'role:web,scope:account,is:premium': {}
-    'role:web,scope:account,checkout_for:premium,submit:checkout': {}
   }
 }
 

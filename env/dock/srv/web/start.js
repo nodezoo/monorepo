@@ -40,9 +40,15 @@ seneca
     github_url: env_var_required('GITHUB_URL'),
     github_api_url: env_var_required('GITHUB_API_URL'),
     github_client_id: env_var_required('GITHUB_CLIENT_ID'),
-    github_client_secret: env_var_required('GITHUB_CLIENT_SECRET')
+    github_client_secret: env_var_required('GITHUB_CLIENT_SECRET'),
+
+    stripe_api_key: env_var_required('STRIPE_API_KEY'),
+    stripe_webhook_endpoint_secret: env_var_required('STRIPE_WEBHOOK_ENDPOINT_SECRET'),
+
+    nodezoo_app_url: env_var_required('NODEZOO_APP_URL')
   })
 
+  .client({ pin: 'sys:group', host: 'user', port: 4670 })
   .client({ pin: 'sys:user', host: 'user', port: 4670 })
   .client({ pin: 'role:user', host: 'user', port: 4670 })
   .client({ pin: 'role:search', host: 'search', port: 4650 })

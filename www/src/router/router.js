@@ -6,11 +6,6 @@ import model from '../../model/model.json'
 //
 import PackageDetailsView from '../components/PackageDetailsView.vue'
 
-// TODO: This is hardcoded for now. See how this can be
-// implemented via the Model.
-//
-import PremiumMembershipCheckoutView from '../components/PremiumMembershipCheckoutView.vue'
-
 
 function makeRouter(Vue, {cmp}) {
   const routes = Object.entries(model.main.app.web.view).map(([n,v])=>({
@@ -38,15 +33,6 @@ function makeRouter(Vue, {cmp}) {
   routes.push({
     path: '/package/:packageName',
     component: PackageDetailsView
-  })
-
-
-  // TODO: This is hardcoded for now. See how this can be
-  // implemented via the Model.
-  //
-  routes.push({
-    path: '/checkout',
-    component: PremiumMembershipCheckoutView
   })
 
 

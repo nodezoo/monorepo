@@ -10,7 +10,7 @@ function web(options) {
 
 
   const seneca = this
-  const app = MakeServer({ seneca }) 
+  const app = MakeServer({ seneca }, options)
 
   app.listen(9000)
 }

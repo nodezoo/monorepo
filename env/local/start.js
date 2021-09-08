@@ -81,6 +81,11 @@ const options = {
   github_client_id: env_var_required('GITHUB_CLIENT_ID'),
   github_client_secret: env_var_required('GITHUB_CLIENT_SECRET'),
 
+  stripe_api_key: env_var_required('STRIPE_API_KEY'),
+  stripe_webhook_endpoint_secret: env_var_required('STRIPE_WEBHOOK_ENDPOINT_SECRET'),
+
+  nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
+
   ingester: {
     sleep_ms_between_iterations: 5e3,
     sleep_ms_between_fetches: 1e3

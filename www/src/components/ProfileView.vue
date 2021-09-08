@@ -31,9 +31,10 @@ export default {
 
   methods: {
     async becomePremium() {
-      // TODO: QUESTION: Use router-link instead?
-      //
-      this.$router.push('/checkout')
+      const response = await Api.submitPremiumMembershipCheckout()
+      const { stripe_session_url } = response.data
+
+      location.href = stripe_session_url
     }
   },
 
