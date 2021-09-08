@@ -113,7 +113,17 @@ function makeStripeApi({ seneca }, options) {
     console.dir(`promoting the user with id ${user_id} to premium`)
 
 
-    await seneca.post('add:user,role:group', {
+    /*
+     * NOTE: We are using seneca.root over seneca because the original
+     * seneca instance has the 'fatal' flag set to true, which means it
+     * crashes whenever there is an error.
+     *
+     * We do not normally want to crash for business errors, hence we must
+     * use seneca.root which has the 'fatal' flag set to false, which means
+     * if there is an error, it won't crash the process.
+     *
+     */
+    await seneca.root.post('add:user,role:group', {
       user_id,
       code: 'PremiumUsers'
     })

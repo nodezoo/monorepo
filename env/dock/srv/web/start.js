@@ -53,4 +53,5 @@ seneca
   .client({ pin: 'role:user', host: 'user', port: 4670 })
   .client({ pin: 'role:search', host: 'search', port: 4650 })
   .client({ pin: 'role:payment', host: 'payment', port: 4640 })
+  .client({ pin: 'role:history', host: 'history', port: 4620 })
 

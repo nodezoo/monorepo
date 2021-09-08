@@ -5,7 +5,7 @@
     color="grey lighten-5"
   >
     <v-card-title>
-      <router-link :to="'/package/' + pkg_name">
+      <router-link :to="'/package/' + encodeURIComponent(pkg_name)">
         {{ pkg_name }}
       </router-link>
     </v-card-title>
