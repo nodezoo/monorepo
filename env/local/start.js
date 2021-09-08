@@ -3,6 +3,7 @@ require('dotenv').config({ path: './env/local/.env' })
 
 const Seneca = require('seneca')
 const Model = require('../../model/model.json')
+const TasksCollection = require('./tasks')
 const { env_var_required } = require('../../lib/shared')
 
 
@@ -119,5 +120,10 @@ seneca.ready(() => {
       throw err
     }
   })
+
+
+  // NOTE: Scheduling the tasks.
+  //
+  TasksCollection.run({ seneca })
 })
 
