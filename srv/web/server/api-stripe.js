@@ -85,6 +85,9 @@ function makeStripeApi({ seneca }, options) {
     async (req, res, next) => {
       const { stripe_event$: event } = req
 
+      console.dir('premium membership stripe webhook: incoming')
+      console.dir(`premium membership stripe webhook: ${event.type}`)
+
       if ('checkout.session.completed' === event.type) {
         const session = event.data.object
 
@@ -105,6 +108,10 @@ function makeStripeApi({ seneca }, options) {
 
   async function fulfillOrder(stripe_session) {
     const { user_id } = stripe_session.metadata
+
+    console.dir('fulfilling the order...')
+    console.dir(`promoting the user with id ${user_id} to premium`)
+
 
     await seneca.post('add:user,role:group', {
       user_id,

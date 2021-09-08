@@ -41,7 +41,7 @@ seneca
       for (const task of tasks) {
         task.start()
       }
-    }, 30e3)
+    }, 60e3)
   })
 
 

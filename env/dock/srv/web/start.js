@@ -48,7 +48,7 @@ seneca
     nodezoo_app_url: env_var_required('NODEZOO_APP_URL')
   })
 
-  .client({ pin: 'sys:group', host: 'user', port: 4670 })
+  .client({ pin: 'role:group', host: 'user', port: 4670 })
   .client({ pin: 'sys:user', host: 'user', port: 4670 })
   .client({ pin: 'role:user', host: 'user', port: 4670 })
   .client({ pin: 'role:search', host: 'search', port: 4650 })
