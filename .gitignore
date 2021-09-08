@@ -115,6 +115,3 @@ local/setup.sh
 devassets
 !devassets/.gitkeep
 
-
-# Ignore the lockfile
-package-lock.json
