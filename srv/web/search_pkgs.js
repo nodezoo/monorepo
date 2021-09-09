@@ -36,7 +36,9 @@ module.exports = function make_search_pkgs() {
     }
 
     const { data: { pkgs } } = out
-    const pkgs_names = pkgs.map(pkg => pick(pkg, ['name']))
+
+    const pkgs_names = pkgs
+      .map(pkg => pick(pkg, ['name', 'version', 'desc']))
 
     return { ok: true, data: { pkgs: pkgs_names } }
   }

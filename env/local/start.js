@@ -75,7 +75,9 @@ seneca.use('simple-mail', {
 
 
 const options = {
+  npm_api_url: env_var_required('NPM_API_URL'),
   npm_registry_url: env_var_required('NPM_REGISTRY_URL'),
+
   github_url: env_var_required('GITHUB_URL'),
   github_api_url: env_var_required('GITHUB_API_URL'),
 
