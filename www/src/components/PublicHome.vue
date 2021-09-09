@@ -1,12 +1,37 @@
 <template>
-  <div>
-    <form @submit.prevent="onLoginAttempt">
-      <input v-model="email" type="email" placeholder="Email" />
-      <input v-model="pass" type="password" placeholder="Password" />
-      <input type="submit" value="Sign in" />
-    </form>
-    <router-link to="/forgot">Forgot password?</router-link>
-    <a :href="githubSignInLink">Sign in with GitHub</a>
+  <div class="h-screen overflow-auto bg-gray-50">
+    <div class="bg-white w-1/5 container mx-auto mt-20 shadow-md">
+      <div class="pt-8">
+        <img class="mx-auto" src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
+      </div>
+
+      <div class="px-8 pb-8 pt-8">
+        <form @submit.prevent="onLoginAttempt" class="mb-4">
+          <div class="mb-4">
+            <input v-model="email" type="email" placeholder="Email"
+               class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" /> 
+          </div>
+
+          <div class="mb-4">
+            <input v-model="pass" type="password" placeholder="Password"
+              class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+
+          <div>
+            <input type="submit" value="Sign in"
+              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline" />
+          </div>
+        </form>
+
+        <div class="mb-4">
+          <router-link to="/forgot" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot password?</router-link>
+        </div>
+
+        <div>
+          <a :href="githubSignInLink" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign in with GitHub</a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
