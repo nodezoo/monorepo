@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Public from './Public.vue'
+import '@/css/tailwind.css'
+
+import Public from '@/Public.vue'
 import PublicHome from '@/components/PublicHome.vue'
 import ForgotPassView from '@/components/ForgotPassView.vue'
 import ResetPassView from '@/components/ResetPassView.vue'
