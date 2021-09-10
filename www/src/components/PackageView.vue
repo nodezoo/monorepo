@@ -3,7 +3,12 @@
     <v-container>
       <v-row v-for="pkg in pkgs" :key="pkg.name">
         <v-col>
-          <PackageSummaryCard :pkg_name="pkg.name" /> </v-col>
+          <PackageSummaryCard
+            :pkg_name="pkg.name"
+            :pkg_version="pkg.version"
+            :pkg_desc="pkg.desc"
+          />
+        </v-col>
       </v-row>
     </v-container>
   </div>

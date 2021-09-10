@@ -41,9 +41,15 @@ module.exports = function make_list_bookmarks() {
     // TODO: Fetch packages' data.
     //
 
-    const pkgs_names = bookmarks.map(b => pick(b, ['name']))
+    const pkgs_names = bookmarks.map(b => b.name)
 
-    return { ok: true, pkgs: pkgs_names }
+    const pkgs = await seneca.make('nodezoo', 'npm')
+      .list$({ name: pkgs_names })
+
+    const pkgs_data = pkgs
+      .map(pkg => pick(pkg, ['name', 'version', 'desc']))
+
+    return { ok: true, pkgs: pkgs_data }
   }
 }
 
