@@ -57,7 +57,7 @@
           "side": {
             "part": "BasicSide",
             "menu": {
-              "order": "profile,search,package,report",
+              "order": "search,profile,package",
               "items": {
                 "search": {
                   "title": "Search",
@@ -65,8 +65,8 @@
                   "cmp": "search-view"
                 },
                 "package": {
-                  "title": "Packages",
-                  "icon": "clipboard-list-outline",
+                  "title": "Bookmarks",
+                  "icon": "package-variant-closed",
                   "cmp": "basic-package-view"
                 },
                 "report": {
@@ -76,7 +76,7 @@
                 },
                 "profile": {
                   "title": "Profile",
-                  "icon": "clipboard-list-outline",
+                  "icon": "account-outline",
                   "cmp": "basic-profile-view"
                 }
               }
@@ -99,8 +99,8 @@
             "cmp": "search-view"
           },
           "package": {
-            "title": "Packages",
-            "icon": "clipboard-list-outline",
+            "title": "Bookmarks",
+            "icon": "package-variant-closed",
             "cmp": "basic-package-view"
           },
           "report": {
@@ -110,7 +110,7 @@
           },
           "profile": {
             "title": "Profile",
-            "icon": "clipboard-list-outline",
+            "icon": "account-outline",
             "cmp": "basic-profile-view"
           }
         }

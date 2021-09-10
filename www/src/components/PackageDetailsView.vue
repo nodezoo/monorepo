@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h1>{{ pkg_name }}</h1>
+  <div class="pt-10 px-20">
+    <h1 class="font-extrabold text-xl">{{ pkg_name }}</h1>
     <h2>{{ pkg_version }}</h2>
     <p>{{ pkg_desc }}</p>
 
-    <div v-if="pkg_name">
+    <div v-if="pkg_name" v-show="is_premium">
       <PackageHistoryChart :pkg_name="pkg_name" />
     </div>
   </div>
@@ -23,7 +23,8 @@ export default {
   data: () => ({
     pkg_name: null,
     pkg_version: null,
-    pkg_desc: null
+    pkg_desc: null,
+    is_premium: false
   }),
 
 
@@ -39,6 +40,16 @@ export default {
       this.pkg_version = pkg.npm.version
       this.pkg_desc = pkg.npm.desc
     }
+
+
+    const premiumResponse = await Api.isPremiumUser()
+
+    if (premiumResponse.data.ok) {
+      const { data: { is_premium } } = premiumResponse.data
+      this.is_premium = is_premium
+    }
+
+
   },
 
   components: {

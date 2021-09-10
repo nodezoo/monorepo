@@ -1,16 +1,21 @@
 <template>
-  <div>
-    <v-container>
-      <v-row v-for="pkg in pkgs" :key="pkg.name">
-        <v-col>
-          <PackageSummaryCard
-            :pkg_name="pkg.name"
-            :pkg_version="pkg.version"
-            :pkg_desc="pkg.desc"
-          />
-        </v-col>
-      </v-row>
-    </v-container>
+  <div class="pt-10 px-20">
+    <div v-if="null == pkgs || pkgs.length === 0">
+      <h1>Your favorite packages will appear here.</h1>
+    </div>
+    <div>
+      <v-container class="pt-10 px-20">
+        <v-row v-for="pkg in pkgs" :key="pkg.name">
+          <v-col>
+            <PackageSummaryCard
+              :pkg_name="pkg.name"
+              :pkg_version="pkg.version"
+              :pkg_desc="pkg.desc"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </div>
 </template>
 

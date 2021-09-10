@@ -5,7 +5,7 @@
         <img class="mx-auto" src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
       </div>
 
-      <div class="px-8 pb-8 pt-10">
+      <div class="px-8 pb-8 pt-14">
         <form @submit.prevent="onLoginAttempt" class="mb-4">
           <div class="mb-4">
             <input v-model="email" type="email" placeholder="Email"
@@ -23,7 +23,7 @@
           </div>
         </form>
 
-        <div class="mt-8">
+        <div class="mt-14">
           <div class="mb-4">
             <router-link to="/forgot" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot password?</router-link>
           </div>

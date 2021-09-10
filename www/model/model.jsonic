@@ -22,7 +22,7 @@ main: app: web: parts: {
 
   side: {
     menu: {
-      order: 'profile,search,package,report'
+      order: 'search,profile,package'
       items: /main/app/web/view
     }
   }
@@ -46,8 +46,8 @@ main: app: web: view: {
     cmp: 'search-view'
   }
   package: {
-    title: 'Packages'
-    icon: 'clipboard-list-outline'
+    title: 'Bookmarks'
+    icon: 'package-variant-closed'
     cmp: 'basic-package-view'
   }
   report: {
@@ -57,7 +57,7 @@ main: app: web: view: {
   }
   profile: {
     title: 'Profile'
-    icon: 'clipboard-list-outline'
+    icon: 'account-outline'
     cmp: 'basic-profile-view'
   }
 }

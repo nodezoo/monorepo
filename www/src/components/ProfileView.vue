@@ -1,32 +1,40 @@
 <template>
   <div class="pt-10 px-20">
-    <div class="pt-12">
-      <v-avatar
-        color="indigo"
-        size="64"
-      >
-        <span class="white--text text-h5">{{ avatarInitials }}</span>
-      </v-avatar>
-    </div>
-
-    <div v-show="email">
-      <p>My email: <span class="font-bold text-xl">{{ email }}</span></p>
-    </div>
-
-    <div v-if="null != is_premium">
-      <div v-if="is_premium">
-        <h3>*You are a Premium user</h3>
+    <div class="w-2/5 container mx-auto">
+      <div class="pt-12 container text-center">
+        <v-avatar
+          color="indigo"
+          size="76"
+        >
+          <span class="white--text text-h5">{{ avatarInitials }}</span>
+        </v-avatar>
       </div>
-      <div v-else>
-        <v-form @submit.prevent="becomePremium">
-          <v-btn type="submit"
-            tile
-            elevation="0"
-            class="bg-yellow-400 text-white font-bold"
-          >
-            Upgrade to Premium
-          </v-btn>
-        </v-form>
+
+      <div class="text-center">
+        <div v-show="email">
+          <p>My email: <span class="font-bold text-xl">{{ email }}</span></p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div v-if="null != is_premium">
+          <div v-if="is_premium">
+            <h3 class="text-yellow-400 font-bold">
+              <span class="font-bold text-xl">*</span>You are a Premium user
+            </h3>
+          </div>
+          <div v-else>
+            <v-form @submit.prevent="becomePremium">
+              <v-btn type="submit"
+                tile
+                elevation="0"
+                class="bg-yellow-400 text-white font-bold"
+              >
+                Upgrade to Premium
+              </v-btn>
+            </v-form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
