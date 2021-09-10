@@ -1,6 +1,18 @@
 <template>
   <div class="pt-10 px-20">
-    <p>My email: <span class="font-bold text-xl">{{ email }}</span></p>
+    <div class="pt-12">
+      <v-avatar
+        color="indigo"
+        size="64"
+      >
+        <span class="white--text text-h5">{{ avatarInitials }}</span>
+      </v-avatar>
+    </div>
+
+    <div v-show="email">
+      <p>My email: <span class="font-bold text-xl">{{ email }}</span></p>
+    </div>
+
     <div v-if="null != is_premium">
       <div v-if="is_premium">
         <h3>*You are a Premium user</h3>
@@ -32,6 +44,31 @@ export default {
     email: null,
     is_premium: false,
   }),
+
+
+  computed: {
+    avatarInitials() {
+      if (null == this.email) {
+        return ''
+      }
+
+      const m = this.email.match(/^([^@]+)/)
+
+      if (null == m || null == m[1]) {
+        // NOTE: This should normally never happen.
+        //
+        return ''
+      }
+
+      const account = m[1]
+      const parts = account.split('.')
+
+      return parts.slice(0, 2)
+        .filter(part => part.length > 0)
+        .map(part => part[0].toUpperCase())
+        .join('')
+    }
+  },
 
 
   methods: {
