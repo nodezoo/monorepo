@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>This is my profile page</h1>
-    <p>Email: {{ email }}</p>
+  <div class="pt-10 px-20">
+    <p>My email: <span class="font-bold text-xl">{{ email }}</span></p>
     <div v-if="null != is_premium">
       <div v-if="is_premium">
         <h3>*You are a Premium user</h3>
