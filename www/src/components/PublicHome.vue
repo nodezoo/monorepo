@@ -1,11 +1,11 @@
 <template>
   <div class="h-screen overflow-auto bg-gray-50">
     <div class="bg-white w-1/5 container mx-auto mt-20 shadow-md">
-      <div class="pt-8">
+      <div class="pt-12">
         <img class="mx-auto" src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
       </div>
 
-      <div class="px-8 pb-8 pt-8">
+      <div class="px-8 pb-8 pt-10">
         <form @submit.prevent="onLoginAttempt" class="mb-4">
           <div class="mb-4">
             <input v-model="email" type="email" placeholder="Email"
@@ -23,12 +23,14 @@
           </div>
         </form>
 
-        <div class="mb-4">
-          <router-link to="/forgot" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot password?</router-link>
-        </div>
+        <div class="mt-8">
+          <div class="mb-4">
+            <router-link to="/forgot" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot password?</router-link>
+          </div>
 
-        <div>
-          <a :href="githubSignInLink" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign in with GitHub</a>
+          <div>
+            <a :href="githubSignInLink" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign in with GitHub</a>
+          </div>
         </div>
       </div>
     </div>
