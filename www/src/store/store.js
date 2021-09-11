@@ -24,7 +24,7 @@ function makeStore(Vue) {
             },
             show: {
               add: true,
-              search: true
+              search: false
             },
           },
           BasicMain: {

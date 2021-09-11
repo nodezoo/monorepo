@@ -11,7 +11,18 @@
               :pkg_name="pkg.name"
               :pkg_version="pkg.version"
               :pkg_desc="pkg.desc"
-            />
+            >
+              <template v-slot:actions>
+                <v-list-item class="grow">
+                  <v-row align="center" justify="end">
+                    <BookmarkPackageAction
+                      :is_bookmarked="true"
+                      @bookmarkRemoved="removeBookmark({ name: pkg.name })" />
+
+                  </v-row>
+                </v-list-item>
+              </template>
+            </PackageSummaryCard>
           </v-col>
         </v-row>
       </v-container>
@@ -22,6 +33,7 @@
 <script>
 import Api from '@/lib/api'
 import PackageSummaryCard from '@/components/PackageSummaryCard.vue'
+import BookmarkPackageAction from '@/components/BookmarkPackageAction.vue'
 
 
 export default {
@@ -40,14 +52,7 @@ export default {
 
   methods: {
     async listMyBookmarks() {
-      /*
-      const auth_token = this.$store.state.auth?.token
-      */
-
-
-      const bookmarksResponse = await Api.listMyBookmarkedPkgs({
-        auth_token: 'd2dd8fc5-b962-4a3d-a899-639962cbbb00'
-      })
+      const bookmarksResponse = await Api.listMyBookmarkedPkgs()
 
       if (!bookmarksResponse.data.ok) {
         return
@@ -55,12 +60,20 @@ export default {
 
       const { pkgs } = bookmarksResponse.data
       this.pkgs = pkgs
+    },
+
+    async removeBookmark(args) {
+      const { name } = args
+      await Api.removeBookmark({ name })
+
+      await this.listMyBookmarks()
     }
   },
 
 
   components: {
-    PackageSummaryCard
+    PackageSummaryCard,
+    BookmarkPackageAction
   }
 }
 </script>
