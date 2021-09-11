@@ -7,8 +7,13 @@ main: app: web: /sys/app/web/basic
 
 
 main: app: web: parts: {
+  main: {
+    show: true
+  }
+
   head: {
     tool: {
+      expandMain: { active: false }
       expandSide: { active: false }
       add: { active: false }
       avatar: { active: true }

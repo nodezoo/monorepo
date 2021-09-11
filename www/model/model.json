@@ -40,6 +40,9 @@
           "head": {
             "part": "BasicHead",
             "tool": {
+              "expandMain": {
+                "active": false
+              },
               "expandSide": {
                 "active": false
               },
@@ -83,7 +86,8 @@
             }
           },
           "main": {
-            "part": "BasicMain"
+            "part": "BasicMain",
+            "show": true
           },
           "foot": {
             "part": "BasicFoot"

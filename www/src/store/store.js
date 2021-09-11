@@ -19,11 +19,16 @@ function makeStore(Vue) {
           },
           BasicHead: {
             allow: {
-              add: true
+              add: true,
+              search: true
             },
             show: {
-              add: true
+              add: true,
+              search: true
             },
+          },
+          BasicMain: {
+            show: true
           }
         }
       },
