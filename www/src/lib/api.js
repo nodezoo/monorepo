@@ -219,6 +219,24 @@ class Api {
       withCredentials: true
     })
   }
+
+
+  static async removeBookmark(args) {
+    const { name } = args
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'account',
+        remove: 'bookmark',
+        name
+      }
+    }
+
+    return api.post('/api/account', reqparams, {
+      withCredentials: true
+    })
+  }
 }
 
 

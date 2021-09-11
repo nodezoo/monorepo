@@ -31,9 +31,9 @@
           "role:web,scope:account,load:profile": {},
           "role:web,scope:account,list:pkg_history": {},
           "role:web,scope:account,bookmark:pkg": {},
+          "role:web,scope:account,remove:bookmark": {},
           "role:web,scope:account,list:bookmarks": {},
-          "role:web,scope:account,is:premium": {},
-          "role:web,scope:account,checkout_for:premium,submit:checkout": {}
+          "role:web,scope:account,is:premium": {}
         }
       },
       "info": {
@@ -99,6 +99,7 @@
           "role:user,ping:pong": {},
           "role:user,scope:auth,login:user": {},
           "role:user,scope:pkg,add:bookmark": {},
+          "role:user,scope:pkg,remove:bookmark": {},
           "role:user,scope:pkg,list:bookmarks": {},
           "role:user,scope:pkg,load:bookmark": {},
           "role:user,is:premium": {},

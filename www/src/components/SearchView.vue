@@ -17,7 +17,7 @@
               <v-list-item class="grow">
                 <v-row align="center" justify="end">
                   <div v-if="isBookmarkedPkg({ name: pkg.name })">
-                    <v-icon class="mr-1">
+                    <v-icon class="mr-1" @click="removeBookmark({ name: pkg.name })">
                       mdi-heart
                     </v-icon>
                     <span class="subheading mr-2">
@@ -73,6 +73,14 @@ export default {
     async doBookmarkPkg(args) {
       const { name } = args
       await Api.doBookmarkPkg({ name })
+
+      await this.fetchBookmarks()
+    },
+
+
+    async removeBookmark(args) {
+      const { name } = args
+      await Api.removeBookmark({ name })
 
       await this.fetchBookmarks()
     },

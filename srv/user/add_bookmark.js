@@ -18,10 +18,9 @@ module.exports = function make_add_bookmark() {
     }
 
 
-    /* BEGIN: checking that the package exists in our db
-     */
+    const { name: pkg_name } = msg
 
-    if ('string' !== typeof msg.name) {
+    if ('string' !== typeof pkg_name) {
       return {
         ok: false,
         why: 'invalid-field',
@@ -32,8 +31,9 @@ module.exports = function make_add_bookmark() {
       }
     }
 
-    const { name: pkg_name } = msg
 
+    /* BEGIN: checking that the package exists in our db
+     */
 
     const npm_pkg = await seneca.make('nodezoo', 'npm')
       .load$({ name: pkg_name })
