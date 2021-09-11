@@ -8,6 +8,7 @@ import PublicHome from '@/components/PublicHome.vue'
 import ForgotPassView from '@/components/ForgotPassView.vue'
 import ResetPassView from '@/components/ResetPassView.vue'
 import GitHubCallbackView from '@/components/GitHubCallbackView.vue'
+import SignInView from '@/components/SignInView.vue'
 
 
 Vue.config.productionTip = false
@@ -34,8 +35,12 @@ const router = new VueRouter({
     {
       path: '/gh-callback',
       component: GitHubCallbackView
+    },
+    {
+      path: '/sign-in',
+      component: SignInView
     }
-  ],
+  ]
 })
 
 
