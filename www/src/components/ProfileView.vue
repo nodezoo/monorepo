@@ -30,7 +30,7 @@
                 elevation="0"
                 class="bg-yellow-400 text-white font-bold"
               >
-                Upgrade to Premium
+                Become Premium
               </v-btn>
             </v-form>
           </div>

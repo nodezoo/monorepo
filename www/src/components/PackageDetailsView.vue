@@ -1,11 +1,37 @@
 <template>
   <div class="pt-10 px-20">
-    <h1 class="font-extrabold text-xl">{{ pkg_name }}</h1>
-    <h2>{{ pkg_version }}</h2>
-    <p>{{ pkg_desc }}</p>
+    <div v-if="pkg_name">
+      <PackageSummaryCard
+        :pkg_name="pkg_name"
+        :pkg_version="pkg_version"
+        :pkg_desc="pkg_desc"
+      >
+        <template v-slot:actions>
+          <v-list-item class="grow">
+            <v-row align="center" justify="end">
+              <BookmarkPackageAction
+                :is_bookmarked="isBookmarkedPkg"
+                @bookmarkAdded="doBookmarkPkg"
+                @bookmarkRemoved="removeBookmark" />
 
-    <div v-if="pkg_name" v-show="is_premium">
-      <PackageHistoryChart :pkg_name="pkg_name" />
+            </v-row>
+          </v-list-item>
+        </template>
+      </PackageSummaryCard>
+    </div>
+
+    <div v-show="pkg_name" class="mt-10">
+      <div v-if="is_premium">
+        <div v-if="isBookmarkedPkg">
+          <PackageHistoryChart :pkg_name="pkg_name" />
+        </div>
+        <div v-else>
+          <h1>*Like this package to start tracking its performance through time</h1>
+        </div>
+      </div>
+      <div v-else>
+        <h1>*See package performance through time by upgrading to Premium</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -14,6 +40,8 @@
 <script>
 import Api from '@/lib/api'
 import PackageHistoryChart from '@/components/PackageHistoryChart.vue'
+import PackageSummaryCard from '@/components/PackageSummaryCard.vue'
+import BookmarkPackageAction from '@/components/BookmarkPackageAction.vue'
 
 
 export default {
@@ -24,8 +52,45 @@ export default {
     pkg_name: null,
     pkg_version: null,
     pkg_desc: null,
-    is_premium: false
+    is_premium: null,
+    bookmarks: null
   }),
+
+
+  computed: {
+    isBookmarkedPkg() {
+      if (null == this.bookmarks) {
+        return
+      }
+
+      return Boolean(this.bookmarks.find(b => b.name === this.pkg_name))
+    }
+  },
+
+
+  methods: {
+    async fetchBookmarks() {
+      const bookmarksResponse = await Api.listMyBookmarkedPkgs()
+
+      if (bookmarksResponse.data.ok) {
+        this.bookmarks = bookmarksResponse.data.pkgs
+      }
+    },
+
+
+    async doBookmarkPkg() {
+      await Api.doBookmarkPkg({ name: this.pkg_name })
+
+      await this.fetchBookmarks()
+    },
+
+
+    async removeBookmark() {
+      await Api.removeBookmark({ name: this.pkg_name })
+
+      await this.fetchBookmarks()
+    },
+  },
 
 
   async mounted() {
@@ -50,10 +115,13 @@ export default {
     }
 
 
+    await this.fetchBookmarks()
   },
 
   components: {
-    PackageHistoryChart
+    PackageHistoryChart,
+    PackageSummaryCard,
+    BookmarkPackageAction
   }
 }
 </script>

@@ -27,7 +27,7 @@ main: app: web: parts: {
 
   side: {
     menu: {
-      order: 'search,profile,package'
+      order: 'search,package'
       items: /main/app/web/view
     }
   }

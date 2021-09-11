@@ -53,14 +53,14 @@
                 "active": true
               },
               "search": {
-                "active": true
+                "active": false
               }
             }
           },
           "side": {
             "part": "BasicSide",
             "menu": {
-              "order": "search,profile,package",
+              "order": "search,package",
               "items": {
                 "search": {
                   "title": "Search",

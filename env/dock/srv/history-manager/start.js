@@ -4,7 +4,7 @@ const Moment = require('moment')
 const Seneca = require('seneca')
 const Model = require('../../../../model/model.json')
 
-const { sleep } = require('../../../../lib/shared')
+const { sleep, dedup } = require('../../../../lib/shared')
 const DynamoDbLib = require('../../lib/dynamo_db_lib')
 const { make_timestamp } = require('../../../../srv/history/lib/shared')
 const { schedule_daily } = require('../../../../lib/shared')
@@ -75,15 +75,18 @@ async function pull_history({ seneca }) {
   console.dir(`pull_history, triggered at: ${now}`)
 
 
-  const pkgs = await seneca.make('nodezoo', 'bookmark')
+  const pkgs_names = await seneca.make('nodezoo', 'bookmark')
     .list$({ all$: true, fields$: ['name'] })
+    .then(pkgs => {
+      const names = pkgs.map(pkg => pkg.name)
+      return dedup(names)
+    })
 
-  console.dir(`pull_history, located ${pkgs.length} bookmarks`)
+  console.dir(`pull_history, located ${pkgs_names.length} bookmarked packages`)
 
 
-  for (let i = 0; i < pkgs.length; i++) {
-    const pkg = pkgs[i]
-    const { name: pkg_name } = pkg
+  for (const pkg_name of pkgs_names) {
+    const pkg_name = pkgs_names[i]
 
     seneca.act('role:history,pull:npm_history', {
       pkg_name,

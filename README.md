@@ -9,6 +9,6 @@ only need a Stripe CLI. Once you run the project via `npm run local`, run
 this command in a separate terminal:
 
 ```
-stripe listen --f forward-to $LOCALHOST:9000/api/stripe/premium-membership-checkout-webhook
+stripe listen --forward-to $LOCALHOST:9000/api/stripe/premium-membership-checkout-webhook
 ```
 
