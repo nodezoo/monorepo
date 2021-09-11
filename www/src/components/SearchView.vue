@@ -16,19 +16,11 @@
             <template v-slot:actions>
               <v-list-item class="grow">
                 <v-row align="center" justify="end">
-                  <div v-if="isBookmarkedPkg({ name: pkg.name })">
-                    <v-icon class="mr-1" @click="removeBookmark({ name: pkg.name })">
-                      mdi-heart
-                    </v-icon>
-                    <span class="subheading mr-2">
-                      Liked
-                    </span>
-                  </div>
-                  <div v-else>
-                    <v-icon class="mr-1" @click="doBookmarkPkg({ name: pkg.name })">
-                      mdi-heart-outline
-                    </v-icon>
-                  </div>
+                  <BookmarkPackageAction
+                    :is_bookmarked="isBookmarkedPkg({ name: pkg.name })"
+                    @bookmarkAdded="doBookmarkPkg({ name: pkg.name })"
+                    @bookmarkRemoved="removeBookmark({ name: pkg.name })" />
+
                 </v-row>
               </v-list-item>
             </template>
@@ -44,6 +36,7 @@
 import Api from '@/lib/api'
 import PackageSummaryCard from '@/components/PackageSummaryCard.vue'
 import PackageSearchForm from '@/components/PackageSearchForm.vue'
+import BookmarkPackageAction from '@/components/BookmarkPackageAction.vue'
 
 
 export default {
@@ -106,7 +99,8 @@ export default {
 
   components: {
     PackageSearchForm,
-    PackageSummaryCard
+    PackageSummaryCard,
+    BookmarkPackageAction
   }
 }
 </script>
