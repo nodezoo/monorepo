@@ -19,17 +19,17 @@
 
           <div>
             <input type="submit" value="Sign in"
-              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline" />
+              class="w-full nodezoo-bg-blue text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline" />
           </div>
         </form>
 
         <div class="mt-14">
           <div class="mb-4">
-            <router-link to="/forgot" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot password?</router-link>
+            <router-link to="/forgot" class="inline-block align-baseline font-bold text-sm nodezoo-text-blue">Forgot password?</router-link>
           </div>
 
           <div>
-            <a :href="githubSignInLink" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign in with GitHub</a>
+            <a :href="githubSignInLink" class="inline-block align-baseline font-bold text-sm nodezoo-text-blue">Sign in with GitHub</a>
           </div>
         </div>
       </div>

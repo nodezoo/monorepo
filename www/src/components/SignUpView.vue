@@ -24,7 +24,7 @@
 
           <div>
             <input type="submit" value="Sign up"
-              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline" />
+              class="w-full nodezoo-bg-blue text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline" />
           </div>
         </form>
       </div>

@@ -5,7 +5,7 @@
         <input type="text" v-model="search" @input="onSearchInput" placeholder="Search packages" class="form-input pl-12 pt-3 pb-3 border-l-0 border-r-0 border-t-0 bg-gray-50 w-full nodezoo-search-input">
       </div>
       <div>
-        <input type="submit" value="Search" class="w-full h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"></input>
+        <input type="submit" value="Search" class="w-full h-full nodezoo-bg-blue text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"></input>
       </div>
     </div>
   </form>

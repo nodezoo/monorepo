@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto mt-10 text-center">
       <img class="mx-auto" src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
-      <p>Search Node.js packages</p>
+      <p>Search <span class="nodezoo-text-green">Node.js</span> packages</p>
 
       <div class="text-center mt-2">
         <router-link to="/sign-in" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign in</router-link>
