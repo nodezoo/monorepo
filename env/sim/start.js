@@ -4,7 +4,7 @@ require('dotenv').config({ path: './env/sim/.env' })
 const Seneca = require('seneca')
 const DynamoDbLib = require('./lib/dynamo_db_lib')
 const Model = require('../../model/model.json')
-const TasksCollection = require('./tasks')
+const { env_var_required } = require('../../lib/shared')
 
 
 const seneca = Seneca({ log: 'flat' })
@@ -16,15 +16,11 @@ seneca
   .use('promisify')
   .use('entity')
 
-/* TODO: Re-enable dynamo-store after testing's been completed.
- *
 seneca
   .ignore_plugin('mem-store')
   .use('dynamo-store', {
     aws: DynamoDbLib.get_config() 
   })
-*/
-seneca.use('mem-store') // dbg
 
 
 const aws_cloudsearch_endpoint = process.env.AWS_CLOUDSEARCH_ENDPOINT
@@ -159,19 +155,19 @@ if (null == gh_app_private_key_path) {
 
 
 const options = {
-  github_app: {
-    client_id: gh_app_client_id,
-    client_secret: gh_app_client_secret,
-    app_id: gh_app_id,
-    installation_id: gh_app_installation_id,
-    private_key_path: gh_app_private_key_path
-  },
+  npm_api_url: env_var_required('NPM_API_URL'),
+  npm_registry_url: env_var_required('NPM_REGISTRY_URL'),
 
-  npm_registry_url,
-  github_api_url,
+  github_url: env_var_required('GITHUB_URL'),
+  github_api_url: env_var_required('GITHUB_API_URL'),
 
-  github_client_id,
-  github_client_secret,
+  github_client_id: env_var_required('GITHUB_CLIENT_ID'),
+  github_client_secret: env_var_required('GITHUB_CLIENT_SECRET'),
+
+  stripe_api_key: env_var_required('STRIPE_API_KEY'),
+  stripe_webhook_endpoint_secret: env_var_required('STRIPE_WEBHOOK_ENDPOINT_SECRET'),
+
+  nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
 
   ingester: {
     sleep_ms_between_iterations: 5e3,
@@ -200,9 +196,5 @@ seneca.ready(() => {
       throw err
     }
   })
-
-  // NOTE: Scheduling the tasks.
-  //
-  TasksCollection.run({ seneca })
 })
 

@@ -1,3 +1,4 @@
+require('dotenv').config({ path: './env/sim/.env' })
 const AWS = require('aws-sdk')
 
 

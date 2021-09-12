@@ -7,36 +7,18 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-# Setting up DynamoDb
-#
-if ! curl "${LOCALHOST}:18000" -s >& /dev/null; then
-  ./env/sim/scripts/aws-dynamo-start.sh -d
+ENV_PATH='./env/sim'
 
 
-  until curl -s "${LOCALHOST}:18000/ping" >& /dev/null; do
-    echo 'INFO: Waiting for the AWS DynamoDb instance to spin up...'
-    sleep 2
-  done
+test -d "${ENV_PATH}/devassets" || mkdir "${ENV_PATH}/devassets"
 
-  node './env/sim/scripts/aws-dynamo-create-tables.js'
+
+if ! test -d "${ENV_PATH}/devassets/wait-for-it"; then
+  git clone https://github.com/vishnubob/wait-for-it.git "${ENV_PATH}/devassets/wait-for-it"
 fi
 
 
-# Setting up Nozama the AWS CloudSearch simulator
-#
-if ! curl "${LOCALHOST}:15808" -s >& /dev/null; then
-  ./env/sim/scripts/aws-cloudsearch-start.sh -dD
+docker-compose -f "${ENV_PATH}/docker-compose.yaml" up -d
+${ENV_PATH}/devassets/wait-for-it/wait-for-it.sh dynamodb:18000 -- node "${ENV_PATH}/dynamodb-migrations/migrate.js"
 
-  until curl -s 'http://localhost:15808/ping'; do
-    echo 'INFO: Waiting for the AWS CloudSearch simulator to spin up...'
-    sleep 2
-  done
-fi
-
-
-# Setting up frontend
-#
-if ! curl "${LOCALHOST}:8080" -s >& /dev/null; then
-  ./env/sim/scripts/frontend-start.sh
-fi
 
