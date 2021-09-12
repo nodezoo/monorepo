@@ -21,7 +21,7 @@ seneca
       fields: ['name'],
       storeFields: ['name', 'version', 'giturl', 'desc', 'readme'],
       searchOptions: {
-        fuzzy: true
+        fuzzy: 0.7
       }
     }
   })
@@ -90,8 +90,8 @@ const options = {
   nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
 
   ingester: {
-    sleep_ms_between_iterations: 5e3,
-    sleep_ms_between_fetches: 1e3
+    sleep_ms_between_iterations: 10e3,
+    sleep_ms_between_fetches: 0
   },
 
   github_srv: {
