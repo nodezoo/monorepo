@@ -44,6 +44,7 @@ aws sns create-topic --name nodezoo_process_change_role_update
 aws sns create-topic --name nodezoo_role_update_stats_ingest
 aws sns create-topic --name nodezoo_ping_pong_role_user
 aws sns create-topic --name nodezoo_login_user_role_user_scope_auth
+aws sns create-topic --name nodezoo_logout_user_role_user_scope_auth
 aws sns create-topic --name nodezoo_add_bookmark_role_user_scope_pkg
 aws sns create-topic --name nodezoo_remove_bookmark_role_user_scope_pkg
 aws sns create-topic --name nodezoo_list_bookmarks_role_user_scope_pkg

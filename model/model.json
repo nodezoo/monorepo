@@ -98,6 +98,7 @@
         "msg": {
           "role:user,ping:pong": {},
           "role:user,scope:auth,login:user": {},
+          "role:user,scope:auth,logout:user": {},
           "role:user,scope:pkg,add:bookmark": {},
           "role:user,scope:pkg,remove:bookmark": {},
           "role:user,scope:pkg,list:bookmarks": {},
