@@ -1,11 +1,20 @@
 <template>
   <div>
-    <div>
-      <img src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
+    <div class="container mx-auto mt-10 text-center">
+      <img class="mx-auto" src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
+      <p>Search Node.js packages</p>
+
+      <div class="text-center mt-2">
+        <router-link to="/sign-in" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign in</router-link>
+        <span class="mr-4"></span>
+        <router-link to="/sign-up" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign up</router-link>
+      </div>
     </div>
 
     <div class="container mx-auto mt-8 w-2/5">
-      <PublicPackageSearchForm />
+      <div>
+        <PublicPackageSearchForm />
+      </div>
     </div>
 
     <div class="container mx-auto mt-10">
@@ -16,11 +25,6 @@
           :pkg_desc="pkg.desc"
         />
       </div>
-    </div>
-
-    <div>
-      <router-link to="/sign-in">Sign in</router-link>
-      <router-link to="/sign-up">Sign up</router-link>
     </div>
   </div>
 </template>
