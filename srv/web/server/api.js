@@ -92,6 +92,7 @@ function makeApi({ seneca }, options) {
 
 
   const public_actions = Patrun()
+    .add({ role: 'web', scope: 'public', register: 'user' }, true)
     .add({ role: 'web', scope: 'public', search: 'pkgs' }, true)
     .add({ role: 'web', scope: 'public', show: 'pkg' }, true)
     .add({ role: 'web', scope: 'public', request: 'pass_reset' }, true)

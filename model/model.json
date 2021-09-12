@@ -23,6 +23,7 @@
           "role:web,ping:pong": {},
           "role:web,scope:public,login:with_github": {},
           "role:web,scope:public,login:user": {},
+          "role:web,scope:public,register:user": {},
           "role:web,scope:public,search:pkgs": {},
           "role:web,scope:public,show:pkg": {},
           "role:web,scope:public,request:pass_reset": {},
@@ -97,6 +98,7 @@
       "user": {
         "msg": {
           "role:user,ping:pong": {},
+          "role:user,scope:auth,register:user": {},
           "role:user,scope:auth,login:user": {},
           "role:user,scope:auth,logout:user": {},
           "role:user,scope:pkg,add:bookmark": {},

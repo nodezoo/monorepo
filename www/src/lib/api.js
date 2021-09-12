@@ -74,6 +74,24 @@ class Api {
   }
 
 
+  static async registerUser(args) {
+    const { email, pass, pass_confirm } = args
+
+    const reqparams = {
+      msg: {
+        role: 'web',
+        scope: 'public',
+        register: 'user',
+        email,
+        pass,
+        pass_confirm
+      }
+    }
+
+    return api.post('/api/public', reqparams)
+  }
+
+
   static async loginUser(args) {
     const { email, pass } = args
     const reqparams = { email, pass }
