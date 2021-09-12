@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import '@/css/tailwind.css'
+import '@/css/shared.css'
 
 import Public from '@/Public.vue'
 import PublicHome from '@/components/PublicHome.vue'

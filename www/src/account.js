@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import '@/css/tailwind.css'
+import '@/css/shared.css'
 
 import { makeVuetify } from './vuetify/vuetify'
 import { makeRouter } from './router/router'

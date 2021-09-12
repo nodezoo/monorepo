@@ -13,7 +13,7 @@
 
     <div class="container mx-auto mt-8 w-2/5">
       <div>
-        <PublicPackageSearchForm />
+        <PublicPackageSearchForm @searching="searchForPkgs" />
       </div>
     </div>
 
@@ -39,24 +39,20 @@ export default {
   name: 'PublicHome',
 
   data: () => ({
-    pkgs: [
-      {
-        name: 'seneca',
-        version: '4.0.0',
-        desc: 'A Microservices Framework for Node.js'
-      },
-      {
-        name: 'seneca-mem-store',
-        version: '6.0.3',
-        desc: 'Seneca in-memory data storage plugin.'
-      },
-      {
-        name: 'seneca-mongo-store',
-        version: '5.0.1',
-        desc: 'Seneca data store plugin for MongoDB'
-      }
-    ]
+    pkgs: []
   }),
+
+  methods: {
+    async searchForPkgs(args) {
+      const { search } = args
+      const searchResponse = await Api.listPkgsWithNamePrefix({ prefix: search })
+
+      if (searchResponse.data.ok) {
+        const { data: { pkgs } } = searchResponse.data
+        this.pkgs = pkgs
+      }
+    }
+  },
 
   components: {
     PublicPackageSearchForm,

@@ -3,7 +3,9 @@
     <v-container class="pt-10 px-20">
 
       <v-row>
-        <PackageSearchForm @searching="searchForPkgs" />
+        <div class="container mx-auto mt-8 w-3/5">
+          <PackageSearchForm @searching="searchForPkgs" />
+        </div>
       </v-row>
 
       <v-row v-for="pkg in pkgs" :key="pkg.name">

@@ -66,9 +66,4 @@
 </script>
 
 <style lang="scss">
-.nodezoo-search-input {
-  background-image: url("~@/assets/magnify.svg");
-  background-repeat: no-repeat;
-  background-position: 13px center;
-}
 </style>
