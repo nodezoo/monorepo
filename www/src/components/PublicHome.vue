@@ -4,12 +4,12 @@
       <img src="@/assets/logo.png" alt="Node Zoo logo" width="136" height="76">
     </div>
 
-    <div>
+    <div class="container mx-auto mt-8 w-2/5">
       <PublicPackageSearchForm />
     </div>
 
-    <div>
-      <div v-for="pkg in pkgs" :key="pkg.name">
+    <div class="container mx-auto mt-10">
+      <div v-for="pkg in pkgs" :key="pkg.name" class="mb-4">
         <PublicPackageSummaryCard
           :pkg_name="pkg.name"
           :pkg_version="pkg.version"
