@@ -7,8 +7,13 @@ main: app: web: /sys/app/web/basic
 
 
 main: app: web: parts: {
+  main: {
+    show: true
+  }
+
   head: {
     tool: {
+      expandMain: { active: false }
       expandSide: { active: false }
       add: { active: false }
       avatar: { active: true }
@@ -22,7 +27,7 @@ main: app: web: parts: {
 
   side: {
     menu: {
-      order: 'profile,search,package,report'
+      order: 'search,package'
       items: /main/app/web/view
     }
   }
@@ -46,8 +51,8 @@ main: app: web: view: {
     cmp: 'search-view'
   }
   package: {
-    title: 'Packages'
-    icon: 'clipboard-list-outline'
+    title: 'Bookmarks'
+    icon: 'package-variant-closed'
     cmp: 'basic-package-view'
   }
   report: {
@@ -57,7 +62,7 @@ main: app: web: view: {
   }
   profile: {
     title: 'Profile'
-    icon: 'clipboard-list-outline'
+    icon: 'account-outline'
     cmp: 'basic-profile-view'
   }
 }

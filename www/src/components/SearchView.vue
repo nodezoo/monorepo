@@ -1,20 +1,30 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="pt-10 px-20">
 
       <v-row>
-        <PackageSearchForm @searching="searchForPkgs" />
+        <div class="container mx-auto mt-8 w-3/5">
+          <PackageSearchForm @searching="searchForPkgs" />
+        </div>
       </v-row>
 
       <v-row v-for="pkg in pkgs" :key="pkg.name">
         <v-col>
-          <PackageSummaryCard :pkg_name="pkg.name">
+          <PackageSummaryCard
+            :pkg_name="pkg.name"
+            :pkg_version="pkg.version"
+            :pkg_desc="pkg.desc"
+          >
             <template v-slot:actions>
-              <v-btn
-                :disabled="isBookmarkedPkg({ name: pkg.name })"
-                @click="doBookmarkPkg({ name: pkg.name })">
-                Like
-              </v-btn>
+              <v-list-item class="grow">
+                <v-row align="center" justify="end">
+                  <BookmarkPackageAction
+                    :is_bookmarked="isBookmarkedPkg({ name: pkg.name })"
+                    @bookmarkAdded="doBookmarkPkg({ name: pkg.name })"
+                    @bookmarkRemoved="removeBookmark({ name: pkg.name })" />
+
+                </v-row>
+              </v-list-item>
             </template>
           </PackageSummaryCard>
         </v-col>
@@ -28,6 +38,7 @@
 import Api from '@/lib/api'
 import PackageSummaryCard from '@/components/PackageSummaryCard.vue'
 import PackageSearchForm from '@/components/PackageSearchForm.vue'
+import BookmarkPackageAction from '@/components/BookmarkPackageAction.vue'
 
 
 export default {
@@ -62,6 +73,14 @@ export default {
     },
 
 
+    async removeBookmark(args) {
+      const { name } = args
+      await Api.removeBookmark({ name })
+
+      await this.fetchBookmarks()
+    },
+
+
     isBookmarkedPkg(args) {
       const { name } = args
       return Boolean(this.bookmarks.find(b => b.name === name))
@@ -82,7 +101,8 @@ export default {
 
   components: {
     PackageSearchForm,
-    PackageSummaryCard
+    PackageSummaryCard,
+    BookmarkPackageAction
   }
 }
 </script>

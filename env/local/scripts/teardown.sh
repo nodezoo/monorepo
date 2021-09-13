@@ -7,10 +7,6 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-# There is currently no need to tear down the frontend in the local env.
-#
-
-
 # Tearing down the mock npm API
 #
 docker-compose -f ./env/local/devassets/mock-api-npm/docker-compose.yaml down

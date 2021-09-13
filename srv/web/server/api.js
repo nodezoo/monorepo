@@ -1,18 +1,19 @@
 const Express = require('express')
+const Patrun = require('patrun')
 const { authenticate } = require('./middlewares/authenticate')
 const Shared = require('../../../lib/shared')
 const { pick } = Shared
-const Patrun = require('patrun')
+const makeStripeApi = require('./api-stripe.js')
 
 
-function makeApi({ seneca }) {
+function makeApi({ seneca }, options) {
   const api = new Express.Router()
 
 
-  api.use(Express.json())
+  api.use('/stripe', makeStripeApi({ seneca }, options))
 
 
-  api.post('/login-with-gh', (req, res, next) => {
+  api.post('/login-with-gh', Express.json(), (req, res, next) => {
     const { code } = req.body
 
     if (null == code) {
@@ -49,7 +50,7 @@ function makeApi({ seneca }) {
   })
 
 
-  api.post('/login', (req, res, next) => {
+  api.post('/login', Express.json(), (req, res, next) => {
     const { email = null, pass = null } = req.body
 
     if (null == email) {
@@ -91,13 +92,14 @@ function makeApi({ seneca }) {
 
 
   const public_actions = Patrun()
+    .add({ role: 'web', scope: 'public', register: 'user' }, true)
     .add({ role: 'web', scope: 'public', search: 'pkgs' }, true)
     .add({ role: 'web', scope: 'public', show: 'pkg' }, true)
     .add({ role: 'web', scope: 'public', request: 'pass_reset' }, true)
     .add({ role: 'web', scope: 'public', reset: 'pass' }, true)
-  
 
-  api.post('/public', (req, res, next) => {
+
+  api.post('/public', Express.json(), (req, res, next) => {
     const { msg = null } = req.body
 
     if (null == msg) {
@@ -126,52 +128,51 @@ function makeApi({ seneca }) {
   })
 
 
-
   const account_actions = Patrun()
     .add({ role: 'web', scope: 'account', logout: 'user' }, true)
     .add({ role: 'web', scope: 'account', list: 'pkg_history' }, true)
     .add({ role: 'web', scope: 'account', list: 'bookmarks' }, true)
     .add({ role: 'web', scope: 'account', bookmark: 'pkg' }, true)
+    .add({ role: 'web', scope: 'account', remove: 'bookmark' }, true)
     .add({ role: 'web', scope: 'account', load: 'profile' }, true)
     .add({ role: 'web', scope: 'account', is: 'premium' }, true)
-    .add({
-      role: 'web',
-      scope: 'account',
-      checkout_for: 'premium',
-      submit: 'checkout'
-    }, true)
 
 
-  api.post('/account', authenticate({ seneca }), (req, res, next) => {
-    const { msg = null } = req.body
+  api.post('/account',
+    Express.json(),
 
-    if (null == msg) {
-      return res.sendStatus(422)
-    }
+    authenticate({ seneca }),
 
-    const is_supported = account_actions.find(msg)
+    (req, res, next) => {
+      const { msg = null } = req.body
 
-    if (!is_supported) {
-      return res.sendStatus(404)
-    }
-
-
-    const { user: { id: user_id } } = req.auth$
-
-    seneca.act(msg, { user_id }, (err, out) => {
-      if (err) {
-        return next(err)
+      if (null == msg) {
+        return res.sendStatus(422)
       }
 
-      if (!out) {
-        return res.sendStatus(204)
+      const is_supported = account_actions.find(msg)
+
+      if (!is_supported) {
+        return res.sendStatus(404)
       }
 
-      return res.json(out)
+
+      const { user: { id: user_id } } = req.auth$
+
+      seneca.act(msg, { user_id }, (err, out) => {
+        if (err) {
+          return next(err)
+        }
+
+        if (!out) {
+          return res.sendStatus(204)
+        }
+
+        return res.json(out)
+      })
+
+      return
     })
-
-    return
-  })
 
 
   return api

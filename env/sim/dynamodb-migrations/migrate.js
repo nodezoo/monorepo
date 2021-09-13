@@ -1,5 +1,3 @@
-require('dotenv').config({ path: './env/sim/.env' })
-
 const DynamoDbLib = require('../lib/dynamo_db_lib')
 
 const ddb = DynamoDbLib.connect()
@@ -229,25 +227,28 @@ const schema = [
   },
 ]
 
-for (const table_desc of schema) {
-  create_table(table_desc, ddb, { verbose: true })
-}
+
+Promise.all(schema.map(table_desc => {
+  return create_table(table_desc, ddb, { verbose: true })
+}))
+  .then(() => ddb.listTables({}).promise())
+  .then(console.log)
+
 
 
 function create_table(table_desc, ddb, opts = {}) {
-  return ddb.createTable(table_desc, (err) => {
-    if (err) {
+  return ddb.createTable(table_desc).promise()
+    .then(() => {
+      if (opts.verbose) {
+        const table = table_desc.TableName
+        console.log('Table "' + table + '" has been created successfully.')
+      }
+
+      return
+    })
+    .catch(err => {
       const table = table_desc.TableName || 'undefined'
       console.error('Error creating table "' + table + '":', err.message)
-      return
-    }
-
-    if (opts.verbose) {
-      const table = table_desc.TableName
-      console.log('Table "' + table + '" has been created successfully.')
-    }
-
-    return
-  })
+    })
 }
 

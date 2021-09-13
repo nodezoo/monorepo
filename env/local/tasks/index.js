@@ -1,5 +1,5 @@
 const Cron = require('node-cron')
-const { sleep } = require('../../../lib/shared')
+const { sleep, dedup } = require('../../../lib/shared')
 const { make_timestamp } = require('../../../srv/history/lib/shared')
 
 
@@ -38,12 +38,14 @@ function pull_npm_history({ seneca }) {
   // NOTE: should be daily in the non-local environments.
   //
   return schedule_every_thirty_seconds(async () => {
-    const pkgs = await seneca.make('nodezoo', 'bookmark')
+    const pkgs_names = await seneca.make('nodezoo', 'bookmark')
       .list$({ all$: true, fields$: ['name'] })
+      .then(pkgs => {
+        const names = pkgs.map(pkg => pkg.name)
+        return dedup(names)
+      })
 
-    for (const pkg of pkgs) {
-      const { name: pkg_name } = pkg
-
+    for (const pkg_name of pkgs_names) {
       seneca.act('role:history,pull:npm_history', {
         pkg_name,
         date: make_timestamp(new Date())
@@ -61,12 +63,14 @@ function pull_github_history({ seneca }) {
   // NOTE: should be daily in the non-local environments.
   //
   return schedule_every_thirty_seconds(async () => {
-    const pkgs = await seneca.make('nodezoo', 'bookmark')
+    const pkgs_names = await seneca.make('nodezoo', 'bookmark')
       .list$({ all$: true, fields$: ['name'] })
+      .then(pkgs => {
+        const names = pkgs.map(pkg => pkg.name)
+        return dedup(names)
+      })
 
-    for (const pkg of pkgs) {
-      const { name: pkg_name } = pkg
-
+    for (const pkg_name of pkgs_names) {
       seneca.act('role:history,pull:github_history', {
         pkg_name
       }, (err) => {

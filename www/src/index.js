@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Public from './Public.vue'
+import '@/css/tailwind.css'
+import '@/css/shared.css'
+
+import Public from '@/Public.vue'
 import PublicHome from '@/components/PublicHome.vue'
 import ForgotPassView from '@/components/ForgotPassView.vue'
 import ResetPassView from '@/components/ResetPassView.vue'
 import GitHubCallbackView from '@/components/GitHubCallbackView.vue'
+import SignInView from '@/components/SignInView.vue'
+import SignUpView from '@/components/SignUpView.vue'
 
 
 Vue.config.productionTip = false
@@ -32,8 +37,16 @@ const router = new VueRouter({
     {
       path: '/gh-callback',
       component: GitHubCallbackView
+    },
+    {
+      path: '/sign-in',
+      component: SignInView
+    },
+    {
+      path: '/sign-up',
+      component: SignUpView
     }
-  ],
+  ]
 })
 
 

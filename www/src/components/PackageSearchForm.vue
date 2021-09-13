@@ -1,13 +1,14 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col class="text-center">
-        <v-form @submit.prevent="onSubmitSearch">
-          <v-text-field label="Search" v-model="search" @input="onSearchInput" />
-        </v-form>
-      </v-col>
-    </v-row>
-  </v-container>
+  <form @submit.prevent="onSubmitSearch">
+    <div class="grid grid-cols-5">
+      <div class="col-span-4">
+        <input type="text" v-model="search" @input="onSearchInput" placeholder="Search packages" class="form-input pl-12 pt-3 pb-3 border-l-0 border-r-0 border-t-0 bg-gray-50 w-full nodezoo-search-input">
+      </div>
+      <div>
+        <input type="submit" value="Search" class="w-full h-full nodezoo-bg-blue text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"></input>
+      </div>
+    </div>
+  </form>
 </template>
 
 

@@ -100,6 +100,7 @@ main: srv: web: {
 
     'role:web,scope:public,login:with_github': {}
     'role:web,scope:public,login:user': {}
+    'role:web,scope:public,register:user': {}
     'role:web,scope:public,search:pkgs': {}
     'role:web,scope:public,show:pkg': {}
     'role:web,scope:public,request:pass_reset': {}
@@ -109,9 +110,9 @@ main: srv: web: {
     'role:web,scope:account,load:profile': {}
     'role:web,scope:account,list:pkg_history': {}
     'role:web,scope:account,bookmark:pkg': {}
+    'role:web,scope:account,remove:bookmark': {}
     'role:web,scope:account,list:bookmarks': {}
     'role:web,scope:account,is:premium': {}
-    'role:web,scope:account,checkout_for:premium,submit:checkout': {}
   }
 }
 
@@ -187,8 +188,11 @@ main: srv: update: {
 main: srv: user: {
   msg: {
     'role:user,ping:pong': {}
+    'role:user,scope:auth,register:user': {}
     'role:user,scope:auth,login:user': {}
+    'role:user,scope:auth,logout:user': {}
     'role:user,scope:pkg,add:bookmark': {}
+    'role:user,scope:pkg,remove:bookmark': {}
     'role:user,scope:pkg,list:bookmarks': {}
     'role:user,scope:pkg,load:bookmark': {}
 

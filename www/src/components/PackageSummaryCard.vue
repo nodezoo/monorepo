@@ -5,12 +5,18 @@
     color="grey lighten-5"
   >
     <v-card-title>
-      <router-link :to="'/package/' + pkg_name">
-        {{ pkg_name }}
+      <router-link :to="'/package/' + encodeURIComponent(pkg_name)">
+        <h3 class="font-extrabold text-xl">
+          {{ pkg_name }}
+        </h3>
       </router-link>
     </v-card-title>
-    <v-card-subtitle>0.0.0_VER_PLAC</v-card-subtitle>
-    <v-card-text>lorem_DESC_PLAC</v-card-text>
+    <v-card-subtitle>
+      {{ pkg_version }}
+    </v-card-subtitle>
+    <v-card-text>
+      {{ pkg_desc }}
+    </v-card-text>
     <v-card-actions>
       <slot name="actions"></slot>
     </v-card-actions>
@@ -24,6 +30,16 @@
 
     props: {
       pkg_name: {
+        type: String,
+        required: true
+      },
+
+      pkg_version: {
+        type: String,
+        required: true
+      },
+
+      pkg_desc: {
         type: String,
         required: true
       }

@@ -7,18 +7,8 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-# Tearing down DynamoDb
-#
-./env/sim/scripts/aws-dynamo-stop.sh
+ENV_PATH='./env/sim'
 
 
-# Tearing down Nozama the AWS CloudSearch simulator
-#
-./env/sim/scripts/aws-cloudsearch-stop.sh
-
-
-# Tearing down frontend
-#
-./env/sim/scripts/frontend-stop.sh
-
+docker-compose -f "${ENV_PATH}/docker-compose.yaml" stop
 
