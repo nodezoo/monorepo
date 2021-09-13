@@ -7,6 +7,7 @@
   "main": {
     "srv": {
       "monitor": {
+        "kind": "internal",
         "msg": {},
         "plugin": {
           "repl": {}
@@ -16,7 +17,8 @@
         "msg": {
           "role:payment,ping:pong": {},
           "role:payment,process:payment": {}
-        }
+        },
+        "kind": "internal"
       },
       "web": {
         "msg": {
@@ -49,14 +51,16 @@
           "role:info,get:info": {
             "params": {}
           }
-        }
+        },
+        "kind": "internal"
       },
       "npm": {
         "msg": {
           "role:npm,ping:pong": {},
           "role:source,source:npm,get:package": {},
           "role:source,source:npm,pull:package": {}
-        }
+        },
+        "kind": "internal"
       },
       "github": {
         "msg": {
@@ -64,7 +68,8 @@
           "role:source,source:github,get:package": {},
           "role:source,source:github,pull:package": {},
           "role:source,source:github,get:rate_limit": {}
-        }
+        },
+        "kind": "internal"
       },
       "history": {
         "msg": {
@@ -72,14 +77,16 @@
           "role:history,pull:npm_history": {},
           "role:history,pull:github_history": {},
           "role:history,list:history": {}
-        }
+        },
+        "kind": "internal"
       },
       "search": {
         "msg": {
           "role:search,ping:pong": {},
           "role:search,search:query": {},
           "role:search,fake_search:query": {}
-        }
+        },
+        "kind": "internal"
       },
       "update": {
         "msg": {
@@ -93,7 +100,8 @@
           "role:update,stop:ingest": {},
           "role:update,process:change": {},
           "role:update,stats:ingest": {}
-        }
+        },
+        "kind": "internal"
       },
       "user": {
         "msg": {
@@ -108,7 +116,8 @@
           "role:user,is:premium": {},
           "role:user,load:profile": {},
           "role:user,join:premium": {}
-        }
+        },
+        "kind": "internal"
       },
       "devtools": {
         "sns_topic": false,
@@ -117,7 +126,8 @@
           "role:devtools,fake:true,create:pkg_history": {},
           "role:devtools,fake:true,create:npm_pkg": {},
           "role:devtools,create:user": {}
-        }
+        },
+        "kind": "internal"
       }
     },
     "ent": {

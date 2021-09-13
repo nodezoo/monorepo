@@ -3,6 +3,7 @@
 sys: shape: srv: {
   &={
     name: string
+    kind: internal
     msg: {
       &={
         async: boolean
@@ -95,6 +96,7 @@ main: srv: payment: {
 
 
 main: srv: web: {
+  kind: external
   msg: {
     'role:web,ping:pong': {}
 

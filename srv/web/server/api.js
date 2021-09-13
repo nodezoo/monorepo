@@ -6,6 +6,35 @@ const { pick } = Shared
 const makeStripeApi = require('./api-stripe.js')
 
 
+/*
+
+const publicSeneca = Seneca({legacy:false})
+    .test()
+    .use('promisify')
+    .use('entity')
+    .use('user')
+    .use('gateway')
+    .use('gateway-express')
+
+
+const accountSeneca = Seneca({legacy:false})
+    .test()
+    .use('promisify')
+    .use('entity')
+    .use('user')
+    .use('gateway')
+    .use('gateway-express')
+    .use('gateway-express-auth') 
+
+app
+  .use('/public', publicSeneca.export('gateway-express/handler'))
+  .use('/account', accountSeneca.export('gateway-express/handler'))
+
+
+*/
+
+
+
 function makeApi({ seneca }, options) {
   const api = new Express.Router()
 
