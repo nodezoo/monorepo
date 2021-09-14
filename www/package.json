@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@voxgig/model": "voxgig/model",
-    "@voxgig/model-vue": "voxgig/model-vue",
+    "@voxgig/model-vue": "file:../../../model-vue",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",

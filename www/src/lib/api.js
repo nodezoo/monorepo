@@ -12,12 +12,10 @@ class Api {
     const { email } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        request: 'pass_reset',
-        email
-      }
+      role: 'web',
+      scope: 'public',
+      request: 'pass_reset',
+      email
     }
 
     return api.post('/api/public', reqparams)
@@ -32,14 +30,12 @@ class Api {
     } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        reset: 'pass',
-        reset_token,
-        new_pass,
-        new_pass_confirmation
-      }
+      role: 'web',
+      scope: 'public',
+      reset: 'pass',
+      reset_token,
+      new_pass,
+      new_pass_confirmation
     }
 
     return api.post('/api/public', reqparams)
@@ -78,14 +74,12 @@ class Api {
     const { email, pass, pass_confirm } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        register: 'user',
-        email,
-        pass,
-        pass_confirm
-      }
+      role: 'web',
+      scope: 'public',
+      register: 'user',
+      email,
+      pass,
+      pass_confirm
     }
 
     return api.post('/api/public', reqparams)
@@ -176,12 +170,10 @@ class Api {
     const { prefix } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        search: 'pkgs',
-        prefix
-      }
+      role: 'web',
+      scope: 'public',
+      search: 'pkgs',
+      prefix
     }
 
     return api.post('/api/public', reqparams)
@@ -207,12 +199,10 @@ class Api {
     const { name } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        show: 'pkg',
-        name
-      }
+      role: 'web',
+      scope: 'public',
+      show: 'pkg',
+      name
     }
 
     return api.post('/api/public', reqparams, {
