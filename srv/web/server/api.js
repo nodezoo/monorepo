@@ -1,42 +1,84 @@
+const Seneca = require('seneca')
 const Express = require('express')
-const Patrun = require('patrun')
-const { authenticate } = require('./middlewares/authenticate')
 const Shared = require('../../../lib/shared')
 const { pick } = Shared
 const makeStripeApi = require('./api-stripe.js')
 
 
-/*
-
-const publicSeneca = Seneca({legacy:false})
-    .test()
+async function makeApi({ seneca }, options) {
+  const public_seneca = Seneca({ legacy: false })
     .use('promisify')
-    .use('entity')
-    .use('user')
     .use('gateway')
     .use('gateway-express')
 
+    .use('allow', {
+      check: [
+        'role:web,scope:public,register:user',
+        'role:web,scope:public,search:pkgs',
+        'role:web,scope:public,show:pkg',
+        'role:web,scope:public,request:pass_reset',
+        'role:web,scope:public,reset:pass'
+      ],
+      wrap: [
+        'role:*'
+      ]
+    })
 
-const accountSeneca = Seneca({legacy:false})
-    .test()
+    .add('role:web', function (msg, reply, _meta) {
+      return seneca.root.act(msg, reply)
+    })
+
+  await public_seneca.ready()
+
+
+  const account_seneca = Seneca({ legacy: false })
     .use('promisify')
-    .use('entity')
-    .use('user')
+
     .use('gateway')
     .use('gateway-express')
-    .use('gateway-express-auth') 
 
-app
-  .use('/public', publicSeneca.export('gateway-express/handler'))
-  .use('/account', accountSeneca.export('gateway-express/handler'))
+    .use('gateway-express-auth', {
+      cookie: {
+        name: 'AUTH_TOKEN'
+      },
+
+      seneca_auth: () => seneca
+    })
+
+    .use('allow', {
+      check: [
+        'role:web,scope:account,logout:user',
+        'role:web,scope:account,list:pkg_history',
+        'role:web,scope:account,list:bookmarks',
+        'role:web,scope:account,bookmark:pkg',
+        'role:web,scope:account,remove:bookmark',
+        'role:web,scope:account,load:profile',
+        'role:web,scope:account,is:premium'
+      ],
+      wrap: [
+        'role:*'
+      ]
+    })
+
+    .add('role:web', function (msg, reply, meta) {
+      const user_id = meta?.custom?.principal?.user?.id
+      return seneca.root.act({ ...msg, user_id }, reply)
+    })
+
+  await account_seneca.ready()
 
 
-*/
-
-
-
-function makeApi({ seneca }, options) {
   const api = new Express.Router()
+
+
+  api.post('/public',
+    Express.json(),
+    public_seneca.export('gateway-express/handler'))
+
+
+  api.post('/account',
+    Express.json(),
+    account_seneca.export('gateway-express/handler'))
 
 
   api.use('/stripe', makeStripeApi({ seneca }, options))
@@ -120,88 +162,13 @@ function makeApi({ seneca }, options) {
   })
 
 
-  const public_actions = Patrun()
-    .add({ role: 'web', scope: 'public', register: 'user' }, true)
-    .add({ role: 'web', scope: 'public', search: 'pkgs' }, true)
-    .add({ role: 'web', scope: 'public', show: 'pkg' }, true)
-    .add({ role: 'web', scope: 'public', request: 'pass_reset' }, true)
-    .add({ role: 'web', scope: 'public', reset: 'pass' }, true)
-
-
-  api.post('/public', Express.json(), (req, res, next) => {
-    const { msg = null } = req.body
-
-    if (null == msg) {
-      return res.sendStatus(422)
-    }
-
-    const is_supported = public_actions.find(msg)
-
-    if (!is_supported) {
+  api.use((err, req, res, next) => {
+    if (err?.seneca$ && 'not_allowed' === err?.code$) {
       return res.sendStatus(404)
     }
 
-    seneca.act(msg, (err, out) => {
-      if (err) {
-        return next(err)
-      }
-
-      if (!out) {
-        return res.sendStatus(204)
-      }
-
-      return res.json(out)
-    })
-
-    return
+    return next(err)
   })
-
-
-  const account_actions = Patrun()
-    .add({ role: 'web', scope: 'account', logout: 'user' }, true)
-    .add({ role: 'web', scope: 'account', list: 'pkg_history' }, true)
-    .add({ role: 'web', scope: 'account', list: 'bookmarks' }, true)
-    .add({ role: 'web', scope: 'account', bookmark: 'pkg' }, true)
-    .add({ role: 'web', scope: 'account', remove: 'bookmark' }, true)
-    .add({ role: 'web', scope: 'account', load: 'profile' }, true)
-    .add({ role: 'web', scope: 'account', is: 'premium' }, true)
-
-
-  api.post('/account',
-    Express.json(),
-
-    authenticate({ seneca }),
-
-    (req, res, next) => {
-      const { msg = null } = req.body
-
-      if (null == msg) {
-        return res.sendStatus(422)
-      }
-
-      const is_supported = account_actions.find(msg)
-
-      if (!is_supported) {
-        return res.sendStatus(404)
-      }
-
-
-      const { user: { id: user_id } } = req.auth$
-
-      seneca.act(msg, { user_id }, (err, out) => {
-        if (err) {
-          return next(err)
-        }
-
-        if (!out) {
-          return res.sendStatus(204)
-        }
-
-        return res.json(out)
-      })
-
-      return
-    })
 
 
   return api

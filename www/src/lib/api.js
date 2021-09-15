@@ -12,12 +12,10 @@ class Api {
     const { email } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        request: 'pass_reset',
-        email
-      }
+      role: 'web',
+      scope: 'public',
+      request: 'pass_reset',
+      email
     }
 
     return api.post('/api/public', reqparams)
@@ -32,14 +30,12 @@ class Api {
     } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        reset: 'pass',
-        reset_token,
-        new_pass,
-        new_pass_confirmation
-      }
+      role: 'web',
+      scope: 'public',
+      reset: 'pass',
+      reset_token,
+      new_pass,
+      new_pass_confirmation
     }
 
     return api.post('/api/public', reqparams)
@@ -59,13 +55,11 @@ class Api {
     const { name, since } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        list: 'pkg_history',
-        name,
-        since
-      }
+      role: 'web',
+      scope: 'account',
+      list: 'pkg_history',
+      name,
+      since
     }
 
     return api.post('/api/account', reqparams, {
@@ -78,14 +72,12 @@ class Api {
     const { email, pass, pass_confirm } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        register: 'user',
-        email,
-        pass,
-        pass_confirm
-      }
+      role: 'web',
+      scope: 'public',
+      register: 'user',
+      email,
+      pass,
+      pass_confirm
     }
 
     return api.post('/api/public', reqparams)
@@ -114,11 +106,9 @@ class Api {
 
   static async logoutUser(_args) {
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        logout: 'user'
-      }
+      role: 'web',
+      scope: 'account',
+      logout: 'user'
     }
 
     return api.post('/api/account', reqparams, {
@@ -129,26 +119,9 @@ class Api {
 
   static async loadUserProfile(_args) {
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        load: 'profile'
-      }
-    }
-
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
-  }
-
-
-  static async makeUserPremium(_args) {
-    const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        join: 'premium'
-      }
+      role: 'web',
+      scope: 'account',
+      load: 'profile'
     }
 
     return api.post('/api/account', reqparams, {
@@ -159,11 +132,9 @@ class Api {
 
   static async isPremiumUser(_args) {
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        is: 'premium'
-      }
+      role: 'web',
+      scope: 'account',
+      is: 'premium'
     }
 
     return api.post('/api/account', reqparams, {
@@ -176,12 +147,10 @@ class Api {
     const { prefix } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        search: 'pkgs',
-        prefix
-      }
+      role: 'web',
+      scope: 'public',
+      search: 'pkgs',
+      prefix
     }
 
     return api.post('/api/public', reqparams)
@@ -190,11 +159,9 @@ class Api {
 
   static async listMyBookmarkedPkgs() {
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        list: 'bookmarks'
-      }
+      role: 'web',
+      scope: 'account',
+      list: 'bookmarks'
     }
 
     return api.post('/api/account', reqparams, {
@@ -207,12 +174,10 @@ class Api {
     const { name } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'public',
-        show: 'pkg',
-        name
-      }
+      role: 'web',
+      scope: 'public',
+      show: 'pkg',
+      name
     }
 
     return api.post('/api/public', reqparams, {
@@ -225,12 +190,10 @@ class Api {
     const { name } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        bookmark: 'pkg',
-        name
-      }
+      role: 'web',
+      scope: 'account',
+      bookmark: 'pkg',
+      name
     }
 
     return api.post('/api/account', reqparams, {
@@ -243,12 +206,10 @@ class Api {
     const { name } = args
 
     const reqparams = {
-      msg: {
-        role: 'web',
-        scope: 'account',
-        remove: 'bookmark',
-        name
-      }
+      role: 'web',
+      scope: 'account',
+      remove: 'bookmark',
+      name
     }
 
     return api.post('/api/account', reqparams, {

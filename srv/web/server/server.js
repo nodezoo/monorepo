@@ -10,7 +10,7 @@ const { premiumUsersOnly } = require('./middlewares/premium_users_only')
 
 
 
-function makeServer({ seneca }, options) {
+async function makeServer({ seneca }, options) {
   const app = Express()
 
 
@@ -27,7 +27,8 @@ function makeServer({ seneca }, options) {
   app.use(CookieParser())
 
 
-  app.use('/api', MakeApi({ seneca }, options))
+  const api = await MakeApi({ seneca }, options)
+  app.use('/api', api)
 
 
   app.use((err, req, res, next) => {
