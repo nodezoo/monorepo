@@ -22,6 +22,14 @@ async function make_app() {
     .use('gateway')
     .use('gateway-express')
 
+  // NOTE: It is important that we wait until the Seneca instance is
+  // ready. Otherwise seneca.export'ing 'gateway-express/handler'
+  // will return `undefined`.
+  //
+  await seneca.ready()
+
+
+  seneca
     .use('search-mem', {
       search: {
         fields: ['name'],
@@ -34,83 +42,36 @@ async function make_app() {
     .use('../../../../srv/search/search-srv.js', {
     })
 
-    // TODO: Do not require Seneca handlers explicitly.
+
+  const app = Express()
+
+  seneca.use('../../../../srv/web_public/web_public-srv.js', {
+    // NOTE: the web_public service registers HTTP endpoints on
+    // the Express instance in place. Perhaps, a better option would
+    // be to initialize the Express instance inside the web_public
+    // service. However, exports are currently not supported on async
+    // plugins:
     //
+    // https://github.com/senecajs/seneca/issues/890
+    app,
 
-    .message('role:web,scope:public,register:user',
-      require('../../../../srv/web/register_user.js')())
+    gateway_express_handler:
+      seneca.export('gateway-express/handler'),
 
-    .message('role:web,scope:public,search:pkgs',
-      require('../../../../srv/web/search_pkgs.js')())
+    github_url: env_var_required('GITHUB_URL'),
+    github_api_url: env_var_required('GITHUB_API_URL'),
+    github_client_id: env_var_required('GITHUB_CLIENT_ID'),
+    github_client_secret: env_var_required('GITHUB_CLIENT_SECRET')
+  })
 
-    .message('role:web,scope:public,show:pkg',
-      require('../../../../srv/web/show_pkg.js')())
-
-    .message('role:web,scope:public,request:pass_reset',
-      require('../../../../srv/web/request_pass_reset.js')())
-
-    .message('role:web,scope:public,reset:pass',
-      require('../../../../srv/web/reset_pass.js')())
-
-
-  // NOTE: It is important that we wait until the Seneca instance is
-  // ready. Otherwise seneca.export'ing 'gateway-express/handler'
-  // will return `undefined`.
+  // NOTE: Currently, this call to #ready is required. Without it,
+  // web_public messages will not have enough time to get registered
+  // properly.
   //
   await seneca.ready()
 
 
-  const app = Express()
-
-
-  app.post('/public',
-    Express.json(),
-
-    filter([
-      { role: 'web', scope: 'public', register: 'user' },
-      { role: 'web', scope: 'public', search: 'pkgs' },
-      { role: 'web', scope: 'public', show: 'pkg' },
-      { role: 'web', scope: 'public', request: 'pass_reset' },
-      { role: 'web', scope: 'public', reset: 'pass' }
-    ]),
-
-    seneca.export('gateway-express/handler'))
-
-
-  app.use((err, req, res, next) => {
-    const is_seneca_err = Boolean(err?.seneca$)
-
-    if (is_seneca_err) {
-      const not_found = ['act_not_found', 'not_allowed'].includes(err?.code$)
-
-      if (not_found) {
-        return res.sendStatus(404)
-      }
-    }
-
-
-    return next(err)
-  })
-
-
   return app
-}
-
-
-function filter(whitelist) {
-  const allowed = whitelist
-    .reduce((acc, msg) => acc.add(msg, true), Patrun())
-
-  return (req, res, next) => {
-    const msg = req.body
-    const is_allowed = allowed.find(msg)
-
-    if (is_allowed) {
-      return next()
-    }
-
-    return res.sendStatus(404)
-  }
 }
 
 

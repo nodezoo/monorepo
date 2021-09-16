@@ -39,6 +39,18 @@
           "role:web,scope:account,is:premium": {}
         }
       },
+      "web_public": {
+        "msg": {
+          "role:web,scope:public,ping:pong": {},
+          "role:web,scope:public,login:with_github": {},
+          "role:web,scope:public,login:user": {},
+          "role:web,scope:public,register:user": {},
+          "role:web,scope:public,search:pkgs": {},
+          "role:web,scope:public,show:pkg": {},
+          "role:web,scope:public,request:pass_reset": {},
+          "role:web,scope:public,reset:pass": {}
+        }
+      },
       "info": {
         "msg": {
           "role:info,ping:pong": {},
