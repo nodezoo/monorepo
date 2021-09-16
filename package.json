@@ -53,6 +53,7 @@
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
     "@seneca/user": "5.8.0",
+    "aws-serverless-express": "3.4.0",
     "axios": "0.21.1",
     "changes-stream": "2.2.0",
     "cookie-parser": "1.4.5",
