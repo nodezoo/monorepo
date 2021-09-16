@@ -1,5 +1,4 @@
 const Seneca = require('seneca')
-const Express = require('express')
 const Patrun = require('patrun')
 const Model = require('../../../../model/model.json')
 const { env_var_required } = require('../../../../lib/shared')
@@ -43,18 +42,7 @@ async function make_app() {
     })
 
 
-  const app = Express()
-
   seneca.use('../../../../srv/web_public/web_public-srv.js', {
-    // NOTE: the web_public service registers HTTP endpoints on
-    // the Express instance in place. Perhaps, a better option would
-    // be to initialize the Express instance inside the web_public
-    // service. However, exports are currently not supported on async
-    // plugins:
-    //
-    // https://github.com/senecajs/seneca/issues/890
-    app,
-
     gateway_express_handler:
       seneca.export('gateway-express/handler'),
 
@@ -71,7 +59,7 @@ async function make_app() {
   await seneca.ready()
 
 
-  return app
+  return seneca.export('web_public/app')
 }
 
 
