@@ -1,56 +1,87 @@
+const Seneca = require('seneca')
 const Express = require('express')
-const Morgan = require('morgan')
-const CookieParser = require('cookie-parser')
-const Cors = require('cors')
 const Shared = require('../../../lib/shared')
 const { pick } = Shared
-const { filter } = require('./middlewares/filter')
+const makeStripeApi = require('./api-stripe.js')
 
 
-function make_api(options = {}) {
-  const { nodezoo_app_url = null } = options
+async function makeApi({ seneca }, options) {
+  const public_seneca = Seneca({ legacy: false })
+    .use('promisify')
+    .use('gateway')
+    .use('gateway-express')
 
-  if (null == nodezoo_app_url) {
-    throw new Error('The nodezoo_app_url option is required')
-  }
+    .use('allow', {
+      check: [
+        'role:web,scope:public,register:user',
+        'role:web,scope:public,search:pkgs',
+        'role:web,scope:public,show:pkg',
+        'role:web,scope:public,request:pass_reset',
+        'role:web,scope:public,reset:pass'
+      ],
+      wrap: [
+        'role:*'
+      ]
+    })
+
+    .add('role:web', function (msg, reply, _meta) {
+      return seneca.root.act(msg, reply)
+    })
+
+  await public_seneca.ready()
+
+
+  const account_seneca = Seneca({ legacy: false })
+    .use('promisify')
+
+    .use('gateway')
+    .use('gateway-express')
+
+    .use('gateway-express-auth', {
+      cookie: {
+        name: 'AUTH_TOKEN'
+      },
+
+      seneca_auth: () => seneca
+    })
+
+    .use('allow', {
+      check: [
+        'role:web,scope:account,logout:user',
+        'role:web,scope:account,list:pkg_history',
+        'role:web,scope:account,list:bookmarks',
+        'role:web,scope:account,bookmark:pkg',
+        'role:web,scope:account,remove:bookmark',
+        'role:web,scope:account,load:profile',
+        'role:web,scope:account,is:premium'
+      ],
+      wrap: [
+        'role:*'
+      ]
+    })
+
+    .add('role:web', function (msg, reply, meta) {
+      const user_id = meta?.custom?.principal?.user?.id
+      return seneca.root.act({ ...msg, user_id }, reply)
+    })
+
+  await account_seneca.ready()
 
 
   const api = new Express.Router()
 
 
-   api.use(Cors({
-     origin: nodezoo_app_url,
-     credentials: true,
-     optionsSuccessStatus: 200
-   }))
-
-
-  api.use(Morgan('combined'))
-
-
-  api.use(CookieParser())
-
-
-  const { gateway_express_handler = null } = options
-
-  if (null == gateway_express_handler) {
-    throw new Error('The "gateway_express_handler" option is required')
-  }
-
-
   api.post('/public',
-
     Express.json(),
+    public_seneca.export('gateway-express/handler'))
 
-    filter([
-      { role: 'web', scope: 'public', register: 'user' },
-      { role: 'web', scope: 'public', search: 'pkgs' },
-      { role: 'web', scope: 'public', show: 'pkg' },
-      { role: 'web', scope: 'public', request: 'pass_reset' },
-      { role: 'web', scope: 'public', reset: 'pass' }
-    ]),
 
-    gateway_express_handler)
+  api.post('/account',
+    Express.json(),
+    account_seneca.export('gateway-express/handler'))
+
+
+  api.use('/stripe', makeStripeApi({ seneca }, options))
 
 
   api.post('/login-with-gh', Express.json(), (req, res, next) => {
@@ -132,21 +163,11 @@ function make_api(options = {}) {
 
 
   api.use((err, req, res, next) => {
-    console.error(err)
-
-
-    const is_seneca_err = Boolean(err?.seneca$)
-
-    if (is_seneca_err) {
-      const not_found = ['act_not_found', 'not_allowed'].includes(err?.code$)
-
-      if (not_found) {
-        return res.sendStatus(404)
-      }
+    if (err?.seneca$ && 'not_allowed' === err?.code$) {
+      return res.sendStatus(404)
     }
 
-
-    return res.sendStatus(500)
+    return next(err)
   })
 
 
@@ -154,4 +175,4 @@ function make_api(options = {}) {
 }
 
 
-module.exports = { make_api }
+module.exports = makeApi

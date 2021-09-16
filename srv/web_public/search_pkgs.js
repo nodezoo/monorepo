@@ -23,7 +23,7 @@ module.exports = function make_search_pkgs() {
     const searchmsg = { query: prefix }
 
     const out = await seneca
-      .post('role:search,fake_search:query', searchmsg)
+      .post('role:search,search:query', searchmsg)
 
     if (!out.ok) {
       //

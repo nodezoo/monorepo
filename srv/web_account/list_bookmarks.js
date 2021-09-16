@@ -2,28 +2,29 @@ const Shared = require('../../lib/shared')
 const { pick } = Shared
 
 
-module.exports = function make_search_pkgs() {
-  return async function search_pkgs(msg) {
+module.exports = function make_list_bookmarks() {
+  return async function list_bookmarks(msg) {
     const seneca = this
 
-    if ('string' !== typeof msg.prefix) {
+
+    if (null == typeof msg.user_id) {
       return {
         ok: false,
         why: 'invalid-field',
         details: {
-          path: ['prefix'],
+          path: ['user_id'],
           why_exactly: 'required'
         }
       }
     }
 
-    const { prefix } = msg
+    const { user_id } = msg
 
 
-    const searchmsg = { query: prefix }
+    const out = await seneca.post('role:user,scope:pkg,list:bookmarks', {
+      user_id
+    })
 
-    const out = await seneca
-      .post('role:search,search:query', searchmsg)
 
     if (!out.ok) {
       //
@@ -35,12 +36,20 @@ module.exports = function make_search_pkgs() {
       return { ok: false }
     }
 
-    const { data: { pkgs } } = out
+    const { bookmarks } = out.data
+
+    // TODO: Fetch packages' data.
+    //
+
+    const pkgs_names = bookmarks.map(b => b.name)
+
+    const pkgs = await seneca.make('nodezoo', 'npm')
+      .list$({ name: pkgs_names })
 
     const pkgs_data = pkgs
       .map(pkg => pick(pkg, ['name', 'version', 'desc']))
 
-    return { ok: true, data: { pkgs: pkgs_data } }
+    return { ok: true, pkgs: pkgs_data }
   }
 }
 

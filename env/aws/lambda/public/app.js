@@ -2,6 +2,7 @@ const Seneca = require('seneca')
 const Patrun = require('patrun')
 const Model = require('../../../../model/model.json')
 const { env_var_required } = require('../../../../lib/shared')
+const DynamoDbLib = require('./lib/dynamo_db_lib')
 
 
 async function get_app() {
@@ -26,13 +27,18 @@ async function make_seneca() {
   seneca.context.model = Model
 
   seneca
-    .use('repl', { port: 3737 }) // DBG, TODO: remove this
-
     .use('promisify')
     .use('reload')
 
+
     .use('entity')
-    .use('mem-store')
+
+    .ignore_plugin('mem-store')
+
+    .use('dynamo-store', {
+      aws: DynamoDbLib.get_config() 
+    })
+
 
     .use('gateway')
     .use('gateway-express')
@@ -69,6 +75,7 @@ async function make_seneca() {
   seneca.use('../../../../srv/web_public/web_public-srv.js', {
     gateway_express_handler,
 
+    nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
     github_url: env_var_required('GITHUB_URL'),
     github_api_url: env_var_required('GITHUB_API_URL'),
     github_client_id: env_var_required('GITHUB_CLIENT_ID'),

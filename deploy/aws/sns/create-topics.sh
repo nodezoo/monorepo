@@ -40,7 +40,6 @@ aws sns create-topic --name nodezoo_pull_github_history_role_history
 aws sns create-topic --name nodezoo_list_history_role_history
 aws sns create-topic --name nodezoo_ping_pong_role_search
 aws sns create-topic --name nodezoo_role_search_search_query
-aws sns create-topic --name nodezoo_fake_search_query_role_search
 aws sns create-topic --name nodezoo_ping_pong_role_update
 aws sns create-topic --name nodezoo_role_update_start_download
 aws sns create-topic --name nodezoo_prepare_ingest_role_update_scope_pkg

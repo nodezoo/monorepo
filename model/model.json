@@ -95,8 +95,7 @@
       "search": {
         "msg": {
           "role:search,ping:pong": {},
-          "role:search,search:query": {},
-          "role:search,fake_search:query": {}
+          "role:search,search:query": {}
         },
         "kind": "internal"
       },
