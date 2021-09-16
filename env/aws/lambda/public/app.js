@@ -27,6 +27,8 @@ async function make_app() {
   //
   await seneca.ready()
 
+  const gateway_express_handler = seneca.export('gateway-express/handler')
+
 
   seneca
     .use('search-mem', {
@@ -43,9 +45,7 @@ async function make_app() {
 
 
   seneca.use('../../../../srv/web_public/web_public-srv.js', {
-    gateway_express_handler:
-      seneca.export('gateway-express/handler'),
-
+    gateway_express_handler,
     github_url: env_var_required('GITHUB_URL'),
     github_api_url: env_var_required('GITHUB_API_URL'),
     github_client_id: env_var_required('GITHUB_CLIENT_ID'),
