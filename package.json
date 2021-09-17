@@ -33,7 +33,6 @@
   "homepage": "https://github.com/nodezoo/monorepo#readme",
   "devDependencies": {
     "@voxgig/model": "voxgig/model",
-    "aws-sdk": "2.973.0",
     "faker": "5.5.3",
     "jasmine": "3.8.0",
     "jsonic": "https://github.com/jsonicjs/jsonic.git#4edd639987b75ef62a74e3904fb890f59d21379c",
@@ -53,6 +52,7 @@
     "@seneca/reload": "^0.2.1",
     "@seneca/sns-transport": "^0.5.2",
     "@seneca/user": "5.8.0",
+    "aws-sdk": "2.990.0",
     "aws-serverless-express": "3.4.0",
     "axios": "0.21.1",
     "changes-stream": "2.2.0",
