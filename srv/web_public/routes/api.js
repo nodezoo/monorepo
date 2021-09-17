@@ -7,7 +7,16 @@ const { pick } = Shared
 const { filter } = require('./middlewares/filter')
 
 
-function make_api(options = {}) {
+function make_api(args, options = {}) {
+  const { seneca = null } = args
+
+  if (null == seneca || !seneca.isSeneca) {
+    throw new Error(
+      'The seneca arg is required and should be a Seneca instance'
+    )
+  }
+
+
   const { nodezoo_app_url = null } = options
 
   if (null == nodezoo_app_url) {

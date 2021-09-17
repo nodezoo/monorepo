@@ -13,7 +13,7 @@ function web_public(options) {
 
   const app = Express()
 
-  app.use('/api', make_api(options))
+  app.use('/api', make_api({ seneca }, options))
 
 
   return {
