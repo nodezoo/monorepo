@@ -53,8 +53,7 @@ module.exports = function make_register_user() {
       .post('register:user,sys:user', {
         user_data: {
           email,
-          pass,
-          repeat: pass_confirm
+          pass
         }
       })
 
