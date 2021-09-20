@@ -59,6 +59,7 @@ module.exports = function make_register_user() {
 
 
     if (!signup.ok) {
+      console.error(signup)
       return { ok: false }
     }
 

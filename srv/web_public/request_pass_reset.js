@@ -58,10 +58,6 @@ module.exports = function make_pass_reset() {
 // TODO: Tidy up.
 //
 async function sendRecoveryLinkEmail(args, ctx) {
-  if (null == process.env.EMAILS_ENABLED) {
-    return
-  }
-
   const { email, reset_token } = args
   const { seneca } = ctx
 

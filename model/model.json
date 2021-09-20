@@ -51,6 +51,18 @@
           "role:web,scope:public,reset:pass": {}
         }
       },
+      "web_account": {
+        "msg": {
+          "role:web,scope:account,ping:pong": {},
+          "role:web,scope:account,logout:user": {},
+          "role:web,scope:account,load:profile": {},
+          "role:web,scope:account,list:pkg_history": {},
+          "role:web,scope:account,bookmark:pkg": {},
+          "role:web,scope:account,remove:bookmark": {},
+          "role:web,scope:account,list:bookmarks": {},
+          "role:web,scope:account,is:premium": {}
+        }
+      },
       "info": {
         "msg": {
           "role:info,ping:pong": {},

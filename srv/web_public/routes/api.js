@@ -30,7 +30,11 @@ function make_api(args, options = {}) {
    api.use(Cors({
      origin: nodezoo_app_url,
      credentials: true,
-     optionsSuccessStatus: 200
+     optionsSuccessStatus: 200,
+     allowedHeaders: [
+       'content-type', 'accept', 'origin', 'cookie',
+       'Set-cookie', 'test'
+     ]
    }))
 
 
@@ -47,6 +51,8 @@ function make_api(args, options = {}) {
   }
 
 
+  api.options('/public')
+
   api.post('/public',
 
     Express.json(),
@@ -61,6 +67,8 @@ function make_api(args, options = {}) {
 
     gateway_express_handler)
 
+
+  api.options('/login-with-gh')
 
   api.post('/login-with-gh', Express.json(), (req, res, next) => {
     const { code } = req.body
@@ -91,13 +99,17 @@ function make_api(args, options = {}) {
         // from the frontend code.
         //
         res.cookie('AUTH_TOKEN', auth_token, {
-          httpOnly: true
+          httpOnly: true,
+          sameSite: 'none',
+          secure: true
         })
 
         return res.json({ ok: true })
       })
   })
 
+
+  api.options('/login')
 
   api.post('/login', Express.json(), (req, res, next) => {
     const { email = null, pass = null } = req.body
@@ -132,7 +144,9 @@ function make_api(args, options = {}) {
         // from the frontend code.
         //
         res.cookie('AUTH_TOKEN', auth_token, {
-          httpOnly: true
+          httpOnly: true,
+          sameSite: 'None',
+          secure: true
         })
 
         return res.json({ ok: true })

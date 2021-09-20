@@ -7,7 +7,7 @@ module.exports = function make_list_bookmarks() {
     const seneca = this
 
 
-    if (null == typeof msg.user_id) {
+    if (null == msg.user_id) {
       return {
         ok: false,
         why: 'invalid-field',
