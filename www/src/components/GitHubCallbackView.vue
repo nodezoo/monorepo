@@ -17,7 +17,10 @@ export default {
       const response = await Api.loginUserWithGitHub({ code })
 
       if (response.data.ok) {
-        location.href = '/account'
+        // TODO: Uncomment this redirect once the issue with the cookies
+        // failing to persist has been resolved.
+        //
+        //location.href = '/account'
       }
     }
   }
