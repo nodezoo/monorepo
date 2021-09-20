@@ -1,0 +1,9 @@
+{
+  "body": "{ \"role\": \"web\", \"scope\": \"public\", \"search\": \"pkgs\", \"prefix\": \"seneca\"  }",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "httpMethod": "POST",
+  "path": "/api/public"
+}
+

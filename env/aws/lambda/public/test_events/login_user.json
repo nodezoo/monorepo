@@ -1,0 +1,10 @@
+{
+  "body": "{ \"email\": \"efim.bogdanovsky@voxgig.com\", \"pass\": \"abcdefghij\" }",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "httpMethod": "POST",
+  "path": "/api/login",
+  "query": ""
+}
+

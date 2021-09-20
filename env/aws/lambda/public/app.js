@@ -1,7 +1,7 @@
 const Seneca = require('seneca')
 const Patrun = require('patrun')
-const Model = require('../../../../model/model.json')
-const { env_var_required } = require('../../../../lib/shared')
+const Model = require('/opt/nodejs/model/model.json')
+const { env_var_required } = require('/opt/nodejs/lib/shared')
 const DynamoDbLib = require('./lib/dynamo_db_lib')
 
 
@@ -35,9 +35,7 @@ async function make_seneca() {
 
     .ignore_plugin('mem-store')
 
-    .use('dynamo-store', {
-      aws: DynamoDbLib.get_config() 
-    })
+    .use('dynamo-store', get_dynamo_store_config())
 
 
     .use('gateway')
@@ -52,9 +50,23 @@ async function make_seneca() {
   const gateway_express_handler = seneca.export('gateway-express/handler')
 
 
+  seneca.use('simple-mail', {
+    transport: {
+      pool: true,
+      secure: false, // TODO: <-- You might want to change that.
+      host: env_var_required('SMTP_HOST'),
+      port: env_var_required('SMTP_PORT'),
+      auth: {
+        user: env_var_required('SMTP_USER'),
+        pass: env_var_required('SMTP_PASS')
+      }
+    }
+  })
+
+
   seneca
     .use('user')
-    .use('../../../../srv/user/user-srv.js', {
+    .use('/opt/nodejs/srv/user/user-srv.js', {
     })
 
 
@@ -68,11 +80,11 @@ async function make_seneca() {
         }
       }
     })
-    .use('../../../../srv/search/search-srv.js', {
+    .use('/opt/nodejs/srv/search/search-srv.js', {
     })
 
 
-  seneca.use('../../../../srv/web_public/web_public-srv.js', {
+  seneca.use('/opt/nodejs/srv/web_public/web_public-srv.js', {
     gateway_express_handler,
 
     nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
@@ -89,6 +101,20 @@ async function make_seneca() {
   await seneca.ready()
 
   return seneca
+}
+
+
+function get_dynamo_store_config() {
+  if ('production' === process.env.NODE_ENV) {
+    return {
+      aws: { default: true },
+      dc: { default: true }
+    }
+  }
+
+  return {
+    aws: DynamoDbLib.get_config()
+  }
 }
 
 
