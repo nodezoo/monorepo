@@ -71,13 +71,10 @@ async function make_seneca() {
 
 
   seneca
-    .use('search-mem', {
-      search: {
-        fields: ['name'],
-        storeFields: ['name', 'version', 'giturl', 'desc', 'readme'],
-        searchOptions: {
-          fuzzy: true
-        }
+    .use('search-aws-cloudsearch', {
+      csd: {
+        endpoint: env_var_required('AWS_CLOUDSEARCH_ENDPOINT'),
+        region: env_var_required('AWS_REGION')
       }
     })
     .use('/opt/nodejs/srv/search/search-srv.js', {
