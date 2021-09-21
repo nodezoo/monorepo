@@ -2,22 +2,18 @@ const { isPremiumUser } = require('./lib/shared')
 
 
 module.exports = function make_list_pkg_history() {
-  return async function list_pkg_history(msg) {
+  return async function list_pkg_history(msg, meta) {
     const seneca = this
 
 
-    if (null == typeof msg.user_id) {
+    const user_id = meta.custom?.principal?.user?.id
+
+    if (null == user_id) {
       return {
         ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['user_id'],
-          why_exactly: 'required'
-        }
+        why: 'unauthorized'
       }
     }
-
-    const { user_id } = msg
 
 
     if ('string' !== typeof msg.name) {

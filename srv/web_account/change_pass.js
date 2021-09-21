@@ -1,21 +1,17 @@
 
 module.exports = function make_logout_user() {
-  return async function logout_user(msg) {
+  return async function logout_user(msg, meta) {
     const seneca = this
 
 
-    if (null == typeof msg.user_id) {
+    const user_id = meta.custom?.principal?.user?.id
+
+    if (null == user_id) {
       return {
         ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['user_id'],
-          why_exactly: 'required'
-        }
+        why: 'unauthorized'
       }
     }
-
-    const { user_id } = msg
 
 
     const out = await seneca.post('logout:user,sys:user', { user_id })

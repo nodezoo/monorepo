@@ -3,22 +3,18 @@ const { pick } = Shared
 
 
 module.exports = function make_remove_bookmark() {
-  return async function remove_bookmark(msg) {
+  return async function remove_bookmark(msg, meta) {
     const seneca = this
 
 
-    if (null == typeof msg.user_id) {
+    const user_id = meta.custom?.principal?.user?.id
+
+    if (null == user_id) {
       return {
         ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['user_id'],
-          why_exactly: 'required'
-        }
+        why: 'unauthorized'
       }
     }
-
-    const { user_id } = msg
 
 
     if ('string' !== typeof msg.name) {

@@ -18,7 +18,7 @@ seneca
   .test('print')
   .error(console.log)
   .use('promisify')
-  .use('entity')
+  .use('entity', { server: true })
   .use('mem-store')
   .use('search-mem', {
     search: {
@@ -29,7 +29,6 @@ seneca
       }
     }
   })
-  .use('repl')
   .use('reload')
   .use('user')
   .use('member')
@@ -46,6 +45,7 @@ seneca
       }
     }
   })
+  .use('repl', { port: 3046 })
 
 
 const options = {
@@ -138,6 +138,11 @@ async function make_public_seneca(seneca) {
     .use('promisify')
     .use('reload')
 
+    .use('repl', { port: 4690 })
+
+    .ignore_plugin('mem-store')
+    .use('entity', { client: true })
+
     .use('gateway')
     .use('gateway-express')
 
@@ -170,7 +175,7 @@ async function make_public_seneca(seneca) {
     .add('sys:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:search', (msg, reply) => seneca.root.act(msg, reply))
     .add('sys:mail', (msg, reply) => seneca.root.act(msg, reply))
-    .add('role:entity', (msg, reply) => seneca.root.act(msg, reply))
+    .add('role:remote-entity', (msg, reply) => seneca.root.act(msg, reply))
 
   return public_seneca
 }
@@ -184,6 +189,11 @@ async function make_account_seneca(seneca) {
   account_seneca
     .use('promisify')
     .use('reload')
+
+    .use('entity', { client: true })
+
+    .ignore_plugin('mem-store')
+    .use('repl', { port: 9092 })
 
     .use('gateway')
     .use('gateway-express')
@@ -215,7 +225,6 @@ async function make_account_seneca(seneca) {
         env_var_required('STRIPE_WEBHOOK_ENDPOINT_SECRET')
     })
 
-
   account_seneca
     .add('sys:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('sys:mail', (msg, reply) => seneca.root.act(msg, reply))
@@ -224,7 +233,7 @@ async function make_account_seneca(seneca) {
     .add('role:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:payment', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:history', (msg, reply) => seneca.root.act(msg, reply))
-    .add('role:entity', (msg, reply) => seneca.root.act(msg, reply))
+    .add('role:remote-entity', (msg, reply) => seneca.root.act(msg, reply))
 
   return account_seneca
 }

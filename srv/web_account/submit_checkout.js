@@ -3,21 +3,19 @@ const { pick } = Shared
 
 
 module.exports = function make_submit_checkout() {
-  return async function submit_checkout(msg) {
+  return async function submit_checkout(msg, meta) {
     const seneca = this
 
-    const { user_id } = msg
+
+    const user_id = meta.custom?.principal?.user?.id
 
     if (null == user_id) {
       return {
         ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['user_id'],
-          why_exactly: 'required'
-        }
+        why: 'unauthorized'
       }
     }
+
 
     const payment_res = await seneca
       .post('role:payment,process:payment', { user_id })

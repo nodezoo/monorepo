@@ -3,22 +3,18 @@ const { pick } = Shared
 
 
 module.exports = function make_list_bookmarks() {
-  return async function list_bookmarks(msg) {
+  return async function list_bookmarks(msg, meta) {
     const seneca = this
 
 
-    if (null == msg.user_id) {
+    const user_id = meta.custom?.principal?.user?.id
+
+    if (null == user_id) {
       return {
         ok: false,
-        why: 'invalid-field',
-        details: {
-          path: ['user_id'],
-          why_exactly: 'required'
-        }
+        why: 'unauthorized'
       }
     }
-
-    const { user_id } = msg
 
 
     const out = await seneca.post('role:user,scope:pkg,list:bookmarks', {
