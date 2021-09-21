@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/nodezoo/monorepo#readme",
   "devDependencies": {
+    "@seneca/repl": "4.0.1",
     "@voxgig/model": "voxgig/model",
     "faker": "5.5.3",
     "jasmine": "3.8.0",

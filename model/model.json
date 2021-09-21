@@ -21,6 +21,7 @@
         "kind": "internal"
       },
       "web_public": {
+        "auto_use": false,
         "msg": {
           "role:web,scope:public,ping:pong": {},
           "role:web,scope:public,login:with_github": {},
@@ -33,6 +34,7 @@
         }
       },
       "web_account": {
+        "auto_use": false,
         "msg": {
           "role:web,scope:account,ping:pong": {},
           "role:web,scope:account,logout:user": {},

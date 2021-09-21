@@ -96,6 +96,7 @@ main: srv: payment: {
 
 
 main: srv: web_public: {
+  auto_use: false
   kind: external
   msg: {
     'role:web,scope:public,ping:pong': {}
@@ -112,6 +113,7 @@ main: srv: web_public: {
 
 
 main: srv: web_account: {
+  auto_use: false
   kind: external
   msg: {
     'role:web,scope:account,ping:pong': {}

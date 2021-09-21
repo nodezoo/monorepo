@@ -9,8 +9,6 @@ import Api from '@/lib/api'
 
 export default {
   async mounted() {
-    console.dir(this.$route.query, { depth: 32 }) // dbg
-
     const { code = null } = this.$route.query
 
     if (null != code) {
@@ -20,7 +18,7 @@ export default {
         // TODO: Uncomment this redirect once the issue with the cookies
         // failing to persist has been resolved.
         //
-        //location.href = '/account'
+        location.href = '/account'
       }
     }
   }
