@@ -1,6 +1,6 @@
 aws sns create-topic --name nodezoo_ping_pong_role_payment
 aws sns create-topic --name nodezoo_process_payment_role_payment
-aws sns create-topic --name nodezoo_ping_pong_role_web
+aws sns create-topic --name nodezoo_ping_pong_role_web_scope_public
 aws sns create-topic --name nodezoo_login_with_github_role_web_scope_public
 aws sns create-topic --name nodezoo_login_user_role_web_scope_public
 aws sns create-topic --name nodezoo_register_user_role_web_scope_public
@@ -8,6 +8,7 @@ aws sns create-topic --name nodezoo_role_web_scope_public_search_pkgs
 aws sns create-topic --name nodezoo_role_web_scope_public_show_pkg
 aws sns create-topic --name nodezoo_request_pass_reset_role_web_scope_public
 aws sns create-topic --name nodezoo_reset_pass_role_web_scope_public
+aws sns create-topic --name nodezoo_ping_pong_role_web_scope_account
 aws sns create-topic --name nodezoo_logout_user_role_web_scope_account
 aws sns create-topic --name nodezoo_load_profile_role_web_scope_account
 aws sns create-topic --name nodezoo_list_pkg_history_role_web_scope_account
@@ -32,7 +33,6 @@ aws sns create-topic --name nodezoo_pull_github_history_role_history
 aws sns create-topic --name nodezoo_list_history_role_history
 aws sns create-topic --name nodezoo_ping_pong_role_search
 aws sns create-topic --name nodezoo_role_search_search_query
-aws sns create-topic --name nodezoo_fake_search_query_role_search
 aws sns create-topic --name nodezoo_ping_pong_role_update
 aws sns create-topic --name nodezoo_role_update_start_download
 aws sns create-topic --name nodezoo_prepare_ingest_role_update_scope_pkg

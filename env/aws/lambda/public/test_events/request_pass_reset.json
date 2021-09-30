@@ -1,0 +1,10 @@
+{
+  "body": "{ \"role\": \"web\", \"scope\": \"public\", \"request\": \"pass_reset\", \"email\": \"efim.bogdanovsky@voxgig.com\" }",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "httpMethod": "POST",
+  "path": "/api/public",
+  "query": ""
+}
+

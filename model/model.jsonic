@@ -95,10 +95,11 @@ main: srv: payment: {
 }
 
 
-main: srv: web: {
+main: srv: web_public: {
+  auto_use: false
   kind: external
   msg: {
-    'role:web,ping:pong': {}
+    'role:web,scope:public,ping:pong': {}
 
     'role:web,scope:public,login:with_github': {}
     'role:web,scope:public,login:user': {}
@@ -107,6 +108,15 @@ main: srv: web: {
     'role:web,scope:public,show:pkg': {}
     'role:web,scope:public,request:pass_reset': {}
     'role:web,scope:public,reset:pass': {}
+  }
+}
+
+
+main: srv: web_account: {
+  auto_use: false
+  kind: external
+  msg: {
+    'role:web,scope:account,ping:pong': {}
 
     'role:web,scope:account,logout:user': {}
     'role:web,scope:account,load:profile': {}
@@ -162,10 +172,6 @@ main: srv: search: {
   msg: {
     'role:search,ping:pong': {}
     'role:search,search:query': {}
-
-    # TODO: Delete this action once the search has been implemented.
-    #
-    'role:search,fake_search:query': {}
   }
 }
 

@@ -1,10 +1,8 @@
 import Axios from 'axios'
 
 
-const host = process.env.VUE_APP_API_HOST || '0.0.0.0'
-const port = process.env.VUE_APP_API_PORT || '9999'
-
-const api = Axios.create({ baseURL: `http://${host}:${port}/` })
+const base_url = process.env.VUE_APP_API_URL || 'http://localhost:9099'
+const api = Axios.create({ baseURL: base_url })
 
 
 class Api {

@@ -20,16 +20,23 @@
         },
         "kind": "internal"
       },
-      "web": {
+      "web_public": {
+        "auto_use": false,
         "msg": {
-          "role:web,ping:pong": {},
+          "role:web,scope:public,ping:pong": {},
           "role:web,scope:public,login:with_github": {},
           "role:web,scope:public,login:user": {},
           "role:web,scope:public,register:user": {},
           "role:web,scope:public,search:pkgs": {},
           "role:web,scope:public,show:pkg": {},
           "role:web,scope:public,request:pass_reset": {},
-          "role:web,scope:public,reset:pass": {},
+          "role:web,scope:public,reset:pass": {}
+        }
+      },
+      "web_account": {
+        "auto_use": false,
+        "msg": {
+          "role:web,scope:account,ping:pong": {},
           "role:web,scope:account,logout:user": {},
           "role:web,scope:account,load:profile": {},
           "role:web,scope:account,list:pkg_history": {},
@@ -83,8 +90,7 @@
       "search": {
         "msg": {
           "role:search,ping:pong": {},
-          "role:search,search:query": {},
-          "role:search,fake_search:query": {}
+          "role:search,search:query": {}
         },
         "kind": "internal"
       },

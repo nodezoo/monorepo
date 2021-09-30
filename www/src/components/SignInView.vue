@@ -46,10 +46,14 @@ export default {
 
   computed: {
     githubSignInLink() {
-      const CLIENT_ID = '1172dca59945c160eef9'
+      const gh_client_id = process.env.VUE_APP_GITHUB_NODEZOO_APP_CLIENT_ID
+
+      if (null == gh_client_id) {
+        throw new Error('malformed url')
+      }
 
       return 'https://github.com/login/oauth/authorize' +
-        `?scope=user:email&client_id=${CLIENT_ID}`
+        `?scope=user:email&client_id=${gh_client_id}`
     }
   },
 

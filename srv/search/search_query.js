@@ -1,33 +1,59 @@
-
-const AWS = require('aws-sdk')
-
-const CSD = new AWS.CloudSearchDomain({
-  endpoint: 'search-nodezoo-2j7gf6f5iejssz4rg5t3yzwwja.us-east-1.cloudsearch.amazonaws.com'
-});
+const { pick } = require('../../lib/shared')
 
 
-// file: search_query.js
-// Implements role:search,search:query
 module.exports = function make_search_query() {
   return async function search_query(msg) {
-    let seneca = this
-    let query = msg.q
+    const seneca = this
 
-    var params = {
-      query: query,
-      sort: 'stars desc',
+
+    const { query = null } = msg
+
+    if ('string' !== typeof query) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['query'],
+          why_exactly: 'required'
+        }
+      }
     }
 
-    let res = await new Promise((res,rej) => {
-      CSD.search(params, function(err, data) {
-        if(err) return rej(err)
-        return res(data)
-      })
-    })
+    if ('' === query.trim()) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['query'],
+          why_exactly: 'blank'
+        }
+      }
+    }
+
+
+    const search = await seneca
+      .post('sys:search,cmd:search', { query })
+
+
+    if (!search.ok) {
+      return search
+    }
+
+    const { hits } = search.data
+
+    const pkgs = hits.map(hit => pick(hit.doc, [
+      'name',
+      'version',
+      'giturl',
+      'desc',
+      'readme'
+    ]))
+
 
     return {
       ok: true,
-      res: res.hits && res.hits.hit,
+      data: { pkgs }
     }
   }
 }
+
