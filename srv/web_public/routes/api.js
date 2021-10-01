@@ -29,12 +29,7 @@ function make_api(args, options = {}) {
 
    api.use(Cors({
      origin: nodezoo_app_url,
-     credentials: true,
-     optionsSuccessStatus: 200,
-     allowedHeaders: [
-       'content-type', 'accept', 'origin', 'cookie',
-       'Set-cookie', 'test'
-     ]
+     credentials: true
    }))
 
 
@@ -49,6 +44,19 @@ function make_api(args, options = {}) {
   if (null == gateway_express_handler) {
     throw new Error('The "gateway_express_handler" option is required')
   }
+
+
+  api.options('/ping')
+
+  api.post('/ping', (req, res) => {
+    res.cookie('ponged', 1, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true
+    })
+
+    return res.json({ ok: true, pong: 'Pong!' })
+  })
 
 
   api.options('/public')

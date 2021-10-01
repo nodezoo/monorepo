@@ -46,9 +46,10 @@ export default {
     async searchForPkgs(args) {
       const { search } = args
       const searchResponse = await Api.listPkgsWithNamePrefix({ prefix: search })
+      const searchResponseData = await searchResponse.json()
 
-      if (searchResponse.data.ok) {
-        const { data: { pkgs } } = searchResponse.data
+      if (searchResponse.ok) {
+        const { data: { pkgs } } = searchResponseData
         this.pkgs = pkgs
       }
     }

@@ -33,8 +33,10 @@
         since: this.daysAgo(7)
       })
 
-      if (historyResponse.data.ok) {
-        const { data: { history } } = historyResponse.data
+      const historyResponseData = await historyResponse.json()
+
+      if (historyResponseData.ok) {
+        const { data: { history } } = historyResponseData
 
 
         this.history = history

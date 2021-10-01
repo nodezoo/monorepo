@@ -38,7 +38,9 @@ export default {
         new_pass_confirmation
       })
 
-      if (response.data.ok) {
+      const responseData = await response.json()
+
+      if (responseData.ok) {
         this.reset_ok = true
       }
     }

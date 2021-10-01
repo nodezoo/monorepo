@@ -1,11 +1,20 @@
-import Axios from 'axios'
 
-
-const base_url = process.env.VUE_APP_API_URL || 'http://localhost:9099'
-const api = Axios.create({ baseURL: base_url })
+const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:9099'
 
 
 class Api {
+  static async ping(args) {
+    const res = await fetchOrCrash(
+      apiUrl('/api/ping'),
+
+      nodezooApiRequestOpts({
+        method: 'POST'
+      })
+    )
+
+    return res
+  }
+
   static async requestPassReset(args) {
     const { email } = args
 
@@ -16,7 +25,16 @@ class Api {
       email
     }
 
-    return api.post('/api/public', reqparams)
+    const res = await fetchOrCrash(
+      apiUrl('/api/public'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -36,16 +54,29 @@ class Api {
       new_pass_confirmation
     }
 
-    return api.post('/api/public', reqparams)
+    const res = await fetchOrCrash(
+      apiUrl('/api/public'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
   static async submitPremiumMembershipCheckout(_args) {
-    const reqparams = {}
+    const res = await fetchOrCrash(
+      apiUrl('/api/stripe/create-premium-membership-checkout-session'),
 
-    return api.post('/api/stripe/create-premium-membership-checkout-session', reqparams, {
-      withCredentials: true
-    })
+      nodezooApiRequestOpts({
+        method: 'POST'
+      })
+    )
+
+    return res
   }
 
 
@@ -60,9 +91,16 @@ class Api {
       since
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -78,7 +116,16 @@ class Api {
       pass_confirm
     }
 
-    return api.post('/api/public', reqparams)
+    const res = await fetchOrCrash(
+      apiUrl('/api/public'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -86,9 +133,16 @@ class Api {
     const { email, pass } = args
     const reqparams = { email, pass }
 
-    return api.post('/api/login', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/login'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -96,9 +150,16 @@ class Api {
     const { code } = args
     const reqparams = { code }
 
-    return api.post('/api/login-with-gh', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/login-with-gh'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -109,9 +170,16 @@ class Api {
       logout: 'user'
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -122,9 +190,16 @@ class Api {
       load: 'profile'
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -135,9 +210,16 @@ class Api {
       is: 'premium'
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -151,7 +233,16 @@ class Api {
       prefix
     }
 
-    return api.post('/api/public', reqparams)
+    const res = await fetchOrCrash(
+      apiUrl('/api/public'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -162,9 +253,16 @@ class Api {
       list: 'bookmarks'
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -178,9 +276,16 @@ class Api {
       name
     }
 
-    return api.post('/api/public', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/public'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -194,9 +299,16 @@ class Api {
       name
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
 
 
@@ -210,10 +322,57 @@ class Api {
       name
     }
 
-    return api.post('/api/account', reqparams, {
-      withCredentials: true
-    })
+    const res = await fetchOrCrash(
+      apiUrl('/api/account'),
+
+      nodezooApiRequestOpts({
+        method: 'POST',
+        body: JSON.stringify(reqparams)
+      })
+    )
+
+    return res
   }
+}
+
+
+function apiUrl(path) {
+  return API_URL + path
+}
+
+
+class RequestFailedError extends Error {
+  constructor() {
+    this.name = 'RequestFailedError'
+  }
+}
+
+
+async function fetchOrCrash(...args) {
+  const res = await fetch(...args)
+
+  if (!res.ok) {
+    throw new RequestFailedError()
+  }
+
+  return res
+}
+
+
+function nodezooApiRequestOpts(opts = {}) {
+  const ans = {
+    mode: 'cors',
+    credentials: 'include',
+    ...opts,
+  }
+
+  if (null != ans.body && !('headers' in ans)) {
+    ans.headers = {
+      'content-type': 'application/json'
+    }
+  }
+
+  return ans
 }
 
 

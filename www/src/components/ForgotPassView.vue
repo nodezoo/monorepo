@@ -39,8 +39,9 @@ export default {
     async onResetFormSubmit() {
       const { email } = this
       const response = await Api.requestPassReset({ email })
+      const responseData = await response.json()
 
-      if (response.data.ok) {
+      if (responseData.ok) {
         this.request_sent = true
       }
     }

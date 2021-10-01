@@ -71,9 +71,10 @@ export default {
   methods: {
     async fetchBookmarks() {
       const bookmarksResponse = await Api.listMyBookmarkedPkgs()
+      const bookmarksResponseData = await bookmarksResponse.json()
 
-      if (bookmarksResponse.data.ok) {
-        this.bookmarks = bookmarksResponse.data.pkgs
+      if (bookmarksResponseData.ok) {
+        this.bookmarks = bookmarksResponseData.pkgs
       }
     },
 
@@ -97,9 +98,10 @@ export default {
     const { params: { packageName } } = this.$route
 
     const packageResponse = await Api.showPkg({ name: packageName })
+    const packageResponseData = await packageResponse.json()
 
-    if (packageResponse.data.ok) {
-      const { data: { pkg } } = packageResponse.data
+    if (packageResponseData.ok) {
+      const { data: { pkg } } = packageResponseData
 
       this.pkg_name = pkg.name
       this.pkg_version = pkg.npm.version
@@ -108,9 +110,10 @@ export default {
 
 
     const premiumResponse = await Api.isPremiumUser()
+    const premiumResponseData = await premiumResponse.json()
 
-    if (premiumResponse.data.ok) {
-      const { data: { is_premium } } = premiumResponse.data
+    if (premiumResponseData.ok) {
+      const { data: { is_premium } } = premiumResponseData
       this.is_premium = is_premium
     }
 
