@@ -68,13 +68,9 @@ export default {
       const loginResponse = await Api.loginUser({ email, pass })
       const loginResponseData = await loginResponse.json()
 
-      console.dir(loginResponseData) // dbg
-
-      /*
       if (loginResponseData.ok) {
         location.href = '/account'
       }
-      */
     }
   }
 }

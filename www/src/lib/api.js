@@ -3,7 +3,7 @@ const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:9099'
 
 
 class Api {
-  static async ping(args) {
+  static async ping(_args) {
     const res = await fetchOrCrash(
       apiUrl('/api/ping'),
 
