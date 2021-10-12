@@ -24,6 +24,13 @@ function make_api(args, options = {}) {
   }
 
 
+  const { nodezoo_app_origin = null } = options
+
+  if (null == nodezoo_app_origin) {
+    throw new Error('The nodezoo_app_origin option is required')
+  }
+
+
   const api = new Express.Router()
 
 
@@ -53,7 +60,7 @@ function make_api(args, options = {}) {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
-      domain: 'nodezoo.com'
+      domain: nodezoo_app_origin
     })
 
     return res.json({ ok: true, pong: 'Pong!' })
@@ -111,7 +118,7 @@ function make_api(args, options = {}) {
           httpOnly: true,
           sameSite: 'none',
           secure: true,
-          domain: 'nodezoo.com'
+          domain: nodezoo_app_origin
         })
 
         return res.json({ ok: true })
@@ -157,7 +164,7 @@ function make_api(args, options = {}) {
           httpOnly: true,
           sameSite: 'None',
           secure: true,
-          domain: 'nodezoo.com'
+          domain: nodezoo_app_origin
         })
 
         return res.json({ ok: true })
