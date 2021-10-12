@@ -53,8 +53,9 @@ export default {
   methods: {
     async listMyBookmarks() {
       const bookmarksResponse = await Api.listMyBookmarkedPkgs()
+      const bookmarksResponseData = await bookmarksResponse.json()
 
-      if (!bookmarksResponse.data.ok) {
+      if (!bookmarksResponseData.ok) {
         return
       }
 

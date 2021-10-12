@@ -49,8 +49,9 @@ export default {
     async onSignUpAttempt() {
       const { email, pass, pass_confirm } = this
       const response = await Api.registerUser({ email, pass, pass_confirm })
+      const responseData = await response.json()
 
-      if (response.data.ok) {
+      if (responseData.ok) {
         this.$router.push('/sign-in')
       }
     }

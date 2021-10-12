@@ -13,8 +13,9 @@ export default {
 
     if (null != code) {
       const response = await Api.loginUserWithGitHub({ code })
+      const responseData = await response.json()
 
-      if (response.data.ok) {
+      if (responseData.ok) {
         // TODO: Uncomment this redirect once the issue with the cookies
         // failing to persist has been resolved.
         //

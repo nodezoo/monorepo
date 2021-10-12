@@ -59,9 +59,10 @@ export default {
   methods: {
     async fetchBookmarks() {
       const bookmarksResponse = await Api.listMyBookmarkedPkgs()
+      const bookmarksResponseData = await bookmarksResponse.json()
 
-      if (bookmarksResponse.data.ok) {
-        this.bookmarks = bookmarksResponse.data.pkgs
+      if (bookmarksResponseData.ok) {
+        this.bookmarks = bookmarksResponseData.pkgs
       }
     },
 
@@ -90,9 +91,10 @@ export default {
     async searchForPkgs(args) {
       const { search } = args
       const searchResponse = await Api.listPkgsWithNamePrefix({ prefix: search })
+      const searchResponseData = await searchResponse.json()
 
-      if (searchResponse.data.ok) {
-        const { data: { pkgs } } = searchResponse.data
+      if (searchResponseData.ok) {
+        const { data: { pkgs } } = searchResponseData
         this.pkgs = pkgs
       }
     }

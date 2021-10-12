@@ -91,17 +91,19 @@ export default {
 
   async mounted() {
     const profileResponse = await Api.loadUserProfile()
+    const profileResponseData = await profileResponse.json()
 
-    if (profileResponse.data.ok) {
-      const { data: { user } } = profileResponse.data
+    if (profileResponseData.ok) {
+      const { data: { user } } = profileResponseData
       this.email = user.email
     }
 
 
     const premiumResponse = await Api.isPremiumUser()
+    const premiumResponseData = await premiumResponse.json()
 
-    if (premiumResponse.data.ok) {
-      const { data: { is_premium } } = premiumResponse.data
+    if (premiumResponseData.ok) {
+      const { data: { is_premium } } = premiumResponseData
       this.is_premium = is_premium
     }
   }
