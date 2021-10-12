@@ -52,7 +52,8 @@ function make_api(args, options = {}) {
     res.cookie('ponged', 1, {
       httpOnly: true,
       sameSite: 'none',
-      secure: true
+      secure: true,
+      domain: 'nodezoo.com'
     })
 
     return res.json({ ok: true, pong: 'Pong!' })
@@ -109,7 +110,8 @@ function make_api(args, options = {}) {
         res.cookie('AUTH_TOKEN', auth_token, {
           httpOnly: true,
           sameSite: 'none',
-          secure: true
+          secure: true,
+          domain: 'nodezoo.com'
         })
 
         return res.json({ ok: true })
@@ -154,7 +156,8 @@ function make_api(args, options = {}) {
         res.cookie('AUTH_TOKEN', auth_token, {
           httpOnly: true,
           sameSite: 'None',
-          secure: true
+          secure: true,
+          domain: 'nodezoo.com'
         })
 
         return res.json({ ok: true })
