@@ -42,6 +42,11 @@ export default {
     pkgs: []
   }),
 
+  async mounted() {
+    console.log('Welcome to Nodezoo! Beep-beep!')
+    await Api.ping()
+  },
+
   methods: {
     async searchForPkgs(args) {
       const { search } = args
