@@ -1,16 +1,32 @@
 
 module.exports = function make_get_info() {
   return async function get_info(msg) {
-    let seneca = this
-    let name = msg.name
+    const seneca = this
 
-    let cache = (seneca.root.context.cache = seneca.root.context.cache || {})
+    const { name = null } = msg
 
-    let info = cache[name]
-    let pending = null == info || null == info.npm || null == info.github || false
+    if (null == name) {
+      return {
+        ok: false,
+        why: 'invalid-field',
+        details: {
+          path: ['name'],
+          why_exactly: 'required'
+        }
+      }
+    }
+
+    const cache = (seneca.root.context.cache = seneca.root.context.cache || {})
+
+    const info = cache[name]
+
+    const pending = null == info ||
+      null == info.npm ||
+      null == info.github ||
+      false
     
-    if(pending) {
-      seneca.act('role:info,need:part', {name})
+    if (pending) {
+      seneca.act('role:info,need:part', { name })
     }
     
     return {

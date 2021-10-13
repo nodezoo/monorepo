@@ -163,6 +163,7 @@ async function make_public_seneca(seneca) {
       gateway_express_handler,
 
       nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
+      nodezoo_app_origin: env_var_required('NODEZOO_APP_ORIGIN'),
       github_url: env_var_required('GITHUB_URL'),
       github_api_url: env_var_required('GITHUB_API_URL'),
       github_client_id: env_var_required('GITHUB_CLIENT_ID'),
@@ -171,6 +172,7 @@ async function make_public_seneca(seneca) {
 
 
   public_seneca
+    .add('role:info', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('sys:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:search', (msg, reply) => seneca.root.act(msg, reply))

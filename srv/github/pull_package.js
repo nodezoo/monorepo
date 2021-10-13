@@ -32,20 +32,13 @@ module.exports = function make_pull_package(options_wrapper) {
     }
 
 
-    const npment = await seneca.entity('nodezoo', 'npm')
-      .load$({ name })
-
-    if (null == npment) {
-      return { ok: false, why: 'not-found', name }
-    }
-
-
     let owner = msg.owner || null
     let repo = msg.repo || null
 
-    // role:info,need:part only has name
+    // NOTE: role:info,need:part only has name
+    //
     if(null == owner || null == repo) {
-      const { giturl } = npment
+      const giturl = await get_giturl(seneca, name, options)
 
       if (null == giturl) {
         return { ok:false,why:'no-giturl',name }
@@ -54,7 +47,7 @@ module.exports = function make_pull_package(options_wrapper) {
       const parsed = owner_and_repo_from_giturl(giturl)
 
       if (null == parsed) {
-        return { ok:false,why:'bad-giturl',giturl:giturl,name }
+        return { ok:false,why:'bad-giturl',giturl,name }
       }
 
 
@@ -94,5 +87,37 @@ module.exports = function make_pull_package(options_wrapper) {
       throw err
     }
   }
+}
+
+
+async function get_giturl(seneca, name, options) {
+  let npment
+
+  npment = await seneca.entity('nodezoo', 'npm')
+    .load$(name)
+
+  // NOTE: The package might be new, hence we are waiting on npm
+  // to pull the package's data.
+  //
+  if (null == npment) {
+    await wait_on_npm_pull(options)
+
+    npment = await seneca.entity('nodezoo', 'npm')
+      .load$(name)
+  }
+
+  return npment && npment.giturl
+}
+
+
+async function wait_on_npm_pull(options) {
+  Assert(null != options.github_srv, 'options.github_srv')
+
+  Assert(null != options.github_srv.wait_ms_on_npm,
+    'options.github_srv.wait_ms_on_npm')
+
+  const { github_srv: { wait_ms_on_npm } } = options
+
+  await sleep(wait_ms_on_npm)
 }
 
