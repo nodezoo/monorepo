@@ -17,6 +17,8 @@ function npm(options) {
 
   // NOTE: This overrides Entity#save$ on nodezoo/npm entities.
   //
+  // TODO: Identify the correct file to define this override in.
+  //
   seneca.add(
     'role:entity,cmd:save,base:nodezoo,name:npm',
 
