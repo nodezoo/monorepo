@@ -172,6 +172,7 @@ async function make_public_seneca(seneca) {
 
 
   public_seneca
+    .add('role:info', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('sys:user', (msg, reply) => seneca.root.act(msg, reply))
     .add('role:search', (msg, reply) => seneca.root.act(msg, reply))
