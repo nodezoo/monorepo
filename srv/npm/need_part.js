@@ -31,11 +31,16 @@ module.exports = function make_need_part() {
     // contract, so it should be perfectly fine to try to
     // remove a document from the search pool that does not
     // exist.
+    //
+    // Currently, we are only adding the package name to the search
+    // pool, which may make the update of the document in the search
+    // pool seem redundant. However, primary goal of doing this is
+    // future-proofing. Later, we may want to search the package by
+    // properties other than the name.
 
     Assert(null != res.pkg, 'res.pkg')
 
     const doc = {
-      ...res.pkg,
       id: pkg_name
     }
 
