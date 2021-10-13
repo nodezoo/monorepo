@@ -1,4 +1,5 @@
 const Assert = require('assert')
+const { pick } = require('../../lib/shared')
 
 
 module.exports = function make_need_part() {
@@ -27,21 +28,24 @@ module.exports = function make_need_part() {
     // NOTE: Because the package may already be in the search pool,
     // we should then overwrite it in the search pool.
     //
-    // sys:search,cmd:remove is required to not crash by its
-    // contract, so it should be perfectly fine to try to
-    // remove a document from the search pool that does not
-    // exist.
-    //
-    // Currently, we are only adding the package name to the search
-    // pool, which may make the update of the document in the search
-    // pool seem redundant. However, primary goal of doing this is
-    // future-proofing. Later, we may want to search the package by
-    // properties other than the name.
+    // sys:search,cmd:remove is required by its contract to not crash,
+    // hence it should be perfectly fine to try to remove a document
+    // from the search pool that does not exist.
 
     Assert(null != res.pkg, 'res.pkg')
 
     const doc = {
-      id: pkg_name
+      id: pkg_name,
+
+      name: pkg_name,
+
+      ...pick(res.pkg, [
+        'name',
+        'version',
+        'giturl',
+        'desc',
+        'readme'
+      ])
     }
 
     const added = await seneca.post('sys:search,cmd:add', { doc })
