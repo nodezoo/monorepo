@@ -28,15 +28,10 @@ function make_api(args, options = {}) {
   const api = new Express.Router()
 
 
-  api.use(Cors({
-    origin: nodezoo_app_url,
-    credentials: true,
-    optionsSuccessStatus: 200,
-    allowedHeaders: [
-      'content-type', 'accept', 'origin', 'cookie',
-       'Set-cookie'
-    ]
-  }))
+   api.use(Cors({
+     origin: nodezoo_app_url,
+     credentials: true
+   }))
 
 
   api.use(Morgan('combined'))
