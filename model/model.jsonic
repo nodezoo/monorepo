@@ -229,7 +229,7 @@ main: srv: devtools: {
   # Please do __not__ ever expose any of these actions to the
   # outside world.
   #
-
+  auto_use: false,
   sns_topic: false,
 
   msg: {

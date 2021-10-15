@@ -129,6 +129,7 @@
         "kind": "internal"
       },
       "devtools": {
+        "auto_use": false,
         "sns_topic": false,
         "msg": {
           "role:devtools,ping:pong": {},

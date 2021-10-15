@@ -221,6 +221,8 @@ async function make_account_seneca(seneca) {
       gateway_express_handler,
 
       nodezoo_app_url: env_var_required('NODEZOO_APP_URL'),
+      nodezoo_app_origin: env_var_required('NODEZOO_APP_ORIGIN'),
+
       stripe_api_key: env_var_required('STRIPE_API_KEY'),
 
       stripe_webhook_endpoint_secret:
