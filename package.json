@@ -35,10 +35,9 @@
   "devDependencies": {
     "@seneca/repl": "4.0.1",
     "@voxgig/model": "voxgig/model",
-    "electron": "21.1.0",
     "faker": "5.5.3",
     "jasmine": "3.8.0",
-    "json-dom-viewer": "0.0.29",
+    "json-dom-viewer": "0.0.30",
     "jsonic": "https://github.com/jsonicjs/jsonic.git#4edd639987b75ef62a74e3904fb890f59d21379c",
     "nock": "13.1.1",
     "nodemon": "2.0.12",
