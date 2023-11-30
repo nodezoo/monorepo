@@ -1,0 +1,66 @@
+
+# Message Patterns
+
+aim: monitor: {
+  get: info: {}
+}
+
+
+aim: auth: {
+  get: info: {}
+  load: auth: {}
+  signin: user: {}
+  signout: user: {}
+  reset: user: {}
+}
+
+
+aim: user: {
+  get: info: {}
+  load: user: {}
+}
+
+
+aim: entity: {
+  get: info: {}
+  load: entity: {}
+  save: entity: {}
+  list: entity: {}
+  remove: entity: {}
+}
+
+
+aim: web: {
+  get: info: {}
+  on: auth: {
+    signin: user: { '$': { file: './web_signin_user' }}
+    signout: user: { '$': { file: './web_signout_user' }}
+    reset: user: { '$': { file: './web_reset_user' }}   
+    load: auth: { '$': { file: './web_load_auth' }} 
+  }
+  on: user: {
+    load: user: { '$': { file: './web_load_user' }} 
+  }
+  on: entity: {
+    load: entity: { '$': { file: './web_load_entity' }}
+    save: entity: { '$': { file: './web_save_entity' }}
+    list: entity: { '$': { file: './web_list_entity' }}
+    remove: entity: { '$': { file: './web_remove_entity' }} 
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

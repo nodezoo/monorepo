@@ -1,0 +1,34 @@
+sys: &: $.main.shape.ent
+nzo: &: $.main.shape.ent
+
+sys: user: {
+  field: {}
+}
+
+sys: login: {
+  field: {}
+}
+
+nzo: content: {
+  field: {
+    id: {
+      label: 'ID'
+      editable: false
+    }
+    kind: {
+      label: 'Kind'
+      options: {
+        foo: label: 'Foo'
+        bar: label: 'Bar'
+      }
+    }
+    title: {
+      label: 'Title'
+    }
+    desc: {
+      label: 'Description'
+    }
+    
+  }
+}
+

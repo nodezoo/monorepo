@@ -1,0 +1,39 @@
+
+
+monitor: {
+  in: {
+    aim: monitor: {}
+  }
+  api: web: { active: false }
+}
+
+
+auth: {
+  in: {
+    aim: auth: {}
+    aim: web: on: auth: {}
+  }
+
+  api: web: path: { area: 'public/', suffix: ''  }
+}
+
+
+user: {
+  in: {
+    aim: user: {}
+    aim: web: on: user: {}
+  }
+
+  api: web: path: { area: 'private/', suffix: ''  }
+}
+
+
+entity: {
+  in: {
+    aim: entity: {}
+    aim: web: on: entity: {}
+  }
+
+  api: web: path: { area: 'private/', suffix: ''  }
+}
+

@@ -1,0 +1,138 @@
+{
+  "sys": {
+    "shape": {
+      "srv": {
+        "in": {},
+        "deps": {},
+        "api": {
+          "web": {
+            "active": true,
+            "path": {},
+            "method": "POST",
+            "cors": {
+              "active": false
+            }
+          }
+        },
+        "env": {
+          "lambda": {
+            "active": false,
+            "timeout": 30,
+            "handler": {
+              "path": {}
+            }
+          }
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
+      }
+    }
+  },
+  "main": {
+    "ent": {
+      "sys": {
+        "user": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      },
+      "nzo": {
+        "content": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": false,
+              "options": {}
+            },
+            "kind": {
+              "label": "Kind",
+              "options": {
+                "foo": {
+                  "label": "Foo"
+                },
+                "bar": {
+                  "label": "Bar"
+                }
+              },
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true
+            },
+            "title": {
+              "label": "Title",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "desc": {
+              "label": "Description",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "String",
+            "inputType": "text",
+            "displayType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
+          }
+        }
+      }
+    }
+  }
+}

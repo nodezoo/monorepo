@@ -1,0 +1,339 @@
+{
+  "main": {
+    "msg": {
+      "aim": {
+        "monitor": {
+          "get": {
+            "info": {}
+          }
+        },
+        "auth": {
+          "get": {
+            "info": {}
+          },
+          "load": {
+            "auth": {}
+          },
+          "signin": {
+            "user": {}
+          },
+          "signout": {
+            "user": {}
+          },
+          "reset": {
+            "user": {}
+          }
+        },
+        "user": {
+          "get": {
+            "info": {}
+          },
+          "load": {
+            "user": {}
+          }
+        },
+        "entity": {
+          "get": {
+            "info": {}
+          },
+          "load": {
+            "entity": {}
+          },
+          "save": {
+            "entity": {}
+          },
+          "list": {
+            "entity": {}
+          },
+          "remove": {
+            "entity": {}
+          }
+        },
+        "web": {
+          "get": {
+            "info": {}
+          },
+          "on": {
+            "auth": {
+              "signin": {
+                "user": {
+                  "$": {
+                    "file": "./web_signin_user"
+                  }
+                }
+              },
+              "signout": {
+                "user": {
+                  "$": {
+                    "file": "./web_signout_user"
+                  }
+                }
+              },
+              "reset": {
+                "user": {
+                  "$": {
+                    "file": "./web_reset_user"
+                  }
+                }
+              },
+              "load": {
+                "auth": {
+                  "$": {
+                    "file": "./web_load_auth"
+                  }
+                }
+              }
+            },
+            "user": {
+              "load": {
+                "user": {
+                  "$": {
+                    "file": "./web_load_user"
+                  }
+                }
+              }
+            },
+            "entity": {
+              "load": {
+                "entity": {
+                  "$": {
+                    "file": "./web_load_entity"
+                  }
+                }
+              },
+              "save": {
+                "entity": {
+                  "$": {
+                    "file": "./web_save_entity"
+                  }
+                }
+              },
+              "list": {
+                "entity": {
+                  "$": {
+                    "file": "./web_list_entity"
+                  }
+                }
+              },
+              "remove": {
+                "entity": {
+                  "$": {
+                    "file": "./web_remove_entity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "srv": {
+      "monitor": {
+        "in": {
+          "aim": {
+            "monitor": {}
+          }
+        },
+        "api": {
+          "web": {
+            "active": false
+          }
+        }
+      },
+      "auth": {
+        "in": {
+          "aim": {
+            "auth": {},
+            "web": {
+              "on": {
+                "auth": {}
+              }
+            }
+          }
+        },
+        "api": {
+          "web": {
+            "path": {
+              "area": "public/",
+              "suffix": ""
+            }
+          }
+        }
+      },
+      "user": {
+        "in": {
+          "aim": {
+            "user": {},
+            "web": {
+              "on": {
+                "user": {}
+              }
+            }
+          }
+        },
+        "api": {
+          "web": {
+            "path": {
+              "area": "private/",
+              "suffix": ""
+            }
+          }
+        }
+      },
+      "entity": {
+        "in": {
+          "aim": {
+            "entity": {},
+            "web": {
+              "on": {
+                "entity": {}
+              }
+            }
+          }
+        },
+        "api": {
+          "web": {
+            "path": {
+              "area": "private/",
+              "suffix": ""
+            }
+          }
+        }
+      }
+    },
+    "ent": {
+      "sys": {
+        "user": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      },
+      "nzo": {
+        "content": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": false,
+              "options": {}
+            },
+            "kind": {
+              "label": "Kind",
+              "options": {
+                "foo": {
+                  "label": "Foo"
+                },
+                "bar": {
+                  "label": "Bar"
+                }
+              },
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true
+            },
+            "title": {
+              "label": "Title",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "desc": {
+              "label": "Description",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "String",
+            "inputType": "text",
+            "displayType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
+          }
+        }
+      }
+    }
+  },
+  "sys": {
+    "shape": {
+      "srv": {
+        "in": {},
+        "deps": {},
+        "api": {
+          "web": {
+            "active": true,
+            "path": {},
+            "method": "POST",
+            "cors": {
+              "active": false
+            }
+          }
+        },
+        "env": {
+          "lambda": {
+            "active": false,
+            "timeout": 30,
+            "handler": {
+              "path": {}
+            }
+          }
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
+      }
+    }
+  }
+}

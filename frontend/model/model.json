@@ -1,0 +1,319 @@
+{
+  "sys": {
+    "app": {
+      "web": {
+        "view": {
+          "content": {
+            "def": {
+              "add": {}
+            }
+          }
+        },
+        "part": {
+          "admin": {},
+          "head": {
+            "logo": {},
+            "tool": {
+              "def": {}
+            },
+            "app": {
+              "web": {
+                "part": {
+                  "side": {
+                    "logo": {},
+                    "section": {}
+                  },
+                  "main": {},
+                  "foot": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "srv": {
+        "in": {},
+        "deps": {},
+        "api": {
+          "web": {
+            "active": true,
+            "path": {},
+            "method": "POST",
+            "cors": {
+              "active": false
+            }
+          }
+        },
+        "env": {
+          "lambda": {
+            "active": false,
+            "timeout": 30,
+            "handler": {
+              "path": {}
+            }
+          }
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
+      }
+    }
+  },
+  "app": {
+    "web": {
+      "frame": {
+        "public": {
+          "kind": "basic"
+        },
+        "private": {
+          "kind": "basic",
+          "part": {
+            "admin": {},
+            "head": {
+              "logo": {
+                "img": "/nodezoo.png"
+              },
+              "variant": "persistent",
+              "tool": {
+                "def": {
+                  "addbutton": {
+                    "kind": "add",
+                    "label": "Add",
+                    "options": {
+                      "kind": "ent",
+                      "label": {
+                        "field": "title"
+                      },
+                      "ent": "nzo/task"
+                    }
+                  }
+                }
+              },
+              "app": {
+                "web": {
+                  "part": {
+                    "side": {
+                      "logo": {},
+                      "section": {}
+                    },
+                    "main": {},
+                    "foot": {}
+                  }
+                }
+              }
+            },
+            "side": {
+              "logo": {
+                "img": "/nodezoo.png"
+              },
+              "variant": "persistent",
+              "section": {
+                "section1": {
+                  "title": "Section 1",
+                  "divider": true,
+                  "item": {
+                    "content": {
+                      "kind": "resource",
+                      "label": "Content",
+                      "icon": "done",
+                      "path": "view/content/index",
+                      "access": {
+                        "admin": true,
+                        "user": true
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "main": {
+              "title": "Main"
+            },
+            "foot": {
+              "title": "Footer"
+            }
+          },
+          "view": {
+            "content": {
+              "title": "Content",
+              "content": {
+                "def": {
+                  "canon": "nzo/content",
+                  "add": {},
+                  "subview": {
+                    "add": {
+                      "active": true
+                    },
+                    "index": {
+                      "kind": "led",
+                      "editingMode": "form"
+                    },
+                    "edit": {},
+                    "show": {}
+                  },
+                  "field": {
+                    "id": {
+                      "label": "ID",
+                      "editable": false,
+                      "kind": "String",
+                      "inputType": "text",
+                      "displayType": "text",
+                      "required": true,
+                      "options": {}
+                    },
+                    "kind": {
+                      "label": "Kind",
+                      "options": {
+                        "foo": {
+                          "label": "Foo"
+                        },
+                        "bar": {
+                          "label": "Bar"
+                        }
+                      },
+                      "kind": "String",
+                      "inputType": "text",
+                      "displayType": "text",
+                      "required": true,
+                      "editable": true
+                    },
+                    "title": {
+                      "label": "Title",
+                      "kind": "String",
+                      "inputType": "text",
+                      "displayType": "text",
+                      "required": true,
+                      "editable": true,
+                      "options": {}
+                    },
+                    "desc": {
+                      "label": "Description",
+                      "kind": "String",
+                      "inputType": "text",
+                      "displayType": "text",
+                      "required": true,
+                      "editable": true,
+                      "options": {}
+                    }
+                  },
+                  "id": {
+                    "field": "id"
+                  }
+                }
+              },
+              "name": "content"
+            }
+          }
+        }
+      }
+    }
+  },
+  "main": {
+    "ent": {
+      "sys": {
+        "user": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        },
+        "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      },
+      "nzo": {
+        "content": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": false,
+              "options": {}
+            },
+            "kind": {
+              "label": "Kind",
+              "options": {
+                "foo": {
+                  "label": "Foo"
+                },
+                "bar": {
+                  "label": "Bar"
+                }
+              },
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true
+            },
+            "title": {
+              "label": "Title",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "desc": {
+              "label": "Description",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "String",
+            "inputType": "text",
+            "displayType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
+          }
+        }
+      }
+    }
+  }
+}

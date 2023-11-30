@@ -1,0 +1,10 @@
+sys: @'frontend.jsonic'
+
+@'@nodezoo/nodezoo-common/model/common.jsonic'
+
+app: web: frame: public: @"web-public.jsonic"
+
+app: web: frame: private: @"web-private.jsonic"
+
+
+
