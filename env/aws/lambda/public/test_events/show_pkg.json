@@ -1,9 +1,0 @@
-{
-  "body": "{ \"role\": \"web\", \"scope\": \"public\", \"show\": \"pkg\", \"name\": \"seneca\" }",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "httpMethod": "POST",
-  "path": "/api/public"
-}
-
