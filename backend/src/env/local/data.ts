@@ -83,19 +83,22 @@ module.exports = {
     }
   },
   nzo: {
-    content: {
+    pkg: {
       'aaaa': {
         id: 'aaaa',
-        kind: 'foo',
-        title: 'FooA',
-        desc: 'Description of FooA',
+        name: 'foo',
+        user_id: 'u01',
       },
       'bbbb': {
         id: 'bbbb',
-        kind: 'foo',
-        title: 'FooA',
-        desc: 'Description of FooA',
-      }
+        name: 'bar',
+        user_id: 'u01',
+      },
+      'cccc': {
+        id: 'cccc',
+        name: 'zed',
+        user_id: 'u02',
+      },
     }
   }
 }

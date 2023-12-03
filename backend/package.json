@@ -16,6 +16,7 @@
     "clean": "rm -rf dist node_modules npm.lock package-lock.json",
     "reset": "npm run clean && npm install && npm run build && npm test",
     "prep-dev": "npm link @nodezoo/nodezoo-common",
+    "prep-vxg": "npm link @nodezoo/nodezoo-common @voxgig/model @voxgig/build",
     "local": "node dist/env/local/local.js --seneca.log.debug",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: backend-$REPO_VERSION && git -u . && git commit -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags"
   },
@@ -47,7 +48,7 @@
     "@types/jest": "29.5.10",
     "@types/uuid": "^9.0.7",
     "@voxgig/build": "0.18.0",
-    "aws-sdk": "^2.1508.0",
+    "aws-sdk": "^2.1510.0",
     "cookie-parser": "1.4.6",
     "es-jest": "2.1.0",
     "esbuild": "0.19.8",

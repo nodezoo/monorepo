@@ -9,24 +9,16 @@ sys: login: {
   field: {}
 }
 
-nzo: content: {
+nzo: pkg: {
   field: {
     id: {
       label: 'ID'
-      editable: false
     }
-    kind: {
-      label: 'Kind'
-      options: {
-        foo: label: 'Foo'
-        bar: label: 'Bar'
-      }
+    name: {
+      label: 'Name'
     }
-    title: {
-      label: 'Title'
-    }
-    desc: {
-      label: 'Description'
+    user_id: {
+      label: 'Owner'
     }
     
   }

@@ -101,13 +101,6 @@ async function runSeneca(info: any) {
       }
     }, gateway_auth))
 
-    .message('handle:hook', async function(msg: any) {
-      console.log('HANDLE-HOOK', msg)
-      return { ok: true }
-    })
-
-
-
 
   seneca
 
@@ -147,9 +140,6 @@ async function runExpress(info: any, seneca: any) {
     .use(new CookieParser())
     .post('/api/web/public/:end', seneca.export('gateway-express$public/handler'))
     .post('/api/web/private/:end', seneca.export('gateway-express$private/handler'))
-    .get('/api/web/public/hook/:name/:code', seneca.export('gateway-express$public/hook'))
-    .get('/api/web/public/hook/:name', seneca.export('gateway-express$public/hook'))
-    .use(Express.static('./static'))
     .listen(8888)
 
   return app

@@ -1,12 +1,6 @@
 {
   "sys": {
-    "shape": {
-      "builder": {
-        "x": 1
-      }
-    },
     "model": {
-      "build": {},
       "builders": {}
     }
   }

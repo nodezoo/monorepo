@@ -1,10 +1,13 @@
 
+&: $.sys.shape.srv.std_ts
+
 
 monitor: {
   in: {
     aim: monitor: {}
   }
   api: web: { active: false }
+  env: lambda: active: true
 }
 
 
@@ -15,6 +18,7 @@ auth: {
   }
 
   api: web: path: { area: 'public/', suffix: ''  }
+  env: lambda: active: true
 }
 
 
@@ -25,6 +29,7 @@ user: {
   }
 
   api: web: path: { area: 'private/', suffix: ''  }
+  env: lambda: active: true
 }
 
 
@@ -35,5 +40,6 @@ entity: {
   }
 
   api: web: path: { area: 'private/', suffix: ''  }
+  env: lambda: active: true
 }
 

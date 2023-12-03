@@ -1,35 +1,4 @@
 {
-  "sys": {
-    "shape": {
-      "srv": {
-        "in": {},
-        "deps": {},
-        "api": {
-          "web": {
-            "active": true,
-            "path": {},
-            "method": "POST",
-            "cors": {
-              "active": false
-            }
-          }
-        },
-        "env": {
-          "lambda": {
-            "active": false,
-            "timeout": 30,
-            "handler": {
-              "path": {}
-            }
-          }
-        }
-      },
-      "app": {},
-      "part": {
-        "img": {}
-      }
-    }
-  },
   "main": {
     "ent": {
       "sys": {
@@ -65,7 +34,7 @@
         }
       },
       "nzo": {
-        "content": {
+        "pkg": {
           "id": {
             "field": "id"
           },
@@ -76,27 +45,11 @@
               "inputType": "text",
               "displayType": "text",
               "required": true,
-              "editable": false,
+              "editable": true,
               "options": {}
             },
-            "kind": {
-              "label": "Kind",
-              "options": {
-                "foo": {
-                  "label": "Foo"
-                },
-                "bar": {
-                  "label": "Bar"
-                }
-              },
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true
-            },
-            "title": {
-              "label": "Title",
+            "name": {
+              "label": "Name",
               "kind": "String",
               "inputType": "text",
               "displayType": "text",
@@ -104,8 +57,8 @@
               "editable": true,
               "options": {}
             },
-            "desc": {
-              "label": "Description",
+            "user_id": {
+              "label": "Owner",
               "kind": "String",
               "inputType": "text",
               "displayType": "text",
@@ -115,6 +68,13 @@
             }
           }
         }
+      }
+    },
+    "conf": {
+      "port": {
+        "backend": 50300,
+        "frontend": 50301,
+        "repl": 50302
       }
     },
     "shape": {
@@ -132,6 +92,56 @@
             "options": {}
           }
         }
+      }
+    }
+  },
+  "sys": {
+    "shape": {
+      "srv": {
+        "base": {
+          "in": {},
+          "deps": {},
+          "api": {
+            "web": {
+              "path": {},
+              "cors": {}
+            }
+          },
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {}
+              }
+            }
+          }
+        },
+        "std": {
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {}
+            }
+          },
+          "env": {
+            "lambda": {
+              "active": false,
+              "timeout": 30,
+              "handler": {
+                "path": {}
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
       }
     }
   }

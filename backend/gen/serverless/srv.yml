@@ -1,0 +1,42 @@
+monitor:
+  handler: dist/handler/lambda/monitor.handler
+  timeout: 30
+
+
+
+auth:
+  handler: dist/handler/lambda/auth.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/public/auth"
+        method: POST
+        cors: false
+
+
+
+
+
+user:
+  handler: dist/handler/lambda/user.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/private/user"
+        method: POST
+        cors: false
+
+
+
+
+
+entity:
+  handler: dist/handler/lambda/entity.handler
+  timeout: 30
+  events:
+    - http:
+        path: "/api/private/entity"
+        method: POST
+        cors: false
+
+
