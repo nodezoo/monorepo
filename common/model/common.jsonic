@@ -1,5 +1,4 @@
 
-# TODO: should load from top level project, not @voxgig/model in this project
 @"@voxgig/model/model/sys.jsonic"
 
 main: ent: @'common-ent.jsonic'
