@@ -1,6 +1,6 @@
 {
   "name": "@nodezoo/common",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Metsitaba DevRel Common",
   "main": "index.js",
   "scripts": {
