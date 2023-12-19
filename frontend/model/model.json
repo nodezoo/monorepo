@@ -34,26 +34,108 @@
     },
     "shape": {
       "srv": {
-        "in": {},
-        "deps": {},
-        "api": {
-          "web": {
-            "active": true,
-            "path": {},
-            "method": "POST",
-            "cors": {
-              "active": false
+        "base": {
+          "in": {},
+          "deps": {},
+          "api": {
+            "web": {
+              "path": {},
+              "cors": {}
+            }
+          },
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {}
+              }
             }
           }
         },
-        "env": {
-          "lambda": {
-            "active": false,
-            "timeout": 30,
-            "handler": {
-              "path": {}
+        "std": {
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
             }
-          }
+          },
+          "env": {
+            "lambda": {
+              "active": false,
+              "timeout": 30,
+              "handler": {
+                "path": {
+                  "suffix": ".handler"
+                }
+              },
+              "kind": "standard"
+            }
+          },
+          "in": {},
+          "deps": {}
+        },
+        "std_js": {
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {
+                  "prefix": "src/handler/lambda/",
+                  "suffix": ".handler"
+                }
+              },
+              "active": false,
+              "timeout": 30,
+              "kind": "standard"
+            }
+          },
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
+        },
+        "std_ts": {
+          "env": {
+            "lambda": {
+              "handler": {
+                "path": {
+                  "prefix": "dist/handler/lambda/",
+                  "suffix": ".handler"
+                }
+              },
+              "active": false,
+              "timeout": 30,
+              "kind": "standard"
+            }
+          },
+          "api": {
+            "web": {
+              "active": true,
+              "method": "POST",
+              "cors": {
+                "active": false
+              },
+              "path": {
+                "prefix": "/api/"
+              }
+            }
+          },
+          "in": {},
+          "deps": {}
         }
       },
       "app": {},
@@ -153,54 +235,6 @@
                     },
                     "edit": {},
                     "show": {}
-                  },
-                  "field": {
-                    "id": {
-                      "label": "ID",
-                      "editable": false,
-                      "kind": "String",
-                      "inputType": "text",
-                      "displayType": "text",
-                      "required": true,
-                      "options": {}
-                    },
-                    "kind": {
-                      "label": "Kind",
-                      "options": {
-                        "foo": {
-                          "label": "Foo"
-                        },
-                        "bar": {
-                          "label": "Bar"
-                        }
-                      },
-                      "kind": "String",
-                      "inputType": "text",
-                      "displayType": "text",
-                      "required": true,
-                      "editable": true
-                    },
-                    "title": {
-                      "label": "Title",
-                      "kind": "String",
-                      "inputType": "text",
-                      "displayType": "text",
-                      "required": true,
-                      "editable": true,
-                      "options": {}
-                    },
-                    "desc": {
-                      "label": "Description",
-                      "kind": "String",
-                      "inputType": "text",
-                      "displayType": "text",
-                      "required": true,
-                      "editable": true,
-                      "options": {}
-                    }
-                  },
-                  "id": {
-                    "field": "id"
                   }
                 }
               },
@@ -246,7 +280,7 @@
         }
       },
       "nzo": {
-        "content": {
+        "pkg": {
           "id": {
             "field": "id"
           },
@@ -257,27 +291,11 @@
               "inputType": "text",
               "displayType": "text",
               "required": true,
-              "editable": false,
+              "editable": true,
               "options": {}
             },
-            "kind": {
-              "label": "Kind",
-              "options": {
-                "foo": {
-                  "label": "Foo"
-                },
-                "bar": {
-                  "label": "Bar"
-                }
-              },
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true
-            },
-            "title": {
-              "label": "Title",
+            "name": {
+              "label": "Name",
               "kind": "String",
               "inputType": "text",
               "displayType": "text",
@@ -285,8 +303,8 @@
               "editable": true,
               "options": {}
             },
-            "desc": {
-              "label": "Description",
+            "user_id": {
+              "label": "Owner",
               "kind": "String",
               "inputType": "text",
               "displayType": "text",
@@ -296,6 +314,13 @@
             }
           }
         }
+      }
+    },
+    "conf": {
+      "port": {
+        "backend": 50300,
+        "frontend": 50301,
+        "repl": 50302
       }
     },
     "shape": {

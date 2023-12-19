@@ -1,9 +1,11 @@
 
-const Express = require('express')
+import Express from 'express'
 const CookieParser = require('cookie-parser')
 
 const Seneca = require('seneca')
 const { Local, /* Concern */ } = require('@voxgig/system')
+
+import { basic, base } from '../shared/basic'
 
 import Pkg from '../../../package.json'
 import Model from '../../../model/model.json'
@@ -11,9 +13,13 @@ import Model from '../../../model/model.json'
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const STAGE = process.env.NODEZOO_STAGE || 'local'
 
+const port = Model.main.conf.port
+const pluginConf = Model.main.conf.plugin
+
 
 run({
-  version: Pkg.version
+  version: Pkg.version,
+  port,
 })
 
 
@@ -29,20 +35,10 @@ async function runSeneca(info: any) {
 
   const { deep } = Seneca.util
 
-  const gateway_auth = {
-    spec: {
-      express_cookie: { token: { name: 'nodezoo-auth' } },
-    }
-  }
-
-  const seneca = Seneca({
-    tag: 'local',
-    legacy: false,
-    log: {
-      logger: 'flat',
-      level: 'warn'
-    },
-  })
+  const seneca = Seneca(deep(base.seneca, {
+    tag: 'nzo-local',
+    plugin: pluginConf,
+  }))
 
   seneca.context.model = Model
   seneca.context.env = 'local'
@@ -53,20 +49,11 @@ async function runSeneca(info: any) {
 
   seneca
     .test()
-    .use('promisify')
-    .use('entity')
 
-    // NOTE: load after store plugins
-    .use('entity-util', {
-      when: {
-        active: true
-      }
-    })
+  basic(seneca)
 
-    .use('user')
-    .use('reload')
-    .use('repl')
-
+  seneca
+    .use('repl', { port: port.repl })
 
     .use('gateway$public', {
       allow: {
@@ -78,35 +65,10 @@ async function runSeneca(info: any) {
       // allow: Object.keys(Model.main.srv)
       //   .reduce(((a,n)=>(a['aim:web,on:'+n]=true,a)),{})
     })
-    .use('gateway-express$public', {
-      auth: { token: { name: 'nodezoo-auth' } },
-    })
-    .use('gateway-express$private', {
-      auth: { token: { name: 'nodezoo-auth' } },
-    })
-    .use('gateway-auth$public', deep({
-      spec: {
-        express_cookie: {
-          active: true,
-          user: { auth: true, require: false },
-        }
-      }
-    }, gateway_auth))
-    .use('gateway-auth$private', deep({
-      spec: {
-        express_cookie: {
-          active: true,
-          user: { auth: true, require: true },
-        }
-      }
-    }, gateway_auth))
-
-
-  seneca
-
-    // .use(Concern, {
-    //   folder: __dirname + '/../../../dist/concern'
-    // })
+    .use('gateway-express$public')
+    .use('gateway-express$private')
+    .use('gateway-auth$public')
+    .use('gateway-auth$private')
 
     .use(function setup_data(this: any) {
       this.prepare(async function(this: any) {
@@ -117,6 +79,25 @@ async function runSeneca(info: any) {
           })
       })
     })
+
+    .use('s3-store', {
+      map: {
+        '-/nzo/archive': '*'
+      },
+      folder: 'archive01',
+      local: {
+        active: true,
+        folder: __dirname + '/../../../data/storage',
+      },
+    })
+
+
+    // NOTE: load after store plugins
+    .use('entity-util', base.options.entity_util)
+
+    // .use(Concern, {
+    //   folder: __dirname + '/../../../dist/concern'
+    // })
 
     .use(Local, {
       srv: {
@@ -140,7 +121,7 @@ async function runExpress(info: any, seneca: any) {
     .use(new CookieParser())
     .post('/api/web/public/:end', seneca.export('gateway-express$public/handler'))
     .post('/api/web/private/:end', seneca.export('gateway-express$private/handler'))
-    .listen(8888)
+    .listen(port.backend)
 
   return app
 }

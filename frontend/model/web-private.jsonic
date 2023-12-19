@@ -57,7 +57,8 @@ view: content: {
   title: 'Content'
   name: 'content'
   content: {
-    def: $.main.ent.nzo.content & {
+    # def: $.main.ent.nzo.content & {
+    def: {
       canon: 'nzo/content'
       subview: {
         add: active: true

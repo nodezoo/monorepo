@@ -5,6 +5,19 @@
         "monitor": {
           "get": {
             "info": {}
+          },
+          "calc": {
+            "sum": {
+              "$": {
+                "params": {
+                  "lhs": "Number",
+                  "rhs": "Number"
+                }
+              }
+            }
+          },
+          "archive": {
+            "entity": {}
           }
         },
         "auth": {
@@ -282,6 +295,86 @@
         "deps": {}
       }
     },
+    "conf": {
+      "core": {
+        "name": "nodezoo",
+        "short": "nzo",
+        "token": "nodezoo-auth"
+      },
+      "shared": {
+        "plugin": {
+          "gateway_express": {
+            "auth": {
+              "token": {
+                "name": "nodezoo-auth"
+              }
+            }
+          },
+          "gateway_auth": {
+            "spec": {
+              "express_cookie": {
+                "active": true,
+                "token": {
+                  "name": "nodezoo-auth"
+                },
+                "user": {
+                  "auth": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "plugin": {
+        "gateway_express$public": {
+          "auth": {
+            "token": {
+              "name": "nodezoo-auth"
+            }
+          }
+        },
+        "gateway_express$private": {
+          "auth": {
+            "token": {
+              "name": "nodezoo-auth"
+            }
+          }
+        },
+        "gateway_auth$public": {
+          "spec": {
+            "express_cookie": {
+              "user": {
+                "require": false,
+                "auth": true
+              },
+              "active": true,
+              "token": {
+                "name": "nodezoo-auth"
+              }
+            }
+          }
+        },
+        "gateway_auth$private": {
+          "spec": {
+            "express_cookie": {
+              "user": {
+                "require": true,
+                "auth": true
+              },
+              "active": true,
+              "token": {
+                "name": "nodezoo-auth"
+              }
+            }
+          }
+        }
+      },
+      "port": {
+        "backend": 50300,
+        "frontend": 50301,
+        "repl": 50302
+      }
+    },
     "ent": {
       "sys": {
         "user": {
@@ -350,13 +443,6 @@
             }
           }
         }
-      }
-    },
-    "conf": {
-      "port": {
-        "backend": 50300,
-        "frontend": 50301,
-        "repl": 50302
       }
     },
     "shape": {

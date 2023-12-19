@@ -3,6 +3,8 @@
 
 aim: monitor: {
   get: info: {}
+  calc: sum: {}
+  archive: entity: {}
 }
 
 
@@ -50,6 +52,13 @@ aim: web: {
 }
 
 
+
+# Message Parameters
+
+aim: monitor: calc: sum: '$': params: {
+  lhs: Number
+  rhs: Number
+}
 
 
 
