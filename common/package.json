@@ -15,7 +15,7 @@
     "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: nzo-common-v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: nzo-common-v$REPO_VERSION && git add -u . && git commit -m nzo-common-v$REPO_VERSION && git push && git tag nzo-common-v$REPO_VERSION && git push --tags",
     "repo-publish": "npm run repo-check && npm run clean && npm install --registry https://registry.npmjs.org && npm run repo-publish-quick",
-    "repo-publish-quick": "npm run repo-check && npm run build && npm run test && npm run repo-tag && npm publish --registry https://registry.npmjs.org"
+    "repo-publish-quick": "npm run repo-check && npm run build && npm run test && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access public"
   },
   "author": "",
   "license": "MIT",
