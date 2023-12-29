@@ -1,38 +1,82 @@
 {
-  "sys": {
-    "app": {
-      "web": {
-        "view": {
-          "content": {
-            "def": {
-              "add": {}
+  "app": {
+    "web": {
+      "frame": {
+        "public": {
+          "kind": "basic",
+          "name": "public",
+          "part": {
+            "head": {
+              "active": false,
+              "name": "head",
+              "tool": {}
             }
           }
         },
-        "part": {
-          "admin": {},
-          "head": {
-            "logo": {},
-            "tool": {
-              "def": {}
-            },
-            "app": {
-              "web": {
-                "part": {
-                  "side": {
-                    "logo": {},
-                    "section": {}
+        "private": {
+          "kind": "basic",
+          "part": {
+            "head": {
+              "active": true,
+              "name": "head",
+              "tool": {
+                "logo": {
+                  "name": "logo",
+                  "kind": "logo",
+                  "attr": {
+                    "img": "/nodezoo.png"
                   },
-                  "main": {},
-                  "foot": {}
+                  "align": "left",
+                  "active": true,
+                  "sx": {},
+                  "style": {}
+                },
+                "add": {
+                  "name": "add",
+                  "kind": "add",
+                  "align": "left",
+                  "active": true,
+                  "attr": {},
+                  "sx": {},
+                  "style": {}
+                },
+                "find": {
+                  "name": "find",
+                  "kind": "search",
+                  "align": "left",
+                  "active": true,
+                  "attr": {},
+                  "sx": {},
+                  "style": {}
+                },
+                "user": {
+                  "name": "user",
+                  "kind": "account",
+                  "align": "right",
+                  "active": true,
+                  "attr": {},
+                  "sx": {},
+                  "style": {}
                 }
               }
             }
-          }
+          },
+          "name": "private"
         }
       }
-    },
+    }
+  },
+  "sys": {
     "shape": {
+      "app": {
+        "web": {
+          "part": {
+            "head": {
+              "tool": {}
+            }
+          }
+        }
+      },
       "srv": {
         "base": {
           "in": {},
@@ -138,110 +182,8 @@
           "deps": {}
         }
       },
-      "app": {},
       "part": {
         "img": {}
-      }
-    }
-  },
-  "app": {
-    "web": {
-      "frame": {
-        "public": {
-          "kind": "basic"
-        },
-        "private": {
-          "kind": "basic",
-          "part": {
-            "admin": {},
-            "head": {
-              "logo": {
-                "img": "/nodezoo.png"
-              },
-              "variant": "persistent",
-              "tool": {
-                "def": {
-                  "addbutton": {
-                    "kind": "add",
-                    "label": "Add",
-                    "options": {
-                      "kind": "ent",
-                      "label": {
-                        "field": "title"
-                      },
-                      "ent": "nzo/task"
-                    }
-                  }
-                }
-              },
-              "app": {
-                "web": {
-                  "part": {
-                    "side": {
-                      "logo": {},
-                      "section": {}
-                    },
-                    "main": {},
-                    "foot": {}
-                  }
-                }
-              }
-            },
-            "side": {
-              "logo": {
-                "img": "/nodezoo.png"
-              },
-              "variant": "persistent",
-              "section": {
-                "section1": {
-                  "title": "Section 1",
-                  "divider": true,
-                  "item": {
-                    "content": {
-                      "kind": "resource",
-                      "label": "Content",
-                      "icon": "done",
-                      "path": "view/content/index",
-                      "access": {
-                        "admin": true,
-                        "user": true
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "main": {
-              "title": "Main"
-            },
-            "foot": {
-              "title": "Footer"
-            }
-          },
-          "view": {
-            "content": {
-              "title": "Content",
-              "content": {
-                "def": {
-                  "canon": "nzo/content",
-                  "add": {},
-                  "subview": {
-                    "add": {
-                      "active": true
-                    },
-                    "index": {
-                      "kind": "led",
-                      "editingMode": "form"
-                    },
-                    "edit": {},
-                    "show": {}
-                  }
-                }
-              },
-              "name": "content"
-            }
-          }
-        }
       }
     }
   },

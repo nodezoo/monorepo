@@ -1,4 +1,8 @@
+
+
 import { BasicAdmin } from '@voxgig/model-react'
+import '@voxgig/model-react/style.css'
+
 import { getMain } from '../setup'
 import { ThemeProvider, createTheme } from '@mui/material'
 import { orange, green, blue, red, purple, cyan } from '@mui/material/colors'
@@ -96,7 +100,7 @@ const ctx = () => ({
 })
 
 const spec = {
-  frame: 'private'
+  frame: main.model.app.web.frame.private
 }
 
 function Private (props: any) {

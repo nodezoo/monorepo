@@ -29,12 +29,6 @@ export function getMain() {
     }
   }
 
-  // Fix up model
-  // TODO: move to @voxgig/model, aontu feature
-  // use .$KEY
-  Object.entries(main.model.app.web.frame.private.view).map(
-    (entry: any) => ((entry[1].name = entry[0]), entry[1])
-  )
 
   const mainSlice = createSlice({
     name: 'main',

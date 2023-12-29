@@ -1,3 +1,5 @@
+
+
 app: web: view: {
   title: string,
   icon: string,
@@ -15,13 +17,9 @@ app: web: part: admin: {}
 
 app: web: part: head: {
   logo: img: string
-  tool: def: &: {
+  tool: &: {
     kind: string
-    label: string
-    options: {
-      kind: string
-      label: field: string
-      ent: string
+    align: *left | string
   }
 }
 

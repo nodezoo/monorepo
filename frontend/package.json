@@ -30,6 +30,7 @@
     "@mui/icons-material": "5.14.19",
     "@mui/material": "5.14.19",
     "@mui/x-data-grid": "6.18.2",
+    "@nodezoo/common": "^0.0.2",
     "@reduxjs/toolkit": "1.9.7",
     "@seneca/redux": "^0.0.1",
     "@voxgig/model-react": "~1.2.3",

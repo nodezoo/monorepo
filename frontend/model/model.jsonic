@@ -1,10 +1,37 @@
-sys: @'frontend.jsonic'
 
-@'@nodezoo/nodezoo-common/model/common.jsonic'
 
-app: web: frame: public: @"web-public.jsonic"
+# sys: @'frontend.jsonic'
 
-app: web: frame: private: @"web-private.jsonic"
+@'@nodezoo/common/model/common.jsonic'
 
+
+app: web: frame: public: @"public.jsonic"
+
+app: web: frame: private: @"private.jsonic"
+
+
+app: web: frame: &: {
+  name: .$KEY
+
+  part: head: $.sys.shape.app.web.part.head & {
+    active: *false | boolean
+    name: head
+  }
+}
+
+
+
+sys: shape: app: web: part: head: {
+  tool: &: {
+    # name: .$KEY
+    name: string
+    kind: string
+    align: *left | string
+    active: *true | boolean
+    attr: {}
+    sx: {}
+    style: {}
+  }
+}
 
 
