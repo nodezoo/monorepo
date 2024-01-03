@@ -1,6 +1,13 @@
 monitor:
   handler: dist/handler/lambda/monitor.handler
   timeout: 30
+  events:
+    - http:
+        path: "/api/undefinedmonitorundefined"
+        method: POST
+        cors: false
+
+
 
 
 
@@ -9,7 +16,7 @@ auth:
   timeout: 30
   events:
     - http:
-        path: "/api/public/auth"
+        path: "/api/undefinedauthundefined"
         method: POST
         cors: false
 
@@ -22,7 +29,7 @@ user:
   timeout: 30
   events:
     - http:
-        path: "/api/private/user"
+        path: "/api/undefineduserundefined"
         method: POST
         cors: false
 

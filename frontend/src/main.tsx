@@ -2,24 +2,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import {
-  BrowserRouter,
-} from "react-router-dom"
-
-
 import { getMain } from './setup'
 import App from './App'
 
+import '@voxgig/model-react/style.css'
 import './index.css'
 
-const main = getMain()
-console.log('init', main.seneca, main.store)
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
-)
+const main = getMain()
+console.log('INFO', main.info, main)
+
+// const AppStart = <React.StrictMode><App /></React.StrictMode>
+const AppStart = <App />
+
+const rootElem = document.getElementById('root') as HTMLElement
+
+ReactDOM.createRoot(rootElem).render(AppStart)
 

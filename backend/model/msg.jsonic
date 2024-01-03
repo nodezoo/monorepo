@@ -32,7 +32,7 @@ aim: entity: {
 }
 
 
-aim: web: {
+aim: req: {
   get: info: {}
   on: auth: {
     signin: user: { '$': { file: './web_signin_user' }}

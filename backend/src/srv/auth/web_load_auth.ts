@@ -6,14 +6,13 @@ module.exports = function make_web_load_user() {
 
     let out: any = {
       ok: true,
-      section: 'auth.state',
-      content: 'signedout',
+      state: 'signedout',
     }
 
     if (user) {
 
       // TODO: double work? user already loaded by gateway
-      let res = await this.post('aim:auth,load:auth', {
+      let res = await seneca.post('aim:auth,load:auth', {
         user_id: user.id
       })
 
@@ -21,17 +20,13 @@ module.exports = function make_web_load_user() {
         return res
       }
 
-      out.content = res.state
+      out.state = res.state
 
       out.user = {
         id: user.id,
         email: user.email,
         handle: user.handle,
       }
-
-      out.foo = 1
-
-      out.handler = 'load_auth'
     }
 
     return out

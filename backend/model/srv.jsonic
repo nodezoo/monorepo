@@ -6,7 +6,7 @@ monitor: {
   in: {
     aim: monitor: {}
   }
-  api: web: { active: false }
+  api: req: { active: false }
   env: lambda: active: true
 }
 
@@ -14,10 +14,10 @@ monitor: {
 auth: {
   in: {
     aim: auth: {}
-    aim: web: on: auth: {}
+    aim: req: on: auth: {}
   }
 
-  api: web: path: { area: 'public/', suffix: ''  }
+  api: req: path: { area: 'public/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -25,10 +25,10 @@ auth: {
 user: {
   in: {
     aim: user: {}
-    aim: web: on: user: {}
+    aim: req: on: user: {}
   }
 
-  api: web: path: { area: 'private/', suffix: ''  }
+  api: req: path: { area: 'private/', suffix: ''  }
   env: lambda: active: true
 }
 
@@ -36,7 +36,7 @@ user: {
 entity: {
   in: {
     aim: entity: {}
-    aim: web: on: entity: {}
+    aim: req: on: entity: {}
   }
 
   api: web: path: { area: 'private/', suffix: ''  }

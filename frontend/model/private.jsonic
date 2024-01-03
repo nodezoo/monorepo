@@ -33,9 +33,15 @@ part: head: {
 }
 
 
+part: main: {
+  active: true
+    
+  view: default: $.app.web.frame.public.part.main.view.default
+}
 
-
-# part: side: {
+part: side: {
+  active: true
+  
 #   logo: img: '/nodezoo.png'
 #   variant: 'persistent'
 #   section: {
@@ -69,9 +75,9 @@ part: head: {
       
 #     }
 #   }
-# }
+}
 
-# part: main: title: "Main"
+
 
 # part: foot: title: "Footer"
 

@@ -1,14 +1,17 @@
-
+import React from 'react'
 
 import { BasicAdmin } from '@voxgig/model-react'
-import '@voxgig/model-react/style.css'
 
 import { getMain } from '../setup'
-import { ThemeProvider, createTheme } from '@mui/material'
-import { orange, green, blue, red, purple, cyan } from '@mui/material/colors'
+// import { ThemeProvider, createTheme } from '@mui/material'
+// import { orange, green, blue, red, purple, cyan } from '@mui/material/colors'
+
+
+console.log('PRIVATE 1')
 
 const main = getMain()
 
+/*
 const lightTheme = createTheme({
   components: {
     MuiDrawer: {
@@ -83,19 +86,20 @@ const lightTheme = createTheme({
     }
   }
 })
+*/
 
 // Provided as a function to prevent deep inspection.
 const ctx = () => ({
   model: main.model,
   seneca: main.seneca,
   store: main.store,
-  theme: lightTheme,
+  theme: main.theme,
   cmp: {
   },
   custom: {
-    BasicLed: {
-      query: (view: any, cmpstate: any) => {}
-    }
+    // BasicLed: {
+    //   query: (view: any, cmpstate: any) => {}
+    // }
   }
 })
 
@@ -104,12 +108,10 @@ const spec = {
 }
 
 function Private (props: any) {
+  //     
+  // <h1>PRIVATE</h1>
   return (
-    <ThemeProvider theme={ctx().theme}>
-      <div className='Private'>
-        <BasicAdmin ctx={ctx} spec={spec} />
-      </div>
-    </ThemeProvider>
+    <BasicAdmin ctx={ctx} spec={spec} />
   )
 }
 

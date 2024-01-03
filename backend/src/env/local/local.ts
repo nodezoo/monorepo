@@ -56,9 +56,9 @@ async function runSeneca(info: any) {
     .use('repl', { port: port.repl })
 
     .use('gateway$public', {
+      // TODO: should be shared
       allow: {
-        'aim:web,on:auth': true,
-        'handle:hook': true
+        'aim:req,on:auth': true,
       }
     })
     .use('gateway$private', {

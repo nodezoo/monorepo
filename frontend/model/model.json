@@ -4,14 +4,31 @@
       "frame": {
         "public": {
           "kind": "basic",
-          "name": "public",
           "part": {
+            "main": {
+              "view": {
+                "default": "track"
+              }
+            },
             "head": {
               "active": false,
               "name": "head",
               "tool": {}
             }
-          }
+          },
+          "page": {
+            "auth": {
+              "title": "Sign In",
+              "img": {
+                "logo": "/nodezoo.png"
+              },
+              "signin": {
+                "debug": false,
+                "view": "track"
+              }
+            }
+          },
+          "name": "public"
         },
         "private": {
           "kind": "basic",
@@ -59,6 +76,15 @@
                   "style": {}
                 }
               }
+            },
+            "main": {
+              "active": true,
+              "view": {
+                "default": "track"
+              }
+            },
+            "side": {
+              "active": true
             }
           },
           "name": "private"

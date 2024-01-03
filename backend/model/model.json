@@ -62,7 +62,7 @@
             "entity": {}
           }
         },
-        "web": {
+        "req": {
           "get": {
             "info": {}
           },
@@ -157,7 +157,7 @@
         },
         "api": {
           "web": {
-            "active": false,
+            "active": true,
             "method": "POST",
             "cors": {
               "active": false
@@ -165,6 +165,9 @@
             "path": {
               "prefix": "/api/"
             }
+          },
+          "req": {
+            "active": false
           }
         },
         "in": {
@@ -196,7 +199,11 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/",
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
               "area": "public/",
               "suffix": ""
             }
@@ -205,7 +212,7 @@
         "in": {
           "aim": {
             "auth": {},
-            "web": {
+            "req": {
               "on": {
                 "auth": {}
               }
@@ -236,7 +243,11 @@
               "active": false
             },
             "path": {
-              "prefix": "/api/",
+              "prefix": "/api/"
+            }
+          },
+          "req": {
+            "path": {
               "area": "private/",
               "suffix": ""
             }
@@ -245,7 +256,7 @@
         "in": {
           "aim": {
             "user": {},
-            "web": {
+            "req": {
               "on": {
                 "user": {}
               }
@@ -285,7 +296,7 @@
         "in": {
           "aim": {
             "entity": {},
-            "web": {
+            "req": {
               "on": {
                 "entity": {}
               }
