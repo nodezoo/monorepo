@@ -10,6 +10,43 @@ sys: login: {
 }
 
 nzo: pkg: {
+  title: 'Package'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    name: {
+      label: 'Name'
+    }
+    org: {
+      label: 'Org'
+      desc: 'NPM org (if any)'
+    }
+  }
+}
+
+
+nzo: git: {
+  title: 'Package'
+  field: {
+    id: {
+      label: 'ID'
+    }
+    ghuser: {
+      label: 'Github User'
+    }
+    ghrepo: {
+      label: 'Github Repo'
+    }
+    pkg_id: {
+      label: 'Package'
+    }
+  }
+}
+
+
+nzo: track: {
+  title: 'Track'
   field: {
     id: {
       label: 'ID'
@@ -20,7 +57,9 @@ nzo: pkg: {
     user_id: {
       label: 'Owner'
     }
-    
+    pkg_id: {
+      label: 'Package'
+    }
   }
 }
 

@@ -47,6 +47,10 @@ function getMain() {
   })
     // .test('print')
     .test()
+
+  seneca.context.model = Model
+
+  seneca
     // .quiet()
     .use(SenecaRedux, {
       debug: true,

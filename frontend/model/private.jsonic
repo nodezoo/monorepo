@@ -2,12 +2,27 @@
 
 kind: basic
 
-# part: $.sys.app.web.part
 
-# part: admin: {}
+nav: {
+  section: one: {
+    name: one
+  }
+    
+  section: one: item: search: {
+    # active: false
+    name: search
+    view: search
+  }
+
+  section: one: item: track: {
+    name: track
+    view: track
+  }  
+}
+
+
 
 part: head: {
-  active: true
 
   tool: logo: {
     name: logo
@@ -33,15 +48,22 @@ part: head: {
 }
 
 
+
+
+
+part: side: {
+}
+
+
 part: main: {
-  active: true
-    
   view: default: $.app.web.frame.public.part.main.view.default
 }
 
-part: side: {
-  active: true
-  
+
+part: foot: {
+}
+
+
 #   logo: img: '/nodezoo.png'
 #   variant: 'persistent'
 #   section: {
@@ -75,7 +97,29 @@ part: side: {
       
 #     }
 #   }
+
+
+
+
+view: search: {
+  title: 'Search'
+  name: search
+  kind: custom
+  cmp: Search
+  spec: {}
 }
+
+
+view: track: {
+  # active: false
+  title: 'Track'
+  name: track
+  kind: led
+  spec: {
+    ent: 'nzo/track'
+  }
+}
+
 
 
 

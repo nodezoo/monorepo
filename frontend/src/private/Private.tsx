@@ -2,6 +2,9 @@ import React from 'react'
 
 import { BasicAdmin } from '@voxgig/model-react'
 
+
+import { Search } from './Search'
+
 import { getMain } from '../setup'
 // import { ThemeProvider, createTheme } from '@mui/material'
 // import { orange, green, blue, red, purple, cyan } from '@mui/material/colors'
@@ -95,6 +98,7 @@ const ctx = () => ({
   store: main.store,
   theme: main.theme,
   cmp: {
+    Search
   },
   custom: {
     // BasicLed: {
