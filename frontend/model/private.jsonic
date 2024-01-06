@@ -22,33 +22,36 @@ nav: {
 
 
 
-part: head: {
-
-  tool: logo: {
+tool: {
+  logo: {
     name: logo
     kind: logo
     attr: img: '/nodezoo.png'
   }
 
-  tool: add: {
+  add: {
     name: add
     kind: add
   }
 
-  tool: find: {
+  find: {
     name: find
     kind: search
   }
 
-  tool: user: {
-    name: user
+  avatar: {
+    name: avatar
     kind: account
-    align: right
   }
 }
 
 
-
+part: head: {
+  tool: logo: {}
+  tool: add: active: false
+  tool: find: active: false 
+  tool: avatar: align: right
+}
 
 
 part: side: {
@@ -62,42 +65,6 @@ part: main: {
 
 part: foot: {
 }
-
-
-#   logo: img: '/nodezoo.png'
-#   variant: 'persistent'
-#   section: {
-#     section1: {
-#       title: 'Section One'
-#       divider: true
-
-#       item: {
-#         content: {
-#           kind: 'resource'
-#           label: 'Search'
-#           icon: 'done'
-#           path: 'view/search/index'
-#           access: {
-#             admin: true
-#             user: true
-#           }
-#         }
-
-#         track: {
-#           kind: 'resource'
-#           label: 'Track'
-#           icon: 'done'
-#           path: 'view/track/index'
-#           access: {
-#             admin: true
-#             user: true
-#           }
-#         }
-#       }
-      
-#     }
-#   }
-
 
 
 
@@ -120,31 +87,4 @@ view: track: {
   }
 }
 
-
-
-
-# part: foot: title: "Footer"
-
-# view: &: $.sys.app.web.view
-
-# view: content: {
-#   title: 'Content'
-#   name: 'content'
-#   content: {
-#     # def: $.main.ent.nzo.content & {
-#     def: {
-#       canon: 'nzo/content'
-#       subview: {
-#         add: active: true
-#         index: {
-#           kind: 'led'
-#           editingMode: 'form'
-#         }
-#         edit: {}
-#         show: {}
-#       }
-
-#     }
-#   }
-# }
 

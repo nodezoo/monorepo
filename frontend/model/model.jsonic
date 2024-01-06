@@ -37,13 +37,8 @@ sys: shape: app: web: part: &: {
 sys: shape: app: web: part: head: {
   name: .$KEY
   tool: &: {
-    active: *true | boolean  
-    name: string
-    kind: string
+    active: *true | boolean
     align: *left | string
-    attr: {}
-    sx: {}
-    style: {}
   }
 }
 
@@ -67,13 +62,23 @@ sys: shape: app: web: part: foot: {
 sys: shape: app: web: nav: {
   section: &: {
     active: *true | boolean
-  name: string
+    name: string
     item: &: {
       active: *true | boolean
       name: string
       view: string
     }
   }
+}
+
+
+sys: shape: app: web: tool: & : {
+  active: *true | boolean
+  name: string
+  kind: string
+  attr: {}
+  sx: {}
+  style: {}
 }
 
 

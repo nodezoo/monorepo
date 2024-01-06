@@ -51,46 +51,45 @@
               }
             }
           },
+          "tool": {
+            "logo": {
+              "name": "logo",
+              "kind": "logo",
+              "attr": {
+                "img": "/nodezoo.png"
+              }
+            },
+            "add": {
+              "name": "add",
+              "kind": "add"
+            },
+            "find": {
+              "name": "find",
+              "kind": "search"
+            },
+            "avatar": {
+              "name": "avatar",
+              "kind": "account"
+            }
+          },
           "part": {
             "head": {
               "tool": {
                 "logo": {
-                  "name": "logo",
-                  "kind": "logo",
-                  "attr": {
-                    "img": "/nodezoo.png"
-                  },
                   "active": true,
-                  "align": "left",
-                  "sx": {},
-                  "style": {}
+                  "align": "left"
                 },
                 "add": {
-                  "name": "add",
-                  "kind": "add",
-                  "active": true,
-                  "align": "left",
-                  "attr": {},
-                  "sx": {},
-                  "style": {}
+                  "active": false,
+                  "align": "left"
                 },
                 "find": {
-                  "name": "find",
-                  "kind": "search",
-                  "active": true,
-                  "align": "left",
-                  "attr": {},
-                  "sx": {},
-                  "style": {}
+                  "active": false,
+                  "align": "left"
                 },
-                "user": {
-                  "name": "user",
-                  "kind": "account",
+                "avatar": {
                   "align": "right",
-                  "active": true,
-                  "attr": {},
-                  "sx": {},
-                  "style": {}
+                  "active": true
                 }
               },
               "name": "head",
@@ -162,6 +161,7 @@
           "nav": {
             "section": {}
           },
+          "tool": {},
           "view": {}
         }
       },
