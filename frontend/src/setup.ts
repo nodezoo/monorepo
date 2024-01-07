@@ -61,6 +61,11 @@ function getMain() {
           user: null,
         }
       },
+
+      // TODO: move to BasicLed setup
+      slot: {
+        'track': {},
+      }
     })
 
     .client({

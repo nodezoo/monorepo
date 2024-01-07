@@ -115,3 +115,5 @@ local/setup.sh
 devassets
 !devassets/.gitkeep
 
+*.off
+
