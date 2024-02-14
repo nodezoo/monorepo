@@ -443,6 +443,86 @@
               "editable": true,
               "options": {}
             },
+            "org": {
+              "label": "Org",
+              "desc": "NPM org (if any)",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "title": "Package"
+        },
+        "git": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "ghuser": {
+              "label": "Github User",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "ghrepo": {
+              "label": "Github Repo",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "pkg_id": {
+              "label": "Package",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          },
+          "title": "Package"
+        },
+        "track": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "String",
+              "label": "ID",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "name": {
+              "label": "Name",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
             "user_id": {
               "label": "Owner",
               "kind": "String",
@@ -451,8 +531,18 @@
               "required": true,
               "editable": true,
               "options": {}
+            },
+            "pkg_id": {
+              "label": "Package",
+              "kind": "String",
+              "inputType": "text",
+              "displayType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
             }
-          }
+          },
+          "title": "Track"
         }
       }
     },

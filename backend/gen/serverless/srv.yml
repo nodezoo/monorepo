@@ -1,6 +1,8 @@
 monitor:
   handler: dist/handler/lambda/monitor.handler
+  role: BasicNodezooLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/undefinedmonitorundefined"
@@ -13,7 +15,9 @@ monitor:
 
 auth:
   handler: dist/handler/lambda/auth.handler
+  role: BasicNodezooLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/undefinedauthundefined"
@@ -26,7 +30,9 @@ auth:
 
 user:
   handler: dist/handler/lambda/user.handler
+  role: BasicNodezooLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/undefineduserundefined"
@@ -39,7 +45,9 @@ user:
 
 entity:
   handler: dist/handler/lambda/entity.handler
+  role: BasicNodezooLambdaRole
   timeout: 30
+  memorySize: 1024
   events:
     - http:
         path: "/api/private/entity"
