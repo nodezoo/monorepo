@@ -26,8 +26,28 @@ const Private = React.lazy(() => import('./private/Private'))
 const main = getMain()
 
 
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'foo-island': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
+    }
+  }
+}
+
+
 function Loading() {
-  return (<img src="/nodezoo.png" />)
+  let [count,setCount] = useState(0)
+  return (
+    <div>
+      <p onClick={()=>setCount(count+1)}>QQQ {count}</p>
+      { 2 < count && <div><b>FOO</b><foo-island></foo-island></div> }
+      <img src="/nodezoo.png" />
+    </div>
+  )
 }
 
 
@@ -86,7 +106,7 @@ function App() {
 
   
   return (
-    'done' === ready ?
+    false && 'done' === ready ?
     <Provider store={seneca.export('Redux/store')}>
       <SenecaProvider seneca={seneca}>
         <ThemeProvider theme={theme}>
