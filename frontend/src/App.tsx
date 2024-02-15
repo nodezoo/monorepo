@@ -26,7 +26,8 @@ const Private = React.lazy(() => import('./private/Private'))
 const main = getMain()
 
 
-
+/*
+TODO: move to notes in podmind widget
 declare global {
   namespace JSX {
     interface IntrinsicElements {
@@ -37,14 +38,12 @@ declare global {
     }
   }
 }
+ */
 
 
 function Loading() {
-  let [count,setCount] = useState(0)
   return (
     <div>
-      <p onClick={()=>setCount(count+1)}>QQQ {count}</p>
-      { 2 < count && <div><b>FOO</b><foo-island></foo-island></div> }
       <img src="/nodezoo.png" />
     </div>
   )
@@ -94,7 +93,7 @@ function App() {
       await seneca.ready()
       const auth = await seneca.post('aim:req,on:auth,load:auth,debounce$:true')
 
-      if(null != auth.ok) {
+      if(auth?.ok) {
         // These may have dependencies on the user.
         main.theme = buildTheme(auth.user)
         main.router = buildRouter(auth.user)
@@ -106,7 +105,7 @@ function App() {
 
   
   return (
-    false && 'done' === ready ?
+    'done' === ready ?
     <Provider store={seneca.export('Redux/store')}>
       <SenecaProvider seneca={seneca}>
         <ThemeProvider theme={theme}>

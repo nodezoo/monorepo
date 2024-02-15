@@ -82,6 +82,8 @@ view: track: {
   title: 'Track'
   name: track
   kind: led
+
+  # TODO: rename as spec already used for top level component prop
   spec: {
     ent: 'nzo/track'
   }

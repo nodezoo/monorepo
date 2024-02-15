@@ -1,5 +1,7 @@
 import Seneca from 'seneca-browser'
 import SenecaRedux from '@seneca/redux'
+import SenecaEntity from 'seneca-entity'
+import BrowserStore from '@seneca/browser-store'
 
 
 // TODO: only version in public
@@ -52,6 +54,10 @@ function getMain() {
 
   seneca
     // .quiet()
+    .use(SenecaEntity)
+    .use(BrowserStore, {
+      debug: true
+    })
     .use(SenecaRedux, {
       debug: true,
       name: 'main',
@@ -63,9 +69,9 @@ function getMain() {
       },
 
       // TODO: move to BasicLed setup
-      slot: {
-        'track': {},
-      }
+      // slot: {
+      //  'track': {},
+      // }
     })
 
     .client({

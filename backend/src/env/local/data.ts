@@ -87,17 +87,26 @@ module.exports = {
       'aaaa': {
         id: 'aaaa',
         name: 'foo',
-        user_id: 'u01',
       },
       'bbbb': {
         id: 'bbbb',
         name: 'bar',
-        user_id: 'u01',
       },
       'cccc': {
         id: 'cccc',
         name: 'zed',
-        user_id: 'u02',
+      },
+    },
+    track: {
+      'aaat': {
+        id: 'aaat',
+        name: 'foot',
+        owner_id: 'u01',
+      },
+      'bbbt': {
+        id: 'bbbt',
+        name: 'bart',
+        owner_id: 'u01',
       },
     }
   }

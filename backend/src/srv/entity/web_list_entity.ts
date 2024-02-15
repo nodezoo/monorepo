@@ -6,9 +6,12 @@ module.exports = function make_web_list_entity() {
     let entmsg = {
       aim: 'entity',
       list: 'entity',
-      canon: msg.canon,
+      // canon: msg.canon,
       ent: msg.ent,
       q: msg.q,
+      name: msg.name,
+      base: msg.base,
+      zone: msg.zone,
     }
 
     let res = await seneca.post(entmsg)
@@ -16,24 +19,6 @@ module.exports = function make_web_list_entity() {
     let out: any = {
       ok: res.ok,
     }
-
-    // if (msg.handler) {
-    //   out.handler = msg.handler
-    // }
-    // else if (res.ok) {
-
-    //   // TODO: should be on client
-    //   out.update = [
-    //     {
-    //       section: 'nzo.ent.list.main.' + msg.canon,
-    //       content: res.list,
-    //     },
-    //     {
-    //       section: 'nzo.ent.meta.main.' + msg.canon + '.state',
-    //       content: 'loaded',
-    //     },
-    //   ]
-    // }
 
     if (res.ok) {
       out.list = res.list

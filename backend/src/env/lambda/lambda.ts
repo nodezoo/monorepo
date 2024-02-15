@@ -1,5 +1,5 @@
 
-function getSeneca(srvname: string): any {
+function getSeneca(srvname: string, complete: Function): any {
   return {}
 }
 
