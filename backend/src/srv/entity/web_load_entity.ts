@@ -6,12 +6,22 @@ module.exports = function make_web_load_entity() {
     let entmsg = {
       aim: 'entity',
       load: 'entity',
-      canon: msg.canon,
       ent: msg.ent,
       q: msg.q,
+      name: msg.name,
+      base: msg.base,
+      zone: msg.zone,
     }
 
-    let out = await seneca.post(entmsg)
+    let res = await seneca.post(entmsg)
+
+    let out: any = {
+      ok: res.ok,
+    }
+
+    if (res.ok) {
+      out.item = res.item
+    }
 
     return out
   }

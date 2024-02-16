@@ -96,6 +96,7 @@ const ctx = () => ({
   model: main.model,
   seneca: main.seneca,
   store: main.store,
+  router: main.router,
   theme: main.theme,
   cmp: {
     Search

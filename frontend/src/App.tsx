@@ -7,7 +7,7 @@ import React, {
 
 import { Provider } from 'react-redux'
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, BrowserRouter, Routes, Route } from "react-router-dom"
 
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -58,7 +58,8 @@ function buildRouter(user?: any) {
       element: <Suspense fallback={<Loading />}><Public /></Suspense>,
     },
     user && {
-      path: '/view/:view',
+      // path: '/view/:view/:subview?/:item?/:subitem?/*',
+      path: '/view/:view/*',
       element: <Suspense fallback={<Loading />}><Private /></Suspense>,
     },
   ].filter(r=>null!=r)
@@ -82,6 +83,7 @@ function buildTheme(user?: any) {
 function App() {
   const { seneca, theme, router } = main
   const [ready, setReady] = useState('init')
+  // const [user, setUser] = useState(null)
 
   useEffect(()=>{
     if('init' !== ready) {
@@ -98,11 +100,27 @@ function App() {
         main.theme = buildTheme(auth.user)
         main.router = buildRouter(auth.user)
 
+        // setUser(auth.user)
         setReady('done')
       }
     }
   },[])
 
+  // <RouterProvider router={router} />
+
+  /*
+            <BrowserRouter>
+            <Routes>
+              <Route path="*"
+                element={<Suspense fallback={<Loading />}><Public /></Suspense>} />
+              { user &&
+                <Route path="/view/:view/*"
+                  element={<Suspense fallback={<Loading />}><Private /></Suspense>} />
+              }
+            </Routes>
+          </BrowserRouter>
+
+  */
   
   return (
     'done' === ready ?

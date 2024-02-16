@@ -1,14 +1,19 @@
 module.exports = function make_load_entity() {
   return async function load_entity(this: any, msg: any) {
     const seneca = this
+    const { clean } = seneca.util
 
-    // TODO: review
-    let canon = msg.canon
-    let ent = msg.ent
-    let q = msg.q
+    let q = clean(msg.q)
+    let name = msg.name
+    let base = msg.base
+    let zone = msg.zone
 
-    let res = await seneca.entity(canon).load$(q)
+    let ent = seneca.entity(zone, base, name)
+    console.log('LOAD-Q', ent.entity$, q)
 
-    return { ok: !!res, ent: res, q }
+    let item = await ent.load$(q)
+
+    return { ok: !!item, item, q }
   }
 }
+  `

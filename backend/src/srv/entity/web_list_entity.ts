@@ -6,7 +6,6 @@ module.exports = function make_web_list_entity() {
     let entmsg = {
       aim: 'entity',
       list: 'entity',
-      // canon: msg.canon,
       ent: msg.ent,
       q: msg.q,
       name: msg.name,

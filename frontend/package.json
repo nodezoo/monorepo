@@ -31,9 +31,9 @@
     "@mui/material": "5.15.10",
     "@mui/x-data-grid": "6.19.4",
     "@nodezoo/common": "0.0.2",
-    "@reduxjs/toolkit": "2.2.0",
-    "@seneca/redux": "^0.0.2",
-    "@voxgig/model-react": "1.9.1",
+    "@reduxjs/toolkit": "2.2.1",
+    "@seneca/redux": "^0.0.3",
+    "@voxgig/model-react": "2.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "9.1.0",
@@ -52,6 +52,6 @@
     "prettier-standard": "16.4.1",
     "serverless-finch": "4.0.3",
     "typescript": "5.3.3",
-    "vite": "5.1.2"
+    "vite": "5.1.3"
   }
 }
