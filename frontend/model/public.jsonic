@@ -2,6 +2,8 @@
 
 kind: basic
 
+
+# default location after sign in
 part: main: {
   view: default: 'track'
 }

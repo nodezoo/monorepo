@@ -1,20 +1,158 @@
 {
   "main": {
+    "ent": {
+      "sys": {
+        "user": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "dx": {},
+              "ux": {},
+              "max": 3333
+            }
+          }
+        },
+        "login": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "dx": {},
+              "ux": {},
+              "max": 3333
+            }
+          }
+        }
+      },
+      "nzo": {
+        "pkg": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {},
+              "max": 3333
+            },
+            "name": {
+              "title": "Name",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "org": {
+              "title": "Org",
+              "ux": {
+                "desc": "NPM org (if any)"
+              },
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {}
+            }
+          },
+          "title": "Package"
+        },
+        "git": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {},
+              "max": 3333
+            },
+            "ghuser": {
+              "title": "Github User",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "ghrepo": {
+              "title": "Github Repo",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "pkg_id": {
+              "title": "Package",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            }
+          },
+          "title": "Package"
+        },
+        "track": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {},
+              "max": 3333
+            },
+            "name": {
+              "title": "Name",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "user_id": {
+              "title": "Owner",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "pkg_id": {
+              "title": "Package",
+              "max": 3333,
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            }
+          },
+          "title": "Track"
+        }
+      }
+    },
     "msg": {
       "aim": {
         "monitor": {
           "get": {
             "info": {}
-          },
-          "calc": {
-            "sum": {
-              "$": {
-                "params": {
-                  "lhs": "Number",
-                  "rhs": "Number"
-                }
-              }
-            }
           },
           "archive": {
             "entity": {}
@@ -175,6 +313,7 @@
             "monitor": {}
           }
         },
+        "out": {},
         "deps": {}
       },
       "auth": {
@@ -219,6 +358,7 @@
             }
           }
         },
+        "out": {},
         "deps": {}
       },
       "user": {
@@ -263,6 +403,7 @@
             }
           }
         },
+        "out": {},
         "deps": {}
       },
       "entity": {
@@ -303,6 +444,7 @@
             }
           }
         },
+        "out": {},
         "deps": {}
       }
     },
@@ -385,183 +527,6 @@
         "frontend": 50301,
         "repl": 50302
       }
-    },
-    "ent": {
-      "sys": {
-        "user": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          }
-        },
-        "login": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          }
-        }
-      },
-      "nzo": {
-        "pkg": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "name": {
-              "label": "Name",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "org": {
-              "label": "Org",
-              "desc": "NPM org (if any)",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          },
-          "title": "Package"
-        },
-        "git": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "ghuser": {
-              "label": "Github User",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "ghrepo": {
-              "label": "Github Repo",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "pkg_id": {
-              "label": "Package",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          },
-          "title": "Package"
-        },
-        "track": {
-          "id": {
-            "field": "id"
-          },
-          "field": {
-            "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "name": {
-              "label": "Name",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "user_id": {
-              "label": "Owner",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            },
-            "pkg_id": {
-              "label": "Package",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
-            }
-          },
-          "title": "Track"
-        }
-      }
-    },
-    "shape": {
-      "ent": {
-        "id": {
-          "field": "id"
-        },
-        "field": {
-          "id": {
-            "kind": "String",
-            "inputType": "text",
-            "displayType": "text",
-            "required": true,
-            "editable": true,
-            "options": {}
-          }
-        }
-      }
     }
   },
   "sys": {
@@ -569,6 +534,7 @@
       "srv": {
         "base": {
           "in": {},
+          "out": {},
           "deps": {},
           "api": {
             "web": {
@@ -610,6 +576,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_js": {
@@ -639,6 +606,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_ts": {
@@ -668,7 +636,21 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
+        }
+      },
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "Text",
+            "active": true,
+            "dx": {},
+            "ux": {}
+          }
         }
       },
       "app": {},

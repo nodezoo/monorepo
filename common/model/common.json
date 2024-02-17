@@ -8,12 +8,10 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "dx": {},
+              "ux": {}
             }
           }
         },
@@ -23,12 +21,10 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "dx": {},
+              "ux": {}
             }
           }
         }
@@ -40,32 +36,27 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {}
             },
             "name": {
-              "label": "Name",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Name",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             },
             "org": {
-              "label": "Org",
-              "desc": "NPM org (if any)",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Org",
+              "ux": {
+                "desc": "NPM org (if any)"
+              },
+              "active": true,
+              "kind": "Text",
+              "dx": {}
             }
           },
           "title": "Package"
@@ -76,40 +67,32 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {}
             },
             "ghuser": {
-              "label": "Github User",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Github User",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             },
             "ghrepo": {
-              "label": "Github Repo",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Github Repo",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             },
             "pkg_id": {
-              "label": "Package",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Package",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             }
           },
           "title": "Package"
@@ -120,40 +103,32 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {}
             },
             "name": {
-              "label": "Name",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Name",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             },
             "user_id": {
-              "label": "Owner",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Owner",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             },
             "pkg_id": {
-              "label": "Package",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Package",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             }
           },
           "title": "Track"
@@ -166,23 +141,6 @@
         "frontend": 50301,
         "repl": 50302
       }
-    },
-    "shape": {
-      "ent": {
-        "id": {
-          "field": "id"
-        },
-        "field": {
-          "id": {
-            "kind": "String",
-            "inputType": "text",
-            "displayType": "text",
-            "required": true,
-            "editable": true,
-            "options": {}
-          }
-        }
-      }
     }
   },
   "sys": {
@@ -190,6 +148,7 @@
       "srv": {
         "base": {
           "in": {},
+          "out": {},
           "deps": {},
           "api": {
             "web": {
@@ -231,6 +190,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_js": {
@@ -260,6 +220,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_ts": {
@@ -289,7 +250,21 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
+        }
+      },
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "Text",
+            "active": true,
+            "dx": {},
+            "ux": {}
+          }
         }
       },
       "app": {},

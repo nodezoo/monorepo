@@ -73,18 +73,15 @@ view: search: {
   name: search
   kind: custom
   cmp: Search
-  spec: {}
+  def: {}
 }
 
 
 view: track: {
-  # active: false
   title: 'Track'
   name: track
   kind: led
-
-  # TODO: rename as spec already used for top level component prop
-  spec: {
+  def: {
     ent: 'nzo/track'
   }
 }

@@ -1,6 +1,7 @@
 
 @'@nodezoo/common/model/common.jsonic'
 
+main: ent: @"ent.jsonic"       # Entities
 main: msg: @"msg.jsonic"       # Seneca Messages
 main: srv: @"srv.jsonic"       # Services
 main: conf: @"conf.jsonic"     # Configuration

@@ -16,4 +16,4 @@ module.exports = function make_load_entity() {
     return { ok: !!item, item, q }
   }
 }
-  `
+

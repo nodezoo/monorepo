@@ -1,5 +1,5 @@
-sys: &: $.main.shape.ent
-nzo: &: $.main.shape.ent
+sys: &: $.sys.shape.ent
+nzo: &: $.sys.shape.ent
 
 sys: user: {
   field: {}
@@ -13,14 +13,14 @@ nzo: pkg: {
   title: 'Package'
   field: {
     id: {
-      label: 'ID'
+      title: 'ID'
     }
     name: {
-      label: 'Name'
+      title: 'Name'
     }
     org: {
-      label: 'Org'
-      desc: 'NPM org (if any)'
+      title: 'Org'
+      ux: desc: 'NPM org (if any)'
     }
   }
 }
@@ -30,16 +30,16 @@ nzo: git: {
   title: 'Package'
   field: {
     id: {
-      label: 'ID'
+      title: 'ID'
     }
     ghuser: {
-      label: 'Github User'
+      title: 'Github User'
     }
     ghrepo: {
-      label: 'Github Repo'
+      title: 'Github Repo'
     }
     pkg_id: {
-      label: 'Package'
+      title: 'Package'
     }
   }
 }
@@ -49,16 +49,16 @@ nzo: track: {
   title: 'Track'
   field: {
     id: {
-      label: 'ID'
+      title: 'ID'
     }
     name: {
-      label: 'Name'
+      title: 'Name'
     }
     user_id: {
-      label: 'Owner'
+      title: 'Owner'
     }
     pkg_id: {
-      label: 'Package'
+      title: 'Package'
     }
   }
 }

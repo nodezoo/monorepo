@@ -1,0 +1,17 @@
+
+sys: &: {
+  field: &: ux: {
+
+    # max length for validation
+    max: *3333 | number
+  }
+}
+
+nzo: &: {
+  field: &: ux: {
+
+    # max length for validation
+    max: *3333 | number
+  }
+}
+

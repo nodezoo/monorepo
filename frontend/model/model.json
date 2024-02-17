@@ -117,17 +117,19 @@
               "name": "search",
               "kind": "custom",
               "cmp": "Search",
-              "spec": {},
-              "active": true
+              "def": {},
+              "active": true,
+              "spec": {}
             },
             "track": {
               "title": "Track",
               "name": "track",
               "kind": "led",
-              "spec": {
+              "def": {
                 "ent": "nzo/track"
               },
-              "active": true
+              "active": true,
+              "spec": {}
             }
           },
           "name": "private"
@@ -168,6 +170,7 @@
       "srv": {
         "base": {
           "in": {},
+          "out": {},
           "deps": {},
           "api": {
             "web": {
@@ -209,6 +212,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_js": {
@@ -238,6 +242,7 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
         },
         "std_ts": {
@@ -267,7 +272,21 @@
             }
           },
           "in": {},
+          "out": {},
           "deps": {}
+        }
+      },
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "kind": "Text",
+            "active": true,
+            "dx": {},
+            "ux": {}
+          }
         }
       },
       "part": {
@@ -284,12 +303,10 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "dx": {},
+              "ux": {}
             }
           }
         },
@@ -299,12 +316,10 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "dx": {},
+              "ux": {}
             }
           }
         }
@@ -316,33 +331,102 @@
           },
           "field": {
             "id": {
-              "kind": "String",
-              "label": "ID",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {}
             },
             "name": {
-              "label": "Name",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Name",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "org": {
+              "title": "Org",
+              "ux": {
+                "desc": "NPM org (if any)"
+              },
+              "active": true,
+              "kind": "Text",
+              "dx": {}
+            }
+          },
+          "title": "Package"
+        },
+        "git": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {}
+            },
+            "ghuser": {
+              "title": "Github User",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "ghrepo": {
+              "title": "Github Repo",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "pkg_id": {
+              "title": "Package",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            }
+          },
+          "title": "Package"
+        },
+        "track": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "kind": "Text",
+              "active": true,
+              "title": "ID",
+              "dx": {},
+              "ux": {}
+            },
+            "name": {
+              "title": "Name",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             },
             "user_id": {
-              "label": "Owner",
-              "kind": "String",
-              "inputType": "text",
-              "displayType": "text",
-              "required": true,
-              "editable": true,
-              "options": {}
+              "title": "Owner",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
+            },
+            "pkg_id": {
+              "title": "Package",
+              "active": true,
+              "kind": "Text",
+              "dx": {},
+              "ux": {}
             }
-          }
+          },
+          "title": "Track"
         }
       }
     },
@@ -351,23 +435,6 @@
         "backend": 50300,
         "frontend": 50301,
         "repl": 50302
-      }
-    },
-    "shape": {
-      "ent": {
-        "id": {
-          "field": "id"
-        },
-        "field": {
-          "id": {
-            "kind": "String",
-            "inputType": "text",
-            "displayType": "text",
-            "required": true,
-            "editable": true,
-            "options": {}
-          }
-        }
       }
     }
   }

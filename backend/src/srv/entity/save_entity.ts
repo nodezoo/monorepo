@@ -2,13 +2,16 @@ module.exports = function make_save_entity() {
   return async function save_entity(this: any, msg: any) {
     const seneca = this
 
-    // TODO: review
-    let canon = msg.canon
-    let ent = msg.ent
-    let q = msg.q
+    let data = msg.ent
+    let name = msg.name
+    let base = msg.base
+    let zone = msg.zone
 
-    let res = await seneca.entity(canon).data$(ent).save$()
+    let ent = seneca.entity(zone, base, name)
+    console.log('SAVE-ENT', ent.entity$, ent)
 
-    return { ok: !!res, ent: res, q }
+    let res = await ent.data$(data).save$()
+
+    return { ok: !!res, item: res }
   }
 }

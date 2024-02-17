@@ -3,7 +3,7 @@
 
 aim: monitor: {
   get: info: {}
-  calc: sum: {}
+  # calc: sum: {}
   archive: entity: {}
 }
 
@@ -55,10 +55,10 @@ aim: req: {
 
 # Message Parameters
 
-aim: monitor: calc: sum: '$': params: {
-  lhs: Number
-  rhs: Number
-}
+# aim: monitor: calc: sum: '$': params: {
+#   lhs: Number
+#   rhs: Number
+# }
 
 
 

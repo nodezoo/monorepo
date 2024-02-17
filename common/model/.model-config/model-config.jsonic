@@ -1,6 +1,6 @@
-# Copyright (c) Nodezoo Ltd. 2023
+# Copyright (c) 2023-2024 Richard Rodger 
 
-@'@voxgig/model/model/.model-config/sys.jsonic'
+@'@voxgig/model/model/.model-config/model-config.jsonic'
 
 sys: model: builders: {}
 

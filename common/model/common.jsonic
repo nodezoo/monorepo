@@ -5,23 +5,3 @@ main: ent: @'common-ent.jsonic'
 main: conf: @'common-conf.jsonic'
 
 
-main: shape: ent: {
-  id: {
-    field: 'id'
-  }
-  field: {
-    id: kind: *'String' | string
-  }
-}
-
-main: shape: ent: field: &: {
-  kind: *'String' | string  
-  label: string  
-  inputType: *'text' | string
-  displayType: *'text' | string
-  required: *true | boolean  
-  editable: *true | boolean
-  options: &: {
-    label: string
-  }
-} 

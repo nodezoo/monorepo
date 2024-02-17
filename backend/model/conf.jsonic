@@ -5,6 +5,8 @@ core: token: 'nodezoo-auth'
 
 
 
+# Shared options used by multiple plugins
+
 shared: plugin: gateway_express: {
   auth: token: name: $.main.conf.core.token
 }
