@@ -83,6 +83,7 @@ view: track: {
   kind: led
   def: {
     ent: 'nzo/track'
+    head: active: true
   }
 }
 

@@ -126,7 +126,10 @@
               "name": "track",
               "kind": "led",
               "def": {
-                "ent": "nzo/track"
+                "ent": "nzo/track",
+                "head": {
+                  "active": true
+                }
               },
               "active": true,
               "spec": {}
