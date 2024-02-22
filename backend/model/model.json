@@ -11,8 +11,9 @@
               "kind": "Text",
               "active": true,
               "dx": {},
-              "ux": {},
-              "max": 3333
+              "ux": {
+                "max": 3333
+              }
             }
           }
         },
@@ -25,8 +26,9 @@
               "kind": "Text",
               "active": true,
               "dx": {},
-              "ux": {},
-              "max": 3333
+              "ux": {
+                "max": 3333
+              }
             }
           }
         }
@@ -42,23 +44,25 @@
               "active": true,
               "title": "ID",
               "dx": {},
-              "ux": {},
-              "max": 3333
+              "ux": {
+                "max": 3333
+              }
             },
             "name": {
               "title": "Name",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             },
             "org": {
               "title": "Org",
               "ux": {
-                "desc": "NPM org (if any)"
+                "desc": "NPM org (if any)",
+                "max": 3333
               },
-              "max": 3333,
               "active": true,
               "kind": "Text",
               "dx": {}
@@ -76,32 +80,36 @@
               "active": true,
               "title": "ID",
               "dx": {},
-              "ux": {},
-              "max": 3333
+              "ux": {
+                "max": 3333
+              }
             },
             "ghuser": {
               "title": "Github User",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             },
             "ghrepo": {
               "title": "Github Repo",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             },
             "pkg_id": {
               "title": "Package",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             }
           },
           "title": "Package"
@@ -116,32 +124,36 @@
               "active": true,
               "title": "ID",
               "dx": {},
-              "ux": {},
-              "max": 3333
+              "ux": {
+                "max": 3333
+              }
             },
             "name": {
               "title": "Name",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             },
             "user_id": {
               "title": "Owner",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             },
             "pkg_id": {
               "title": "Package",
-              "max": 3333,
+              "ux": {
+                "max": 3333
+              },
               "active": true,
               "kind": "Text",
-              "dx": {},
-              "ux": {}
+              "dx": {}
             }
           },
           "title": "Track"
