@@ -1,0 +1,9 @@
+
+&: &: field: &: ux: {
+  kind: *'Text'|string
+}
+
+
+nzo: track: field: pkg_id: ux: {
+  size: 6
+}

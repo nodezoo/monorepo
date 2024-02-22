@@ -9,6 +9,9 @@ app: web: frame: public: @"public.jsonic"
 
 app: web: frame: private: @"private.jsonic"
 
+main: ent: @"frontend-ent.jsonic"
+
+
 
 # TODO: move to @voxgig/model
 
